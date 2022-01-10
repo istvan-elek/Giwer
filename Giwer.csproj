@@ -123,9 +123,9 @@
     <Content Include="sima32.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="dataStock\DataStock.csproj">
+    <ProjectReference Include="dataStock\dataStock.csproj">
       <Project>{ad4a9bf1-2846-42e4-b3df-a2417a125b76}</Project>
-      <Name>DataStock</Name>
+      <Name>dataStock</Name>
     </ProjectReference>
     <ProjectReference Include="workflowBuilder\WorkflowBuilder.csproj">
       <Project>{a661c299-616d-4531-89a6-6ae23029727e}</Project>

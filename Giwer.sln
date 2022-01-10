@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		moni.ico = moni.ico
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStock", "dataStock\DataStock.csproj", "{AD4A9BF1-2846-42E4-B3DF-A2417A125B76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataStock", "dataStock\dataStock.csproj", "{AD4A9BF1-2846-42E4-B3DF-A2417A125B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog", "catalog_sqlite\Catalog.csproj", "{12229B8A-A214-4EFF-81CE-DFA603992943}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catalog_sqlite", "catalog_sqlite\catalog_sqlite.csproj", "{12229B8A-A214-4EFF-81CE-DFA603992943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

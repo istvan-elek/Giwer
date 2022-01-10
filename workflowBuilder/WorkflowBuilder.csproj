@@ -101,9 +101,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dataStock\DataStock.csproj">
+    <ProjectReference Include="..\dataStock\dataStock.csproj">
       <Project>{ad4a9bf1-2846-42e4-b3df-a2417a125b76}</Project>
-      <Name>DataStock</Name>
+      <Name>dataStock</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -642,7 +642,7 @@
             // nDVIToolStripMenuItem1
             // 
             this.nDVIToolStripMenuItem1.Name = "nDVIToolStripMenuItem1";
-            this.nDVIToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.nDVIToolStripMenuItem1.Size = new System.Drawing.Size(169, 22);
             this.nDVIToolStripMenuItem1.Text = "NDVI";
             this.nDVIToolStripMenuItem1.ToolTipText = "Normalized Differential Vegetation Index";
             this.nDVIToolStripMenuItem1.Click += new System.EventHandler(this.nDVIToolStripMenuItem_Click);
@@ -650,7 +650,7 @@
             // aRVIToolStripMenuItem
             // 
             this.aRVIToolStripMenuItem.Name = "aRVIToolStripMenuItem";
-            this.aRVIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aRVIToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.aRVIToolStripMenuItem.Text = "ARVI";
             this.aRVIToolStripMenuItem.ToolTipText = "Atmospherically Resistant Vegetation Index";
             this.aRVIToolStripMenuItem.Click += new System.EventHandler(this.aRVIToolStripMenuItem_Click);
@@ -658,7 +658,7 @@
             // sAVIToolStripMenuItem
             // 
             this.sAVIToolStripMenuItem.Name = "sAVIToolStripMenuItem";
-            this.sAVIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sAVIToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.sAVIToolStripMenuItem.Text = "SAVI";
             this.sAVIToolStripMenuItem.ToolTipText = "Soil-Adjusted Vegetation Index";
             this.sAVIToolStripMenuItem.Click += new System.EventHandler(this.sAVIToolStripMenuItem_Click);
@@ -666,7 +666,7 @@
             // waterStressIndexToolStripMenuItem
             // 
             this.waterStressIndexToolStripMenuItem.Name = "waterStressIndexToolStripMenuItem";
-            this.waterStressIndexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.waterStressIndexToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.waterStressIndexToolStripMenuItem.Text = "Water stress index";
             // 
             // crossPlotToolStripMenuItem
@@ -1566,6 +1566,7 @@
             this.tsBttnRecordStart.Name = "tsBttnRecordStart";
             this.tsBttnRecordStart.Size = new System.Drawing.Size(32, 32);
             this.tsBttnRecordStart.Text = "Start recording workflow";
+            this.tsBttnRecordStart.Visible = false;
             // 
             // tsBttnRecordStop
             // 
@@ -1575,6 +1576,7 @@
             this.tsBttnRecordStop.Name = "tsBttnRecordStop";
             this.tsBttnRecordStop.Size = new System.Drawing.Size(32, 32);
             this.tsBttnRecordStop.Text = "Stop recording workflow";
+            this.tsBttnRecordStop.Visible = false;
             // 
             // toolStripSeparator7
             // 
