@@ -1,0 +1,9 @@
+Giwer quick start
+-----------------
+
+1. Csomagold ki a giwer.zip-et
+2. Indítsd el a giwer.exe-t
+3. Először állítsd be a config fájl tartalmát (click to 'config' gomb). Itt állíthatod be, hogy kezdetben hol vannak a jpg, tif, ddm, bil és gwr fájlok. Ha már használod, mindig az utoljára megnyitott helyen fogja őket keresni. A gwr-t azért kell beállítani az elején, mert amíg nincs egyetlen gwr fájl sem, ha létre akarsz hozni egyet, nem fogja tudni, hogy hová mentse (például c:\gwr).
+5. Indítsd el a 'datastock'-ot az ikonra klikkelve.
+4. Ha nem látszik a bal oldalon egy üres fehér sáv (layer lista és a header helye), akkor klikkelj a 'H' jelü gombra.
+5. Kezdheted a próbálkozást. A teljes funkcionalitás csak a gwr (gwh) formátumú adatokon megy. A többit csak megjeleníti. Ilyenkor szinte minden ikon disable. Például olvass be egy jpg-t, választd ki bármelyik sávját, és klikkelj a 'Data tools\Convert to giwer format' menüre. Ha sikerült, onnantól a G jelű ikonra kattintva be tudod olvasni, és minden ikon aktív lesz.

@@ -1,0 +1,140 @@
+\select@language {magyar} \contentsline {part}{I.\hspace {1em}A Giwer r\IeC {\"o}vid bemutat\IeC {\'a}sa}{6}
+\select@language {magyar} \contentsline {section}{\numberline {1}Bevezet\IeC {\'e}s}{6}
+\select@language {magyar} \contentsline {section}{\numberline {2}C\IeC {\'e}lkit\IeC {\H u}z\IeC {\'e}sek}{7}
+\select@language {magyar} \contentsline {section}{\numberline {3}Megval\IeC {\'o}s\IeC {\'\i }t\IeC {\'a}s}{8}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.1}Lehets\IeC {\'e}ges megold\IeC {\'a}si m\IeC {\'o}dok}{8}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.2}A desktop alkalmaz\IeC {\'a}s}{8}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.1}Data stock}{8}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.2}Catalog}{9}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.3}Workflow builder}{10}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.4}Config editor}{10}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.5}Help}{11}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.6}Getting information}{11}
+\select@language {magyar} \contentsline {part}{II.\hspace {1em}R\IeC {\'e}szletes le\IeC {\'\i }r\IeC {\'a}s}{12}
+\select@language {magyar} \contentsline {section}{\numberline {1}A Giwer logikai fel\IeC {\'e}p\IeC {\'\i }t\IeC {\'e}se}{12}
+\select@language {magyar} \contentsline {section}{\numberline {2}A Giwer keretrendszer}{13}
+\select@language {magyar} \contentsline {section}{\numberline {3}Data Stock}{13}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.1}A program m\IeC {\H u}k\IeC {\"o}d\IeC {\'e}se}{14}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.2}T\IeC {\'a}mogatott adatform\IeC {\'a}tumok}{14}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.1}Tiff}{14}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.2}Jpeg}{15}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.3}Bil}{15}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.4}DDM}{17}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.5}Gwr}{17}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.3}Oszt\IeC {\'a}lyok \IeC {\'e}s f\IeC {\"u}ggv\IeC {\'e}nyek}{18}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.1}A \textbf {GeoImageData} oszt\IeC {\'a}ly}{18}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.2}A \textbf {GeoImageTools} oszt\IeC {\'a}ly}{18}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.3}A \textbf {StatMath} oszt\IeC {\'a}ly}{18}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.4}A \textbf {GeoFilters} oszt\IeC {\'a}ly}{18}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.5}A \textbf {GeoMultibandMethods} oszt\IeC {\'a}ly}{21}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.6}A \textbf {DTM} oszt\IeC {\'a}ly}{21}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.7}A \textbf {Raster calculator} oszt\IeC {\'a}ly}{21}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.8}Az \textbf {ImageWindow} oszt\IeC {\'a}ly}{21}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.4}A \textbf {Project} oszt\IeC {\'a}ly}{22}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.5}A \textbf {Mosaic} oszt\IeC {\'a}ly}{22}
+\select@language {magyar} \contentsline {section}{\numberline {4}F\IeC {\"u}ggv\IeC {\'e}nyek \IeC {\'e}s elj\IeC {\'a}r\IeC {\'a}sok bemutat\IeC {\'a}sa}{23}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.1}A \textbf {GeoImageData} oszt\IeC {\'a}ly elj\IeC {\'a}r\IeC {\'a}sai}{23}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.1}parseBilHeader}{23}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.2}parseTifHeader}{23}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.3}parseGeoTifHeader}{23}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.4}parseJpgHeader}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.5}getExif}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.1.6}parseGiwerHeader}{24}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.2}A \textbf {GeoImageTools} oszt\IeC {\'a}ly elj\IeC {\'a}r\IeC {\'a}sai}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.1}saveGiwerFormat}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.2}saveHeader2Giwer}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.3}convertByteArray2GiwerFormat}{24}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.4}convertOneBandBytestoBitmap}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.5}getOneBandBytes}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.6}getOneBandtoByteArrayFromBitmap}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.7}BitmapToByteArray}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.8}ByteArrayToBitmap}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.9}convertImageFromTif2Jpg}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.10}convertImageFromJpg2Tif}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.11}InvertColor}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.12}GrayscaleConversion}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.13}readGwrFile}{25}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.14}GetAnRGBBand}{26}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.2.15}combine2Images}{27}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.3}A \textbf {StatMath} oszt\IeC {\'a}ly elj\IeC {\'a}r\IeC {\'a}sai}{27}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.1}getMinMax}{27}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.2}imageAverage}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.3}imageScatter}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.4}imagesStandardization}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.5}computeCorrelationMatrix}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.6}compEigen}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.7}PCA}{28}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.4}A \textbf {GeoFilters} oszt\IeC {\'a}ly elj\IeC {\'a}r\IeC {\'a}sai}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.1}MedianFilter3Bands}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.2}MedianFilterOneBand}{28}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.3}Canny}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.4}Laplace3Bands}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.5}LaplaceOneBand}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.6}ConvolSingleBand}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.7}Convol3bands}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.8}highPassKernel}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.9}lowPassKernelGauss}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.10}lowPassKernelBox}{29}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.11}resampling}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.12}Prewitt}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.13}Sobel}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.14}Isotropic}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.4.15}vectorize}{32}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.5}\textbf {GeoMultibandMethods} oszt\IeC {\'a}ly elj\IeC {\'a}r\IeC {\'a}sai}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.1}RGB}{32}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.2}NDVI}{33}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.3}Cross Plot}{33}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.4}compEigen}{33}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.5}compPCA}{33}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.6}Clustering}{37}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.5.7}Segmentation}{37}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.6}A \textbf {DTM} oszt\IeC {\'a}ly}{38}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.6.1}readParameters}{38}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.6.2}readDDM}{38}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.7}A \textbf {Raster Calculator} oszt\IeC {\'a}ly}{38}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.8}A \textbf {Project} oszt\IeC {\'a}ly}{38}
+\select@language {magyar} \contentsline {section}{\numberline {5}A DataStock alrendszer haszn\IeC {\'a}lata}{41}
+\select@language {magyar} \contentsline {subsection}{\numberline {5.1}Men\IeC {\"u}rendszer}{41}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.1}File}{41}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.2}One band processes}{43}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.3}Multiband processes}{44}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.4}Data tools}{45}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.5}N\IeC {\'e}h\IeC {\'a}ny hasznos funkci\IeC {\'o}}{46}
+\select@language {magyar} \contentsline {section}{\numberline {6}A Catalog alrendszer haszn\IeC {\'a}lata}{47}
+\select@language {magyar} \contentsline {subsection}{\numberline {6.1}Els\IeC {\H o} l\IeC {\'e}p\IeC {\'e}sek}{47}
+\select@language {magyar} \contentsline {subsection}{\numberline {6.2}A f\IeC {\'a}jlrendszer el\IeC {\H o}k\IeC {\'e}sz\IeC {\'\i }t\IeC {\'e}se}{49}
+\select@language {magyar} \contentsline {subsection}{\numberline {6.3}Az adatb\IeC {\'a}zis felt\IeC {\"o}lt\IeC {\'e}se}{50}
+\select@language {magyar} \contentsline {subsection}{\numberline {6.4}Funkci\IeC {\'o}k}{50}
+\select@language {magyar} \contentsline {subsection}{\numberline {6.5}Lek\IeC {\'e}rdez\IeC {\'e}s}{52}
+\select@language {magyar} \contentsline {part}{III.\hspace {1em}F\IeC {\"u}ggel\IeC {\'e}k}{55}
+\select@language {magyar} \contentsline {section}{\numberline {1}A t\IeC {\'a}v\IeC {\'e}rz\IeC {\'e}kel\IeC {\'e}s fizikai alapjai}{55}
+\select@language {magyar} \contentsline {section}{\numberline {2}A f\IeC {\H o}komponens anal\IeC {\'\i }zis matematikai alapjai}{59}
+\select@language {magyar} \contentsline {section}{\numberline {3}A digit\IeC {\'a}lis sz\IeC {\H u}r\IeC {\'e}si elj\IeC {\'a}r\IeC {\'a}sok \IeC {\'a}ttekint\IeC {\'e}se}{61}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.1}Konvol\IeC {\'u}ci\IeC {\'o}s sz\IeC {\H u}r\IeC {\H o}k}{62}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.1.1}Szepar\IeC {\'a}bilis sz\IeC {\H u}r\IeC {\H o}k}{63}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.1.2}Box sz\IeC {\H u}r\IeC {\H o}}{64}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.1.3}Gauss-sz\IeC {\H u}r\IeC {\H o}}{64}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.1.4}Nem-szepar\IeC {\'a}bilis sz\IeC {\H u}r\IeC {\H o}k}{66}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.2}\IeC {\'E}ldetektorok}{66}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.1}Gradiens sz\IeC {\H u}r\IeC {\H o}}{66}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.2}Laplace-sz\IeC {\H u}r\IeC {\H o}}{67}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.3}LoG sz\IeC {\H u}r\IeC {\H o}}{67}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.4}Emboss sz\IeC {\H u}r\IeC {\H o}}{68}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.5}Canny-f\IeC {\'e}le \IeC {\'e}ldetektor}{68}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.2.6}K\IeC {\'e}p \IeC {\'e}les\IeC {\'\i }t\IeC {\'e}se}{70}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.3}Nemline\IeC {\'a}ris sz\IeC {\H u}r\IeC {\H o}k}{70}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.1}Rangsz\IeC {\H u}r\IeC {\H o}k}{70}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.2}Olimpiai sz\IeC {\H u}r\IeC {\H o}}{71}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.3.3}Konzervat\IeC {\'\i }v sim\IeC {\'\i }t\IeC {\'a}s}{71}
+\select@language {magyar} \contentsline {subsection}{\numberline {3.4}Szegment\IeC {\'a}l\IeC {\'a}s, k\IeC {\"u}sz\IeC {\"o}b\IeC {\"o}l\IeC {\'e}s}{72}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {3.4.1}Otsu-f\IeC {\'e}le k\IeC {\"u}sz\IeC {\"o}b\IeC {\"o}l\IeC {\'e}s}{72}
+\select@language {magyar} \contentsline {section}{\numberline {4}Oszt\IeC {\'a}lyoz\IeC {\'a}s, klaszterez\IeC {\'e}s}{74}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.1}Particion\IeC {\'a}l\IeC {\'o} klaszterez\IeC {\'e}s}{76}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.2}Hierarchikus elj\IeC {\'a}r\IeC {\'a}sok}{76}
+\select@language {magyar} \contentsline {subsection}{\numberline {4.3}K\IeC {\'e}pek klaszterez\IeC {\'e}se}{77}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.1}ISODATA elj\IeC {\'a}r\IeC {\'a}s}{77}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {4.3.2}Fel\IeC {\"u}gyelt oszt\IeC {\'a}lyoz\IeC {\'a}s}{77}
+\select@language {magyar} \contentsline {section}{\numberline {5}Szegment\IeC {\'a}l\IeC {\'a}s}{79}
+\select@language {magyar} \contentsline {subsection}{\numberline {5.1}A Giwer rendszer \IeC {\'e}ldetekt\IeC {\'a}l\IeC {\'a}si m\IeC {\'o}dszere}{80}
+\select@language {magyar} \contentsline {subsubsection}{\numberline {5.1.1}Soks\IeC {\'a}vos k\IeC {\'e}pek szegment\IeC {\'a}l\IeC {\'a}sa}{80}
+\select@language {magyar} \contentsline {section}{\numberline {6}Text\IeC {\'u}ra elemz\IeC {\'e}s}{81}

@@ -1,0 +1,6 @@
+\select@language {magyar} \contentsline {section}{\numberline {1}Catalog}{3}
+\select@language {magyar} \contentsline {subsection}{\numberline {1.1}Els\IeC {\H o} l\IeC {\'e}p\IeC {\'e}sek}{3}
+\select@language {magyar} \contentsline {subsection}{\numberline {1.2}A f\IeC {\'a}jlrendszer el\IeC {\H o}k\IeC {\'e}sz\IeC {\'\i }t\IeC {\'e}se}{5}
+\select@language {magyar} \contentsline {subsection}{\numberline {1.3}Az adatb\IeC {\'a}zis felt\IeC {\"o}lt\IeC {\'e}se}{5}
+\select@language {magyar} \contentsline {subsection}{\numberline {1.4}Funkci\IeC {\'o}k}{7}
+\select@language {magyar} \contentsline {subsection}{\numberline {1.5}Lek\IeC {\'e}rdez\IeC {\'e}s}{8}

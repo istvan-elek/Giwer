@@ -1,0 +1,37 @@
+Catalog: rövid intro
+--------------------
+
+A program és az adatbázis előkészítése
+
+1. Legyen telepítve egy postgres (user: postgres, pw: root) 
+2. bontsd ki a catalog.exe-t.
+3. Ahová kibontottad, onnan indítható a catalog.exe, nem kell külön telepíteni.
+4. Elinduláskor megjelenik egy autentikációs ablak.
+   - Ha már van létező adatbázis (dronimagecatalog néven), akkor megjelenik a tartalma egy táblázatban.
+   - Ha nincs, akkor nyomd meg az F2 gombot (bal felső sarok környéke a keyboardon). Ekkor megjelenik egy 'Catalog' nevű menü. Választd ki a 'Create new catalog' almenüt, amely létrehoz egy 'dronimagecatalog' nevű adatbázist, és benne egy üres adattáblát ('images' lesz a neve). Ide fognak képződni a felvett képek adatai.
+5. Nyomd meg az 'open' almenüt
+6. F2-t mégegyszer megnyomva, eltűnik a 'Catalog' menü.
+
+A fájlrendszer előkészítése
+
+1. Kreálj egy könyvtárat valahol 'DRON_IMAGES' néven valahol a fájlrendszerben.
+2. Klikkelj az 'open folder tree' ikonra (bal felső sarok). Ekkor megnyílik a 'Folder structure' nevű ablak.
+3. Klikkelj a 'Select destination folder' nevű menü gombra, majd keresd meg és választd ki a 'DRON_IMAGES' nevű könyvtárat. Ezzel megadtad a kép catalógus helyét aa fájlrendszerben, amire ezentúl emlékezni fog a program, ha újra elindítod.
+4. Keresd a flash driven-on azt a könyvtárat, ahol az éppen most készített képek vannak. Ha a jobb oldali ablakban megjelennek a fájlok, klikkelj a 'Save files to 'c:\DRON_IMAGES' folder' gombra. Ennek hatására az egész könyvtár tartalma átmásolódik a flash driveról a 'DRON_IMAGES' nevű könyvtárba.
+5. Ennek hatására a 'DRON_IMAGES' nevű könyvtárban megjelenik egy új directory, aminek a neve az első fájl mentésének időpontja. 
+
+Az adatbázis feltöltése
+
+1. Kétféle képpen töltheted fel az adabázist: vagy egyenként (vagy multiselecttel több fájlt is) vagy egy directory-t kijelölve tömegese, annak teljes tartalmát. A fájlonkéntihez klikkelje a sárga plusz jelre, a teljes directoryhoz a zöld karikában fehér kereszt ikonra.
+2. Bármelyikre klikkeltél, felbukkan a 'Editable image attributes' nevű ablak, ahol megadhatod azokat az adatokat, amelyek minden most beemelendő képre vonatkoznak. A többi adatot a program automatikus feltölti (fájlnév, long, lat, timestemp, folder).
+3. A táblázat nem automatikus adatai szerkeszthetők, amik el is mentődnek, amint a következő rekordra lépünk.
+4. A színes poligon ikonra kattintva megjelenik az aktuális rekordhoz tartózó kép. Az 'Exif' feliratú gomb az aktuális rekordhoz tartozó kép exif adatait mutatja meg egy külön ablakban.
+
+Lekérdezés
+
+1. Az 'SQL' feliratú ikonra klikkelve megjelenik egy 'Query editor' nevű ablak. Itt ki lehet választni, hogy melyik mezőre kérdezünk. milyen feltételt szabunk 
+pl. select field: type;  Operator: =; Value rgb ====> WHERE type=rgb. Ha itt vége, akkor klick to 'Generate WHERE condition and Sql command' majd 'Execute query'. Ha új lekérdezés lesz, akkor előtt klick to 'Clear WHERE'.
+2. Összetettebb lekérdezésekhez klikkelj az 'Add further condition' nevű check boxra. Ha kész vagy egy further feltétellel klikkelj az 'Add further condition'- gombra. Ha az utolsót is hozzáadtad, akkor klikkelj a 'Generate WHERE condition and Sql command' majd az 'Execute query'-re. Ha jó volt az sql parancs, akkor megjelenik az eredmény az adatrácsban.
+3. Ha meg vagy elégedve az eredménnyel, klikkelj a 'Close and return to main window' gombra. Ekkor becsukódik a 'Query editor' ablak, és a lekérdezés eredménye megjelenik a fő ablakban. Itt nézegetheted kedvedre.
+
+
