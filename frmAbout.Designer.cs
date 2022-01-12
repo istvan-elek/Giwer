@@ -59,9 +59,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(257, 17);
+            this.label1.Size = new System.Drawing.Size(253, 17);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Geo Image Workflow Editing Resources";
+            this.label1.Text = "GeoImage Workflow Editing Resources";
             // 
             // lblCompanyName
             // 

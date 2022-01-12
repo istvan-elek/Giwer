@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Giwer")]
-[assembly: AssemblyDescription("Geo Image Workflow Editing Resources")]
+[assembly: AssemblyDescription("GeoImage Workflow Editing Resources")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ELTE IK")]
 [assembly: AssemblyProduct("Giwer")]

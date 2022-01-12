@@ -213,6 +213,12 @@
     <Content Include="sheet.png" />
     <Content Include="sheet2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\micasense\micasense.csproj">
+      <Project>{1adbe49d-2d34-4754-8a09-c4c06d424fe6}</Project>
+      <Name>micasense</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

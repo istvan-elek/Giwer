@@ -78,7 +78,14 @@ namespace Giwer.dataStock
                     MessageBox.Show("Config file may contain improper data, or it is damaged. " + e.Message + ". Try to recover the 'config.cfg' file", "Improper data",MessageBoxButtons.OK, MessageBoxIcon.Error);
                     //frmConfig cnffile = new frmConfig();
                     conf.config.Clear();
-                    conf.readConfig(Application.StartupPath + @"\config_default.cfg");
+                    //conf.readConfig(Application.StartupPath + @"\config_default.cfg");
+                    JpgDataFolder = "";
+                    TifDataFolder = "";
+                    BilDataFolder = "";
+                    GiwerDataFolder = "";
+                    D3DataFolder = "";
+                    ProjectFolder = "";
+                    WorkflowFolder = "";
                 }
 
                 this.splitContainer1.Panel2.Controls.Add(imw);
@@ -86,16 +93,6 @@ namespace Giwer.dataStock
                 imw.BackColor = Color.White;
                 imw.Visible = false;
                 imw.BringToFront();
-            }
-            else
-            {
-                JpgDataFolder = "";
-                TifDataFolder = "";
-                BilDataFolder = "";
-                GiwerDataFolder = "";
-                D3DataFolder = "";
-                ProjectFolder = "";
-                WorkflowFolder = "";
             }
             setControls(GeoImageData.fTypes.UNKOWN, false);
             loadAvailableColorPalettes();
@@ -1566,6 +1563,7 @@ namespace Giwer.dataStock
                 createSimpleWorkflowToolStripMenuItem.Enabled = true;
                 saveProjectAsToolStripMenuItem.Enabled = true;
                 this.Text = "Data stock --> " + Path.GetFileName(project.ProjectFileName);
+                ProjectFolder = Path.GetDirectoryName(of.FileName);
             }
         }
 
@@ -1659,6 +1657,7 @@ namespace Giwer.dataStock
             {
                 frmSimpleWorkflow wf = new frmSimpleWorkflow(of.FileName);
                 wf.Show();
+                WorkflowFolder = Path.GetDirectoryName(of.FileName);
             }
         }
 
@@ -1713,7 +1712,6 @@ namespace Giwer.dataStock
             if (this.WindowState != FormWindowState.Minimized)
             {
                 Properties.Settings.Default["StartLocation"] = this.Location;
-                //Properties.Settings.Default["FormSize"] = this.Size;
                 Properties.Settings.Default["WindowState"] = this.WindowState;
                 if (this.WindowState == FormWindowState.Normal) Properties.Settings.Default["FormSize"] = this.Size;
                 Properties.Settings.Default["SplitterDistance"] = splitContainer1.SplitterDistance;
@@ -1721,7 +1719,6 @@ namespace Giwer.dataStock
                 Properties.Settings.Default["OnOffDronTools"] = toolStripDron.Visible;
                 Properties.Settings.Default.Save();
             }
-            frmConfig conf = new frmConfig();
             conf.config["BilDataFolder"] = BilDataFolder;
             conf.config["JpgDataFolder"] = JpgDataFolder;
             conf.config["TifDataFolder"] = TifDataFolder;

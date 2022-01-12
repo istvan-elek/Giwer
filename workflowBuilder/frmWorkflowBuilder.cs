@@ -53,12 +53,27 @@ namespace Giwer.workflowBuilder
                 workflowBuilder.Properties.Settings.Default["FormSize"] = this.Size;
                 workflowBuilder.Properties.Settings.Default["WindowState"] = this.WindowState;
                 workflowBuilder.Properties.Settings.Default.Save();
+                conf.config["WorkflowFolder"] = WorkflowFolder;
+                conf.saveConfig();
+            }
+        }
+
+        private void WorkflowBuilder_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                workflowBuilder.Properties.Settings.Default["StartLocation"] = this.Location;
+                workflowBuilder.Properties.Settings.Default["FormSize"] = this.Size;
+                workflowBuilder.Properties.Settings.Default["WindowState"] = this.WindowState;
+                workflowBuilder.Properties.Settings.Default.Save();
+                conf.config["WorkflowFolder"] = WorkflowFolder;
+                conf.saveConfig();
             }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void btnAddOperation_Click(object sender, EventArgs e)
@@ -216,6 +231,7 @@ namespace Giwer.workflowBuilder
             of.Filter = "Workflow files (*.wkf)|*.wkf";
             if (of.ShowDialog() == DialogResult.OK)
             {
+                WorkflowFolder = Path.GetDirectoryName(of.FileName);
                 currentWorkflow.initWorkflow();
                 lstSelectedOperations.Items.Clear();
                 pnlParams.Controls.Clear();
@@ -289,5 +305,7 @@ namespace Giwer.workflowBuilder
         {
             currentWorkflow.Description = tbDescription.Text;
         }
+
+
     }
 }

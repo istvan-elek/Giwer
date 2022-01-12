@@ -89,13 +89,20 @@ namespace Giwer.dataStock
                     hdr[k] = prop.Name + ";" + prop.GetValue(gida);
                     k += 1;
                 }
-                //hdr[k] = "wavelength;";
-                string hdrs= "Wavelength;";
-                foreach (string item in gida.Wavelength) 
+                else
                 {
-                    hdrs += item + ",";
+                    string hdrs = "Wavelength;";
+                    if (gida.Wavelength != null)
+                    {
+                        foreach (string item in gida.Wavelength)
+                        {
+                            hdrs += item + ",";
+                        }
+                        hdr[k] = hdrs.Substring(0, hdrs.Length - 1);
+                        k += 1;
+                    }
                 }
-                hdr[k] = hdrs.Substring(0,hdrs.Length-1);
+                
             }
             File.WriteAllLines(destFname, hdr); 
         }

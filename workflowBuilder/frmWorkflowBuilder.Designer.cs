@@ -91,7 +91,7 @@
             // 
             this.createWorkflowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("createWorkflowToolStripMenuItem.Image")));
             this.createWorkflowToolStripMenuItem.Name = "createWorkflowToolStripMenuItem";
-            this.createWorkflowToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.createWorkflowToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.createWorkflowToolStripMenuItem.Text = "Create new workflow";
             this.createWorkflowToolStripMenuItem.Click += new System.EventHandler(this.createWorkflowToolStripMenuItem_Click);
             // 
@@ -99,7 +99,7 @@
             // 
             this.loadWorkflowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("loadWorkflowToolStripMenuItem.Image")));
             this.loadWorkflowToolStripMenuItem.Name = "loadWorkflowToolStripMenuItem";
-            this.loadWorkflowToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.loadWorkflowToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.loadWorkflowToolStripMenuItem.Text = "Load workflow";
             this.loadWorkflowToolStripMenuItem.Click += new System.EventHandler(this.loadWorkflowToolStripMenuItem_Click);
             // 
@@ -107,7 +107,7 @@
             // 
             this.saveWorkflowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveWorkflowToolStripMenuItem.Image")));
             this.saveWorkflowToolStripMenuItem.Name = "saveWorkflowToolStripMenuItem";
-            this.saveWorkflowToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.saveWorkflowToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.saveWorkflowToolStripMenuItem.Text = "Save workflow";
             this.saveWorkflowToolStripMenuItem.Click += new System.EventHandler(this.bttnSave_Click);
             // 
@@ -115,19 +115,19 @@
             // 
             this.deleteWorkflowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deleteWorkflowToolStripMenuItem.Image")));
             this.deleteWorkflowToolStripMenuItem.Name = "deleteWorkflowToolStripMenuItem";
-            this.deleteWorkflowToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.deleteWorkflowToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.deleteWorkflowToolStripMenuItem.Text = "Delete workflow";
             this.deleteWorkflowToolStripMenuItem.Click += new System.EventHandler(this.deleteWorkflowToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(189, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -354,7 +354,7 @@
             this.Name = "WorkflowBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Workflow Builder";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmProjectBuilder_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WorkflowBuilder_FormClosed);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             this.grpBoxMetadata.ResumeLayout(false);

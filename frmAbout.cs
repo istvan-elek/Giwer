@@ -25,7 +25,7 @@ namespace Giwer
             lblVersionCatalog.Text = "Catalog version: " + versInfo.ProductVersion;
             versInfo = FileVersionInfo.GetVersionInfo(Application.StartupPath + @"\workflowbuilder.exe");
             lblVersionProjectBuilder.Text = "WorkflowBuilder version: " + versInfo.ProductVersion;
-            lblCopyright.Text= "Copyright \u00A9 István Elek, 2019, 2020, 2021, 2022 " + Environment.NewLine + "          and    Máté Cserép, 2021, 2022" + Environment.NewLine + "          and    Dávid Borbély, 2021" + Environment.NewLine + "          and    Tamás Tarczali, 2021";
+            lblCopyright.Text= "Copyright \u00A9 István Elek 2019, 2020, 2021, 2022 " + Environment.NewLine + "                    Máté Cserép, 2021, 2022" + Environment.NewLine + "                    Dávid Borbély, 2021" + Environment.NewLine + "                    Tamás Tarczali, 2021";
             lblProductName.Text = "Product name: " + Application.ProductName;
         }
     }

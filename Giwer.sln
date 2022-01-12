@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataStock", "dataStock\data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catalog_sqlite", "catalog_sqlite\catalog_sqlite.csproj", "{12229B8A-A214-4EFF-81CE-DFA603992943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "micasense", "micasense\micasense.csproj", "{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{12229B8A-A214-4EFF-81CE-DFA603992943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12229B8A-A214-4EFF-81CE-DFA603992943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12229B8A-A214-4EFF-81CE-DFA603992943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
