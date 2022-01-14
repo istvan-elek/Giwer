@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BitMiracle.LibTiff.Classic;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using BitMiracle.LibTiff.Classic;
 
 namespace Giwer.dataStock
 {
@@ -26,17 +26,17 @@ namespace Giwer.dataStock
          * compute image average and standard deviation
          * Resampling
          */
-    
+
         GeoImageData gida = new GeoImageData();
         public enum OperationType { Plus, Minus, Exor };
 
-        public  GeoImageTools(GeoImageData gimDa)
+        public GeoImageTools(GeoImageData gimDa)
         {
             gida = gimDa;
         }
         public GeoImageTools() { }
 
-        
+
         public void saveAll2GiwerFormat(string GiwerDataFolder)  // save  giwer data to a binary file
         {
             //string newDirName = GiwerDataFolder + "\\" + Path.GetFileNameWithoutExtension(gida.FileName) + "\\";
@@ -66,7 +66,7 @@ namespace Giwer.dataStock
         public void saveOneBandResultAsGiwerFormat(string fName, byte[] curBand, string desc)
         {
             string newDirName = Path.GetDirectoryName(fName) + "\\" + Path.GetFileNameWithoutExtension(fName);
-            System.IO.Directory.CreateDirectory(newDirName) ;
+            System.IO.Directory.CreateDirectory(newDirName);
             gida.Nbands = 1;
             gida.Comment = desc;
             convertByteArray2GiwerFormat(curBand, newDirName + "\\0" + ".gwr");
@@ -89,7 +89,9 @@ namespace Giwer.dataStock
                     hdr[k] = prop.Name + ";" + prop.GetValue(gida);
                     k += 1;
                 }
-                else
+                //hdr[k] = "wavelength;";
+                string hdrs = "Wavelength;";
+                foreach (string item in gida.Wavelength)
                 {
                     string hdrs = "Wavelength;";
                     if (gida.Wavelength != null)
@@ -102,9 +104,9 @@ namespace Giwer.dataStock
                         k += 1;
                     }
                 }
-                
+                hdr[k] = hdrs.Substring(0, hdrs.Length - 1);
             }
-            File.WriteAllLines(destFname, hdr); 
+            File.WriteAllLines(destFname, hdr);
         }
 
         [UserAttr("u")]
@@ -140,7 +142,7 @@ namespace Giwer.dataStock
                 ncp.Entries[i] = Color.FromArgb(i, i, i);
             b.Palette = ncp;
             Rectangle BoundsRect = new Rectangle(0, 0, gida.Ncols, gida.Nrows);
-            BitmapData bdata=b.LockBits(BoundsRect, ImageLockMode.ReadOnly, pf);
+            BitmapData bdata = b.LockBits(BoundsRect, ImageLockMode.ReadOnly, pf);
             Int32 ind = 0;
             int res = (gida.Ncols) % 4;
 
@@ -156,7 +158,7 @@ namespace Giwer.dataStock
                     ind++;
                 }
             }
-            b=ByteArrayTo8bitBitmap(byOut, gida.Ncols, gida.Nrows);
+            b = ByteArrayTo8bitBitmap(byOut, gida.Ncols, gida.Nrows);
             return b;
         }
 
@@ -201,7 +203,7 @@ namespace Giwer.dataStock
         }
 
         public Bitmap convertOneBandBytesto8bitBitmap(byte[] byIn, int imwidth, int imheight, Int32[] cp)   //convert byte array to bitmap
-        {         
+        {
             PixelFormat pf = PixelFormat.Format8bppIndexed;
             Bitmap b = new Bitmap(imwidth, imheight, pf);
             ColorPalette ncp = b.Palette;
@@ -220,7 +222,7 @@ namespace Giwer.dataStock
             //int bytes = bmpData.Stride * b.Height;
             int res = (imwidth) % 4;
             //if (res == 1) res = 3;
-            Math.DivRem(4-res, 4, out res);
+            Math.DivRem(4 - res, 4, out res);
             //res = 4 - res;
             Int32 stride = bmpData.Stride;  //imwidth + res;
             byte[] byOut = new byte[stride * imheight];
@@ -246,9 +248,9 @@ namespace Giwer.dataStock
             Int32 ind = 0;
             float elevdiff = dm.ElevMax - dm.ElevMin;
 
-            for (int i=0; i< gd.Nrows;i++)
+            for (int i = 0; i < gd.Nrows; i++)
             {
-                for (int j=0; j< gd.Ncols; j++)
+                for (int j = 0; j < gd.Ncols; j++)
                 {
                     float val = 255F * ((dm.dem[j, i] - dm.ElevMin) / elevdiff);
                     byOut[ind] = (byte)val;
@@ -276,8 +278,8 @@ namespace Giwer.dataStock
 
             if (gida.FileType == GeoImageData.fTypes.BIL || gida.FileType == GeoImageData.fTypes.BSQ || gida.FileType == GeoImageData.fTypes.ENVI)  // if data file type is BIL, BSQ or ENVI
             {
-               if (gida.Interleave == "BSQ" || gida.FileType == GeoImageData.fTypes.BSQ)  // if data interleave is BSQ
-               {
+                if (gida.Interleave == "BSQ" || gida.FileType == GeoImageData.fTypes.BSQ)  // if data interleave is BSQ
+                {
                     using (FileStream fs = new FileStream(gida.FileName, FileMode.Open, FileAccess.Read))
                     {
                         BinaryReader br = new BinaryReader(fs);
@@ -314,7 +316,7 @@ namespace Giwer.dataStock
                             }
                         }
                     }
-               }
+                }
                 else  // if data interleave is BIL or ENVI
                 {
                     using (FileStream fs = new FileStream(gida.FileName, FileMode.Open, FileAccess.Read))
@@ -407,13 +409,13 @@ namespace Giwer.dataStock
                     byteOut = getOneBandtoByteArrayFromBitmap(new Bitmap(gida.FileName), whichBand);
                 }
 
-            if (gida.FileType ==GeoImageData.fTypes.DDM) //------------------
+            if (gida.FileType == GeoImageData.fTypes.DDM) //------------------
             {
                 if (gida.Nbits == 16)
                 {
                     dtm ddm = new dtm();
                     ddm.FileName = gida.FileName;
-                    byteOut= getOneBandtoByteArrayFromBitmap(ddm.demBitmap, whichBand);
+                    byteOut = getOneBandtoByteArrayFromBitmap(ddm.demBitmap, whichBand);
                 }
             }
             return byteOut;
@@ -435,10 +437,10 @@ namespace Giwer.dataStock
                         for (Int32 i = 0; i < gida.Nrows; i++)
                         {
                             image.ReadScanline(scanline, i);
-                            for (Int32 j=0; j< gida.Ncols; j++)
+                            for (Int32 j = 0; j < gida.Ncols; j++)
                             {
                                 Int32 k = j * gida.Nbands + whichBand;
-                                byOut[i*gida.Ncols + j] = scanline[k];
+                                byOut[i * gida.Ncols + j] = scanline[k];
                             }
                         }
                         return byOut;
@@ -449,7 +451,7 @@ namespace Giwer.dataStock
                             for (Int32 j = 0; j < gida.Ncols; j++)
                             {
                                 Int32 k = (j * gida.Nbands + whichBand) * numByte;
-                                int newByte=(int)((scanline[k] | scanline[k+1] << 8)/256);
+                                int newByte = (int)((scanline[k] | scanline[k + 1] << 8) / 256);
                                 byOut[i * gida.Ncols + j] = (byte)newByte;
                             }
                         }
@@ -493,7 +495,7 @@ namespace Giwer.dataStock
                 for (int j = 0; j < gida.Ncols; j++)
                 {
                     ind = i * bdata.Stride + j * gida.BytesPerPixel;
-                    int col = byIn[ind + offs  - band]; 
+                    int col = byIn[ind + offs - band];
                     byOut[indOut] = (byte)col;
                     indOut += 1;
                 }
@@ -557,7 +559,7 @@ namespace Giwer.dataStock
         //}
 
         #region image format conversion
-        public void convertImageFromTif2Jpg( string tifFileName)  // convert a tif bitmap to a jpg bitmap (24 bpp)
+        public void convertImageFromTif2Jpg(string tifFileName)  // convert a tif bitmap to a jpg bitmap (24 bpp)
         {
             string fn = Path.GetDirectoryName(tifFileName) + "\\" + Path.GetFileNameWithoutExtension(tifFileName) + "_24b.jpg";
             Bitmap bmp = new Bitmap(tifFileName);
@@ -674,7 +676,7 @@ namespace Giwer.dataStock
             switch (mode)
             {
                 case OperationType.Plus:
-                    for (int i=0;i<b1.Length;i++)
+                    for (int i = 0; i < b1.Length; i++)
                     {
                         bOut[i] = (byte)(Convert.ToSingle(b1[i]) / 2F + Convert.ToSingle(b2[i]) / 2F);
                     }
@@ -688,7 +690,7 @@ namespace Giwer.dataStock
                 case OperationType.Exor:
                     for (int i = 0; i < b1.Length; i++)
                     {
-                        if (b2[i]==0) { bOut[i] = b1[i]; } 
+                        if (b2[i] == 0) { bOut[i] = b1[i]; }
                         else { bOut[i] = b2[i]; }
                     }
                     break;
@@ -715,7 +717,7 @@ namespace Giwer.dataStock
 
         void saveBILHeaderFile(string fname)
         {
-            string header="";
+            string header = "";
             header = "#ARC/INFO BIL file" + Environment.NewLine;
             header += "nbands " + gida.Nbands + Environment.NewLine;
             header += "nbits " + gida.Nbits + Environment.NewLine;
@@ -723,7 +725,7 @@ namespace Giwer.dataStock
             header += "nrows " + gida.Nrows + Environment.NewLine;
             header += "xdim " + gida.Xdim + Environment.NewLine;
             header += "ydim " + gida.Ydim + Environment.NewLine;
-            header += "ulxmap " + gida.Ulxmap.ToString().Replace(',','.') + Environment.NewLine;
+            header += "ulxmap " + gida.Ulxmap.ToString().Replace(',', '.') + Environment.NewLine;
             header += "ulymap " + gida.Ulymap.ToString().Replace(',', '.') + Environment.NewLine;
             string head = "# This file contains drone image parameters which are not compatible with bil header data" + Environment.NewLine;
             foreach (var prop in gida.GetType().GetProperties())
@@ -733,13 +735,13 @@ namespace Giwer.dataStock
             }
             File.WriteAllText(Path.ChangeExtension(fname, ".dat"), head);
 
-            using (FileStream fs=new FileStream(fname, FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fs = new FileStream(fname, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.Write(header);
                     sw.Flush();
-                }               
+                }
             }
         }
 
@@ -750,15 +752,15 @@ namespace Giwer.dataStock
                 BinaryWriter bw = new BinaryWriter(fs);
                 Int64 pos = 0;
                 Int64 count = gida.Nbands * gida.Nrows * gida.Ncols;
-                for (Int64 i = 0; i < count; i++ ) { bw.Write(0); }
+                for (Int64 i = 0; i < count; i++) { bw.Write(0); }
 
-                for (int iBand = 0; iBand< gida.Nbands; iBand++)
+                for (int iBand = 0; iBand < gida.Nbands; iBand++)
                 {
                     byte[] band = getOneBandBytes(iBand);
                     for (Int32 iRow = 0; iRow < gida.Nrows; iRow++)
                     {
-                            pos = iRow * gida.Ncols * gida.Nbands + iBand * gida.Ncols;
-                            fs.Position = pos;
+                        pos = iRow * gida.Ncols * gida.Nbands + iBand * gida.Ncols;
+                        fs.Position = pos;
                         for (Int32 iCol = 0; iCol < gida.Ncols; iCol++)
                         {
                             bw.Write(band[iCol + iRow * gida.Ncols]);

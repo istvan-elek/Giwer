@@ -1,8 +1,8 @@
+using Giwer.dataStock.Clustering.Model.Distance;
+using Giwer.dataStock.Clustering.Model.Loader;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Giwer.dataStock.Clustering.Model.Distance;
-using Giwer.dataStock.Clustering.Model.Loader;
 
 namespace Giwer.dataStock.Clustering.Model.CentroidBased
 {
@@ -68,7 +68,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
 
         #region Methods for the handling of execution
         protected override byte[] Execute(ImageLoader imageLoader)
-        { 
+        {
             Progress.Report(ClusteringProgress.Initializing(MaxStep));
             LoadPoints(imageLoader);
             CancellationToken.ThrowIfCancellationRequested();
@@ -129,7 +129,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
         protected void InitManualClustersPoly(List<List<int>> polysInPoints)
         {
             _clusters = new Dictionary<uint, Cluster>();
-            System.Diagnostics.Debug.WriteLine("polysInPoints.Count: "+ polysInPoints.Count);
+            System.Diagnostics.Debug.WriteLine("polysInPoints.Count: " + polysInPoints.Count);
             foreach (List<int> poly in polysInPoints)
             {
                 System.Diagnostics.Debug.WriteLine("poly.Count: " + poly.Count);
@@ -158,7 +158,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
                 Centroid centroid = new Centroid(PointDim);
                 centroid.CopyValuesFrom(randomPoints[(int)i]);
                 _clusters.Add(centroid.ID, new Cluster(_points, _distance, centroid));
-            } 
+            }
         }
 
         /// <summary>

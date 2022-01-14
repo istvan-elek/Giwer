@@ -4,17 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Giwer.dataStock
 {
     public partial class frmSimpleWorkflow : Form
     {
-        Project curProject=new Project();
+        Project curProject = new Project();
         SimpleWorkflow sworkflow = new SimpleWorkflow();
         //string wkfName;
         BindingSource bs = new BindingSource();
@@ -37,7 +34,7 @@ namespace Giwer.dataStock
         public frmSimpleWorkflow(string fname)
         {
             InitializeComponent();
-            if (System.IO.Path.GetExtension(fname)==".proj") // if file extension is .proj
+            if (System.IO.Path.GetExtension(fname) == ".proj") // if file extension is .proj
             {
                 curProject.ProjectFileName = fname;
                 printProjectData(fname);
@@ -50,7 +47,7 @@ namespace Giwer.dataStock
                 tbWorkflowData.AppendText(Environment.NewLine + "#Workflow_description: " + sworkflow.WorkflowDescription);
                 tbWorkflowData.AppendText(Environment.NewLine + "#Project_file: " + sworkflow.NameOfProject);
                 tbWorkflowData.AppendText(Environment.NewLine + "#Files:" + Environment.NewLine);
-                tbWorkflowData.AppendText(string.Join(Environment.NewLine,sworkflow.FileNames));
+                tbWorkflowData.AppendText(string.Join(Environment.NewLine, sworkflow.FileNames));
                 tbWorkflowData.AppendText(Environment.NewLine + "#Methods:" + Environment.NewLine);
                 tbWorkflowData.AppendText(string.Join(Environment.NewLine, sworkflow.MethodNames));
                 tabProjdata.SelectedTab = tabProjdata.TabPages["tabViewWorkflow"];
@@ -58,7 +55,7 @@ namespace Giwer.dataStock
                 setpgColumnWidth(pg, 120);
                 printProjectData(curProject.ProjectFileName);
             }
-            foreach(string item in sworkflow.MethodNames)
+            foreach (string item in sworkflow.MethodNames)
             {
                 lstSelectedFunctions.Items.Add(item);
             }
@@ -213,14 +210,14 @@ namespace Giwer.dataStock
                 dt = results.CopyToDataTable<DataRow>();
             }
             return dt;
-    }
+        }
 
         private void bttnCreateWorkflow_Click(object sender, EventArgs e)
         {
             List<string> lstmethods = new List<string>();
             foreach (string item in lstSelectedFunctions.Items)
             { lstmethods.Add(item); }
-            
+
             sworkflow.createWorkflow("unsaved workflow", curProject.ProjectFileName, curProject.FileNames, lstmethods, sworkflow.WorkflowDescription);
             tbWorkflowData.Text = "#Workflow_name: " + sworkflow.NameOfWorkflow;
             tbWorkflowData.AppendText(Environment.NewLine + "#Workflow_description: " + Environment.NewLine + "description");//sworkflow.WorkflowDescription);

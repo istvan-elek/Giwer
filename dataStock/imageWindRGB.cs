@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace Giwer.dataStock
@@ -18,8 +17,8 @@ namespace Giwer.dataStock
         //float[,] elev;
         //byte[] imageIn;
         //byte[] actualImage;
-        Point startPosImage; 
-        Point endPosImage; 
+        Point startPosImage;
+        Point endPosImage;
         byte[] iminRed;
         byte[] iminGreen;
         byte[] iminBlue;
@@ -28,7 +27,7 @@ namespace Giwer.dataStock
         byte[] actualiminBlue;
         //Int32[] colorPal;
         Size sizeClipedImage;
-        Point imageStartIndex=new Point(0,0);
+        Point imageStartIndex = new Point(0, 0);
         //Boolean flagRGB;
 
         public ImageWindRGB()
@@ -53,7 +52,7 @@ namespace Giwer.dataStock
         public void LoadImageFromFile(string fileName)  // load an image to picture box (pb) from files (jpg vagy tif)
         {
             Image img = Image.FromFile(fileName);
-            pb.Image = img;            
+            pb.Image = img;
         }
 
         public void LoadImageFromFile(Bitmap bmp)
@@ -203,7 +202,7 @@ namespace Giwer.dataStock
             Graphics gr = pb.CreateGraphics();
             Pen p = new Pen(Color.White);
             //gr.DrawRectangle(new Pen(Color.White), startx, starty, Math.Abs((newx - startx)), Math.Abs((newy - starty)));
-            gr.DrawLine(p, startx, starty, startx , newy);
+            gr.DrawLine(p, startx, starty, startx, newy);
             gr.DrawLine(p, startx, starty, newx, starty);
             gr.DrawLine(p, newx, starty, newx, newy);
             gr.DrawLine(p, newx, newy, startx, newy);
@@ -213,7 +212,7 @@ namespace Giwer.dataStock
         private void Pb_MouseDown(object sender, MouseEventArgs e)
         {
             startx = e.X;
-            starty = e.Y;           
+            starty = e.Y;
             drawRectangleBool = true;
         }
 
@@ -234,9 +233,9 @@ namespace Giwer.dataStock
                     pb.Invalidate();
                     DrawBox(e.X, e.Y);
                 }
-            }            
+            }
         }
-   
+
 
         private void Pb_MouseUp(object sender, MouseEventArgs e)
         {
@@ -271,7 +270,7 @@ namespace Giwer.dataStock
                 actualiminGreen = ClipImage(iminGreen, startPosImage, sizeClipedImage, width, height);
                 actualiminBlue = ClipImage(iminBlue, startPosImage, sizeClipedImage, width, height);
                 GeoMultiBandMethods gmb = new GeoMultiBandMethods();
-                pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);                
+                pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);
                 width = sizeClipedImage.Width;
                 height = sizeClipedImage.Height;
                 imageStartIndex = new Point(imageStartIndex.X + startPosImage.X, imageStartIndex.Y + startPosImage.Y);
@@ -296,7 +295,7 @@ namespace Giwer.dataStock
                 actualiminBlue = ClipImage(iminBlue, imageStartIndex, sizeClipedImage, gimda.Ncols, gimda.Nrows);
                 GeoMultiBandMethods gmb = new GeoMultiBandMethods();
                 pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);
-                
+
             }
         }
 
@@ -311,7 +310,7 @@ namespace Giwer.dataStock
             {
                 for (Int32 j = imStart.X; j < endx; j++)
                 {
-                    byOut[k] = byIn[j + i*IWidth];
+                    byOut[k] = byIn[j + i * IWidth];
                     k++;
                 }
             }
@@ -371,11 +370,11 @@ namespace Giwer.dataStock
             if (imageStartIndex.Y < 0) imageStartIndex.Y = 0;
             if (imageStartIndex.X > gimda.Ncols - sizeClipedImage.Width) imageStartIndex.X = gimda.Ncols - sizeClipedImage.Width;
             if (imageStartIndex.Y > gimda.Nrows - sizeClipedImage.Height) imageStartIndex.Y = gimda.Nrows - sizeClipedImage.Height;
-            
+
             ZoomOutImageRGB(imageStartIndex, sizeClipedImage, gimda.Ncols, gimda.Nrows);
             GeoMultiBandMethods gmb = new GeoMultiBandMethods();
             pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);
-            
+
             width = sizeClipedImage.Width;
             height = sizeClipedImage.Height;
         }
@@ -384,14 +383,14 @@ namespace Giwer.dataStock
         {
             width = gimda.Ncols;
             height = gimda.Nrows;
-            sizeClipedImage.Width=width;
-            sizeClipedImage.Height=height;
+            sizeClipedImage.Width = width;
+            sizeClipedImage.Height = height;
             //if (!flagRGB)
             //{
             //    DrawImage(gimda, imageIn, colorPal);
             //}
             //else
-            
+
             DrawImageRGB(gimda, iminRed, iminGreen, iminBlue);
             imageStartIndex = new Point(0, 0);
             bttnPlus.Checked = true;
@@ -417,7 +416,7 @@ namespace Giwer.dataStock
 
         public Bitmap GetImage()
         {
-            return (Bitmap)pb.Image;           
+            return (Bitmap)pb.Image;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Giwer.dataStock
     {
         public byte[] band1;
         byte[] band2;
-        Color clr= System.Drawing.Color.DarkBlue;
+        Color clr = System.Drawing.Color.DarkBlue;
         int msize = 2;
         Point startP;
         public Point s1;
@@ -44,7 +44,7 @@ namespace Giwer.dataStock
 
         void fillCmbBands(int bandNum)
         {
-            for (int i=0; i<bandNum; i++)
+            for (int i = 0; i < bandNum; i++)
             {
                 cmbXaxis.Items.Add(i);
                 cmbYaxis.Items.Add(i);
@@ -67,7 +67,7 @@ namespace Giwer.dataStock
         private void DrawPlot_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            if (cmbXaxis.SelectedIndex>-1 & cmbYaxis.SelectedIndex > -1)
+            if (cmbXaxis.SelectedIndex > -1 & cmbYaxis.SelectedIndex > -1)
             {
                 ch1.ChartAreas[0].AxisX.Title = "Band#" + cmbXaxis.SelectedItem;
                 ch1.ChartAreas[0].AxisY.Title = "Band#" + cmbYaxis.SelectedItem; ;
@@ -92,17 +92,17 @@ namespace Giwer.dataStock
             var set = new HashSet<string>();
 
             ch1.Series[0].Points.Clear();
-            for (Int32 i=0; i<band1.Length;i++)
+            for (Int32 i = 0; i < band1.Length; i++)
             {
                 set.Add(band1[i] + "," + band2[i]);
             }
-            List < string> lst = set.ToList();
+            List<string> lst = set.ToList();
             foreach (String item in lst)
             {
                 string[] s = item.Split(',');
                 double x = Convert.ToDouble(item.Split(',')[0]);
                 double y = Convert.ToDouble(item.Split(',')[1]);
-                ch1.Series[0].Points.AddXY(x,y);
+                ch1.Series[0].Points.AddXY(x, y);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Giwer.dataStock
         {
             var result = ch1.HitTest(e.X, e.Y);
             double x = result.ChartArea.AxisX.PixelPositionToValue(e.X);
-            double y = result.ChartArea.AxisY.PixelPositionToValue(e.Y); 
+            double y = result.ChartArea.AxisY.PixelPositionToValue(e.Y);
             ch1.Series[1].Points.Clear();
             startP = new Point((int)x, (int)y);
             ch1.Series[1].MarkerSize = msize;
@@ -141,7 +141,7 @@ namespace Giwer.dataStock
                 return;
             }
             ch1.Series[1].MarkerSize = 4;
-            Point endP = new Point((int)x, (int)y); 
+            Point endP = new Point((int)x, (int)y);
             ch1.Series[1].Points.AddXY(startP.X, startP.Y);
             ch1.Series[1].Points.AddXY(endP.X, endP.Y);
             float m = (float)((int)y - startP.Y) / (float)((int)x - startP.X);
@@ -168,10 +168,10 @@ namespace Giwer.dataStock
         void drawLongLine(float m, float a)
         {
             s1 = new Point();
-            int xmax=255;
-            int ymax = (int)(m * 255 +a);
+            int xmax = 255;
+            int ymax = (int)(m * 255 + a);
             s2 = new Point(xmax, ymax);
-            if (a>0)
+            if (a > 0)
             {
                 s1.X = 0;
                 s1.Y = (int)a;

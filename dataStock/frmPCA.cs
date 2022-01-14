@@ -22,11 +22,11 @@ namespace Giwer.dataStock
 
         void initCheckList(int nBands)
         {
-            for (int i=0; i< nBands; i++)
+            for (int i = 0; i < nBands; i++)
             {
                 chkListBands.Items.Add(i);
                 chkListBands.SetItemChecked(i, true);
-                cmbWhichPC.Items.Add(i+1);
+                cmbWhichPC.Items.Add(i + 1);
             }
             cmbWhichPC.SelectedIndex = 0;
         }
@@ -48,7 +48,7 @@ namespace Giwer.dataStock
         void selectAllChkListItems(Boolean flag)
         {
             bttnOKCorr.Enabled = flag;
-            for (int i=0; i< chkListBands.Items.Count; i++)
+            for (int i = 0; i < chkListBands.Items.Count; i++)
             {
                 chkListBands.SetItemChecked(i, flag);
             }
@@ -56,7 +56,7 @@ namespace Giwer.dataStock
 
         private void bttnOK_Click(object sender, EventArgs e)
         {
-            if (chkListBands.CheckedItems.Count==0) { return; }
+            if (chkListBands.CheckedItems.Count == 0) { return; }
             this.Cursor = Cursors.WaitCursor;
             List<int> lst4PCA = new List<int>(gida.Nbands);
             foreach (var item in chkListBands.CheckedItems)
@@ -83,7 +83,7 @@ namespace Giwer.dataStock
             {
                 for (int j = 0; j < N; j++)
                 {
-                    line += cor[i, j].ToString("F3") + "\t"; 
+                    line += cor[i, j].ToString("F3") + "\t";
                 }
                 tbCorr.AppendText(line + Environment.NewLine);
                 line = "";
@@ -92,7 +92,7 @@ namespace Giwer.dataStock
 
         private void chkListBands_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (chkListBands.CheckedItems.Count > 0) { bttnOKCorr.Enabled = true; } else {bttnOKCorr.Enabled = false; }
+            if (chkListBands.CheckedItems.Count > 0) { bttnOKCorr.Enabled = true; } else { bttnOKCorr.Enabled = false; }
         }
 
         private void frmPCA_FormClosed(object sender, FormClosedEventArgs e)

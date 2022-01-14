@@ -19,7 +19,7 @@ namespace Giwer.dataStock
             GiwerDataFolder = gdf;
             imgDat = imgD;
             InitializeComponent();
-            for (int i=0;i < imgDat.Nbands; i++)
+            for (int i = 0; i < imgDat.Nbands; i++)
             {
                 cmbInfraRed.Items.Add(i);
                 cmbRed.Items.Add(i);

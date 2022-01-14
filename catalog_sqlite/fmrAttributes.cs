@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -14,7 +6,7 @@ namespace catalog
 {
     public partial class frmAttributes : Form
     {
-        public string meteo="";
+        public string meteo = "";
         public string author = "";
         public string content = "";
         public string purpose = "";
@@ -38,7 +30,7 @@ namespace catalog
                 if (item != "public") { dgvattributes.Rows.Add(item); }
                 else dgvattributes.Rows.Add("public", publi.ToString());
             }
-            
+
         }
 
         private void bttnCancel_Click(object sender, EventArgs e)

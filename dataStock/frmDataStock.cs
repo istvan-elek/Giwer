@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Giwer.dataStock.Clustering.View;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
-
-using Giwer.dataStock.Clustering.View;
 
 namespace Giwer.dataStock
 {
@@ -22,14 +20,14 @@ namespace Giwer.dataStock
         byte[] undoBand;
         frmConfig conf;
         public string GiwerDataFolder = "";
-        string JpgDataFolder="";
+        string JpgDataFolder = "";
         string TifDataFolder = "";
         string BilDataFolder = "";
         string D3DataFolder = "";
         string ProjectFolder = "";
         string WorkflowFolder = "";
         Project project = new Project();
-        Int32[] colorpal=new int[256];
+        Int32[] colorpal = new int[256];
         ImageWindow imw = new ImageWindow();
         #endregion
 
@@ -75,7 +73,7 @@ namespace Giwer.dataStock
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Config file may contain improper data, or it is damaged. " + e.Message + ". Try to recover the 'config.cfg' file", "Improper data",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Config file may contain improper data, or it is damaged. " + e.Message + ". Try to recover the 'config.cfg' file", "Improper data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     //frmConfig cnffile = new frmConfig();
                     conf.config.Clear();
                     //conf.readConfig(Application.StartupPath + @"\config_default.cfg");
@@ -402,7 +400,7 @@ namespace Giwer.dataStock
                 printPars("bil");
                 BilDataFolder = Path.GetDirectoryName(of.FileName);
                 setControls(GeoImage.FileType, true);
-                if (project.ProjectFileName !="") saveProjectAsToolStripMenuItem.Enabled = true;
+                if (project.ProjectFileName != "") saveProjectAsToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -434,7 +432,7 @@ namespace Giwer.dataStock
                     GTools = new GeoImageTools(GeoImage);
                     printPars("3d");
                     D3DataFolder = Path.GetDirectoryName(of.FileName);
-                    setControls(GeoImageData.fTypes.DDM,false);
+                    setControls(GeoImageData.fTypes.DDM, false);
                     if (project.ProjectFileName != "") saveProjectAsToolStripMenuItem.Enabled = true;
                     dtm ddm = new dtm();
                     ddm.FileName = of.FileName;
@@ -584,7 +582,7 @@ namespace Giwer.dataStock
                 {
                     tbHeader.AppendText(prop.Name + ": " + prop.GetValue(GeoImage) + Environment.NewLine);
                 }
-                else 
+                else
                 {
                     if (GeoImage.Wavelength != null)
                     {
@@ -845,7 +843,7 @@ namespace Giwer.dataStock
                     int j = i;
                     GTools.convertByteArray2GiwerFormat(curBand, newDirName + "\\" + j + ".gwr");
                 }
-                if (gimda.FileType == GeoImageData.fTypes.TIF )
+                if (gimda.FileType == GeoImageData.fTypes.TIF)
                 {
                     GTools.convertByteArray2GiwerFormat(curBand, newDirName + "\\" + i + ".gwr");
                 }
@@ -1367,14 +1365,14 @@ namespace Giwer.dataStock
             of.Filter = "Giwer files|*.gwh";
             if (of.ShowDialog() == DialogResult.OK)
             {
-                foreach(string item in of.FileNames)
+                foreach (string item in of.FileNames)
                 {
                     string FolderName = Path.GetDirectoryName(item) + "\\" + Path.GetFileNameWithoutExtension(item);
                     File.Delete(item);
                     var dir = new DirectoryInfo(FolderName);
                     dir.Delete(true);
                 }
-            MessageBox.Show("The files was successfuly deleted");
+                MessageBox.Show("The files was successfuly deleted");
             }
         }
         #endregion
@@ -1530,7 +1528,7 @@ namespace Giwer.dataStock
         {
             undoBand = currentBand;
             Filter sobel = new Filter();
-            currentBand = sobel.Sobel(currentBand,GeoImage.Ncols,GeoImage.Nrows);
+            currentBand = sobel.Sobel(currentBand, GeoImage.Ncols, GeoImage.Nrows);
             imw.Show();
             imw.Clear(GeoImage);
             imw.DrawImage(GeoImage, currentBand, colorpal);
@@ -1555,7 +1553,7 @@ namespace Giwer.dataStock
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Project files|*.proj";
             of.InitialDirectory = ProjectFolder;
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 project.initProject();
                 GeoImage = new GeoImageData();
@@ -1573,7 +1571,7 @@ namespace Giwer.dataStock
             {
                 project.ProjectFileName = fileName;
                 tbProjDesc.Text = project.ProjectDescription;
-                foreach(string item in project.FileNames)
+                foreach (string item in project.FileNames)
                 {
                     TreeNode actualTreenode = LayerViewer.Nodes.Add(Path.GetFileName(item));
                     LayerViewer.Nodes[actualTreenode.Index].Tag = item;
@@ -1653,7 +1651,7 @@ namespace Giwer.dataStock
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Workflows (wkf)|*.wkf";
             of.InitialDirectory = WorkflowFolder;
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 frmSimpleWorkflow wf = new frmSimpleWorkflow(of.FileName);
                 wf.Show();
@@ -1680,7 +1678,7 @@ namespace Giwer.dataStock
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "BIL format|*.bil";
             sf.InitialDirectory = BilDataFolder;
-            if (sf.ShowDialog()==DialogResult.OK)
+            if (sf.ShowDialog() == DialogResult.OK)
             {
                 this.Cursor = Cursors.WaitCursor;
                 GeoImageTools gimsave = new GeoImageTools(GeoImage);

@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Giwer
 {
@@ -17,10 +10,10 @@ namespace Giwer
         {
             InitializeComponent();
             lblDesc.Text = "This program is the Giwer (GeoImage Workflow Editing Resources). It contains many functions for handling satellite and drone images. You can use it interactively, run the built-in workflows or create your own, which can be constructed from the available functions.";
-            lblCompanyName.Text = "Company name: " +  Application.CompanyName;
+            lblCompanyName.Text = "Company name: " + Application.CompanyName;
             lblVersionGiwer.Text = "Giwer version: " + Application.ProductVersion;
             var versInfo = FileVersionInfo.GetVersionInfo(Application.StartupPath + @"\datastock.exe");
-            lblVersionDataStock.Text= "DataStock version: " + versInfo.ProductVersion;
+            lblVersionDataStock.Text = "DataStock version: " + versInfo.ProductVersion;
             versInfo = FileVersionInfo.GetVersionInfo(Application.StartupPath + @"\catalog.exe");
             lblVersionCatalog.Text = "Catalog version: " + versInfo.ProductVersion;
             versInfo = FileVersionInfo.GetVersionInfo(Application.StartupPath + @"\workflowbuilder.exe");

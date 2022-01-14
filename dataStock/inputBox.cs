@@ -10,8 +10,8 @@ namespace Giwer.dataStock
         //GeoImageTools gm = new GeoImageTools();
         public inputBox(string Operation)
         {
-            InitializeComponent();   
-            this.Text = Operation;            
+            InitializeComponent();
+            this.Text = Operation;
         }
 
 

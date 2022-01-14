@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Giwer.dataStock.Clustering.Model.Loader;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using Giwer.dataStock.Clustering.Model.Loader;
 
 namespace Giwer.dataStock.Clustering.Model.Supervised.RandomForest
 {

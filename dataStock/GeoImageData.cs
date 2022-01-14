@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BitMiracle.LibTiff.Classic;
+using OSGeo.GDAL;
+using OSGeo.OSR;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -6,9 +9,6 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Xml;
-using BitMiracle.LibTiff.Classic;
-using OSGeo.GDAL;
-using OSGeo.OSR;
 
 namespace Giwer.dataStock
 {
@@ -31,7 +31,7 @@ namespace Giwer.dataStock
          * convert bitmap from Jpg to Tif
          *******************************************************/
 
-        public enum fTypes {GWH, BIL, BSQ, TIF, JPG, ENVI, DDM, UNKOWN }; // allowed file formats
+        public enum fTypes { GWH, BIL, BSQ, TIF, JPG, ENVI, DDM, UNKOWN }; // allowed file formats
 
 
         // properties -------------------------------------------------------------------
@@ -42,11 +42,11 @@ namespace Giwer.dataStock
             get { return _fileName; }
             set
             {
-                    _fileName = value;
-                    setUpFileType();
-                    parseHeader();
-                    computeStride();
-                    if (_fileType == fTypes.BIL || _fileType == fTypes.ENVI) { _bytesPerPixel = (_nBits / 8) * _nBands; } 
+                _fileName = value;
+                setUpFileType();
+                parseHeader();
+                computeStride();
+                if (_fileType == fTypes.BIL || _fileType == fTypes.ENVI) { _bytesPerPixel = (_nBits / 8) * _nBands; }
             }
         }
 
@@ -136,9 +136,9 @@ namespace Giwer.dataStock
         public int BytesPerPixel
         {
             get { return _bytesPerPixel; }
-            set 
-            { 
-                _bytesPerPixel = value; 
+            set
+            {
+                _bytesPerPixel = value;
             }
         }
 
@@ -146,10 +146,10 @@ namespace Giwer.dataStock
         public int Nbits
         {
             get { return _nBits; }
-            set 
-            { 
-                _nBits = value; 
-                if (BytesPerPixel==0) _bytesPerPixel = (_nBits/8) * _nBands; 
+            set
+            {
+                _nBits = value;
+                if (BytesPerPixel == 0) _bytesPerPixel = (_nBits / 8) * _nBands;
             }
         }
 
@@ -314,12 +314,12 @@ namespace Giwer.dataStock
         // functions and methods  -------------------------------------------------------------
         void setUpFileType()  // set _fileType which is just read
         {
-            switch(Path.GetExtension(_fileName).ToUpper())
+            switch (Path.GetExtension(_fileName).ToUpper())
             {
                 case ".BIL":
                     _fileType = fTypes.BIL;
                     _comment = "This is an ESRI BIL file";
-                    string fn = Path.ChangeExtension( _fileName, "hdr");
+                    string fn = Path.ChangeExtension(_fileName, "hdr");
                     if (File.ReadAllText(fn).Contains("ENVI")) { _fileType = fTypes.ENVI; _comment = "This is an ENVI file"; }
                     return;
                 case ".BSQ":
@@ -473,11 +473,11 @@ namespace Giwer.dataStock
                 _time = ss;
             }
 
-            if (line.ToLower().Contains("wavelength") && !line.ToLower().Contains("wavelength units") && !line.ToLower().Contains("wavelength,")) 
-            { 
+            if (line.ToLower().Contains("wavelength") && !line.ToLower().Contains("wavelength units") && !line.ToLower().Contains("wavelength,"))
+            {
                 _wavelenght = new string[this.Nbands];
                 string sline = (line.Split('=')[1]).Trim('}').Trim(); //.Trim('{');
-                _wavelenght = sline.Substring(1).Split(','); 
+                _wavelenght = sline.Substring(1).Split(',');
             }
             if (line.ToLower().Contains("wavelength units")) _wavelenght_units = line.Split('=')[1];
         }
@@ -499,7 +499,7 @@ namespace Giwer.dataStock
 
                 if (_cellsize != 0) { _xdim = _cellsize; _ydim = _xdim; }
                 if (_cellsize == 0 && _xdim == _ydim) _cellsize = _xdim;
-                if (_lrxmap ==0 && Lrymap==0) { _lrxmap = _ulxmap + _nCols * _xdim; _lrymap = _ulymap + _nRows * _ydim; }
+                if (_lrxmap == 0 && Lrymap == 0) { _lrxmap = _ulxmap + _nCols * _xdim; _lrymap = _ulymap + _nRows * _ydim; }
                 if (_xllcenter != 0 && _yllcenter != 0)
                 {
                     _ulxmap = _xllcenter - (_nCols * _xdim) / 2F;
@@ -517,7 +517,7 @@ namespace Giwer.dataStock
             if (line.ToLower().Contains("byteorder")) { _byteorder = line.Split(' ')[1]; }
             if (line.ToLower().Contains("layout")) { _layout = line.Split(' ')[1]; }
             if (_layout == "layout") { _dataType = "ENVI BIL"; }
-            if (_layout == "" || _layout=="bil") { _dataType = "ESRI BIL"; }
+            if (_layout == "" || _layout == "bil") { _dataType = "ESRI BIL"; }
             if (line.ToLower().Contains("datatype")) { _dataType = line.Split(' ')[1]; }
             if (line.ToLower().Contains("nbits")) { _nBits = Convert.ToInt16(line.Split(' ')[1]); }
             if (line.ToLower().Contains("xdim")) { _xdim = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
@@ -540,11 +540,11 @@ namespace Giwer.dataStock
         void parseTifParams()
         {
             string[] exif = getExifData(_fileName);
-            foreach(string line in exif)
+            foreach (string line in exif)
             {
                 string l = line.ToLower();
                 if (l.Contains("gps latitude ref")) { _gpslatitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps latitude") && !l.Contains("gps latitude ref")) 
+                if (l.Contains("gps latitude") && !l.Contains("gps latitude ref"))
                 {
                     string st = l.Split(';')[1].Trim();
                     st = st.Substring(0, st.Length - 1);
@@ -552,29 +552,29 @@ namespace Giwer.dataStock
                     //_gpslatitude = Convert.ToDouble(l.Split(';')[1], CultureInfo.InvariantCulture);
                 }
                 if (l.Contains("gps longitude ref")) { _gpslongitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps longitude") && !l.Contains("gps longitude ref")) 
+                if (l.Contains("gps longitude") && !l.Contains("gps longitude ref"))
                 {
                     string st = l.Split(';')[1].Trim();
                     _gpslongitude = convertDegree2Decimal(st);
                     //_gpslongitude = Convert.ToDouble(l.Split(';')[1].Split(' ')[0], CultureInfo.InvariantCulture); 
                 }
                 if (l.Contains("gps altitude ref")) { _gpsaltitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps altitude") && !l.Contains("gps altitude ref")) 
+                if (l.Contains("gps altitude") && !l.Contains("gps altitude ref"))
                 {
                     string s1 = l.Split(';')[1].Trim();
-                    _gpsaltitude = Convert.ToSingle(s1.Split(' ')[0].Trim(), CultureInfo.InvariantCulture); 
+                    _gpsaltitude = Convert.ToSingle(s1.Split(' ')[0].Trim(), CultureInfo.InvariantCulture);
                 }
                 _absolute_altitude = _gpsaltitude;
                 if (l.Contains("byte order")) { _byteorder = l.Split(';')[1]; }
                 if (l.Contains("image width")) { _nCols = Convert.ToInt16(l.Split(';')[1]); }
                 if (l.Contains("image height")) { _nRows = Convert.ToInt16(l.Split(';')[1]); }
                 if (l.Contains("samples per pixel")) { _nBands = Convert.ToInt16(l.Split(';')[1]); }
-                if (l.Contains("bits per sample")) 
+                if (l.Contains("bits per sample"))
                 {
                     string s2 = l.Split(';')[1].Trim();
                     if (s2.Split(' ') == null) { _nBits = Convert.ToInt16(l.Split(';')[1]); }
                     else { _nBits = Convert.ToInt16(s2.Split(' ')[0]); }
-                     
+
                 }
 
                 if (l.Contains("pitch") && !l.Contains("<pitch>")) { _camera_pitch = Convert.ToSingle(l.Split(';')[1], CultureInfo.InvariantCulture); }
@@ -608,25 +608,25 @@ namespace Giwer.dataStock
         #region Parse tif parameters (no active)
         void parseGeoTifParams()  // for 24 bits images only
         {
-            Tiff tf = BitMiracle.LibTiff.Classic.Tiff.Open(_fileName,"r");
+            Tiff tf = BitMiracle.LibTiff.Classic.Tiff.Open(_fileName, "r");
             FieldValue[] val = tf.GetField(TiffTag.IMAGEWIDTH);
             if (val != null) { _nCols = val[0].ToInt(); }
             val = tf.GetField(TiffTag.IMAGELENGTH);
             if (val != null) { _nRows = val[0].ToInt(); }
             int res = (_nCols) % 4;
-            _stride = (_nCols + res) *_nBands;
+            _stride = (_nCols + res) * _nBands;
             val = tf.GetField(TiffTag.BITSPERSAMPLE);
             if (val != null) { _nBits = val[0].ToInt(); }
             val = tf.GetField(TiffTag.SAMPLESPERPIXEL);
             if (val != null)
             {
                 _nBands = val[0].ToInt();
-                _bytesPerPixel = _nBands * (_nBits/8);
+                _bytesPerPixel = _nBands * (_nBits / 8);
             }
             _dataType = "TIF";
             val = tf.GetField(TiffTag.COMPRESSION);
-            
-            if (val != null) { _compression = val[0].ToString(); }          
+
+            if (val != null) { _compression = val[0].ToString(); }
             val = tf.GetField(TiffTag.CELLWIDTH);
             if (val != null) { _xdim = val[0].ToInt(); }
             val = tf.GetField(TiffTag.CELLLENGTH);
@@ -685,7 +685,7 @@ namespace Giwer.dataStock
                     {
                         st = item.Split(';')[1].Trim();
                         string st2 = st.Split(' ')[0];
-                        _gpsaltitude = Convert.ToSingle(st2,System.Globalization.CultureInfo.InvariantCulture);
+                        _gpsaltitude = Convert.ToSingle(st2, System.Globalization.CultureInfo.InvariantCulture);
                     }
                     if (item.Contains("GPS Altitude Ref"))
                     {
@@ -803,10 +803,10 @@ namespace Giwer.dataStock
                 }
 
                 if (item.Contains("gps longitude") && !item.Contains("gps longitude ref"))
-                { 
+                {
                     st = item.Split(';')[1].Trim();
-                    st = st.Substring(0, st.Length-1);                    
-                    _gpslongitude=convertDegree2Decimal(st);
+                    st = st.Substring(0, st.Length - 1);
+                    _gpslongitude = convertDegree2Decimal(st);
                 }
 
                 if (item.Contains("gps longitude ref"))
@@ -870,8 +870,8 @@ namespace Giwer.dataStock
             string[] outSt = inSt.Split(' ');
             int deg = Convert.ToInt16(outSt[0]); //.Substring(0, outSt[0].Length - 1));
             int min = Convert.ToInt16(outSt[2].Substring(0, outSt[2].Length - 1), CultureInfo.InvariantCulture);
-            Single sec = Convert.ToSingle(outSt[3].Substring(0, outSt[3].Length-1), CultureInfo.InvariantCulture);
-            double coord = deg + Convert.ToDouble(min) / 60D + Convert.ToDouble(sec)/3600D;
+            Single sec = Convert.ToSingle(outSt[3].Substring(0, outSt[3].Length - 1), CultureInfo.InvariantCulture);
+            double coord = deg + Convert.ToDouble(min) / 60D + Convert.ToDouble(sec) / 3600D;
             return coord;
         }
 
@@ -891,14 +891,15 @@ namespace Giwer.dataStock
 
                 if (ln.Contains("ncols")) { _nCols = Convert.ToInt16(ln.Split(';')[1]); }
                 if (ln.Contains("nrows")) { _nRows = Convert.ToInt16(ln.Split(';')[1]); }
-                if (line.ToLower().Contains("samples")) 
-                { 
-                    _samples = Convert.ToInt32(line.Split(';')[1]); 
-                    if (Samples !=0) _nCols = _samples; 
+                if (line.ToLower().Contains("samples"))
+                {
+                    _samples = Convert.ToInt32(line.Split(';')[1]);
+                    if (Samples != 0) _nCols = _samples;
                 }
-                if (line.ToLower().Contains("lines")) 
-                { _lines = Convert.ToInt32(line.Split(';')[1]); 
-                    if(Lines !=0) _nRows = _lines; 
+                if (line.ToLower().Contains("lines"))
+                {
+                    _lines = Convert.ToInt32(line.Split(';')[1]);
+                    if (Lines != 0) _nRows = _lines;
                 }
                 if (ln.Contains("datatype")) { _dataType = ln.Split(';')[1]; }
                 if (ln.Contains("defaultbands")) { _defaultBands = ln.Split(';')[1]; }
@@ -999,7 +1000,7 @@ namespace Giwer.dataStock
             //_bytesPerPixel = (_nBits + 7) / 8;
             //_stride = 4 * (_nCols * _bytesPerPixel + 3) / 4;
             int res = (_nCols) % 4;
-            _stride = (_nCols+res) * _nBands;
+            _stride = (_nCols + res) * _nBands;
         }
 
         void resetImageParameters()

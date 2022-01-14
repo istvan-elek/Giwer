@@ -16,7 +16,7 @@ namespace Giwer.dataStock.Clustering.Model.Loader
             BandCount = _includedBands.Length;
         }
 
-        protected override void SetValuesFromLoadedBands<T>(T values, Action<T,  byte[], int> setAtBand)
+        protected override void SetValuesFromLoadedBands<T>(T values, Action<T, byte[], int> setAtBand)
         {
             GeoImageTools gImgTools = new GeoImageTools(_gImgData);
             for (int bandInd = 0; bandInd < BandCount; bandInd++)

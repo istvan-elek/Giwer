@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Giwer.dataStock.Clustering.View
 {
@@ -32,9 +27,9 @@ namespace Giwer.dataStock.Clustering.View
         public List<Color> getColors()
         {
             List<Color> retList = new List<Color>();
-            for (int i = 0; i < dgvMCS.Rows.Count-1; i++)
+            for (int i = 0; i < dgvMCS.Rows.Count - 1; i++)
             {
-                retList.Add(dgvMCS.Rows[i].Cells["Color"].Style.BackColor);                
+                retList.Add(dgvMCS.Rows[i].Cells["Color"].Style.BackColor);
             }
             return retList;
         }
@@ -42,12 +37,12 @@ namespace Giwer.dataStock.Clustering.View
         public List<String> getCategories()
         {
             List<String> retList = new List<String>();
-            for (int i = 0; i < dgvMCS.Rows.Count-1; i++)
+            for (int i = 0; i < dgvMCS.Rows.Count - 1; i++)
             {
-                if (dgvMCS.Rows[i].Cells["Category"].Value != null)                
-                    retList.Add(dgvMCS.Rows[i].Cells["Category"].Value.ToString());                 
-                else                
-                    retList.Add("");                
+                if (dgvMCS.Rows[i].Cells["Category"].Value != null)
+                    retList.Add(dgvMCS.Rows[i].Cells["Category"].Value.ToString());
+                else
+                    retList.Add("");
             }
             return retList;
         }
@@ -58,7 +53,7 @@ namespace Giwer.dataStock.Clustering.View
             InitColorPalettes();
             typeCmbx.Items.Add("Point");
             typeCmbx.Items.Add("Polygon");
-            typeCmbx.SelectedItem ="Point";
+            typeCmbx.SelectedItem = "Point";
         }
 
         public void init(ImageWindow imW)
@@ -88,7 +83,7 @@ namespace Giwer.dataStock.Clustering.View
             }
             dgvMCS.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            int col = 200/(int)numberOfClustersChanger.Value;
+            int col = 200 / (int)numberOfClustersChanger.Value;
             for (int j = 0; j < numberOfClustersChanger.Value; j++)
             {
                 dgvMCS.Rows[j].Cells["Color"].Style.BackColor = Color.FromArgb(28 + col * j, 28 + col * j, 28 + col * j);
@@ -123,7 +118,7 @@ namespace Giwer.dataStock.Clustering.View
             imgWidth = Math.Abs(loc.Item3);
             if (_sampleCellIndex != -1)
             {
-                if(typeCmbx.SelectedItem.Equals("Point"))
+                if (typeCmbx.SelectedItem.Equals("Point"))
                 {
                     dgvMCS.Rows[_sampleCellIndex].Cells[0].Value = "(" + loc.Item1 + "," + loc.Item2 + ")";
                     SamplePointIndexes[_sampleCellIndex] = loc.Item2 * Math.Abs(loc.Item3) + loc.Item1;
@@ -133,7 +128,7 @@ namespace Giwer.dataStock.Clustering.View
                 {
                     dgvMCS.Rows[_sampleCellIndex].Cells[0].Value = "Polygon";
                     SampleAreasIndexes[_sampleCellIndex].Add(loc.Item2 * Math.Abs(loc.Item3) + loc.Item1);
-                    
+
                     if (loc.Item3 < 0)
                     {
                         int first = SampleAreasIndexes[_sampleCellIndex][0];
@@ -141,7 +136,7 @@ namespace Giwer.dataStock.Clustering.View
                         drawPolygon();
                         SamplePolyInPointIndexes[_sampleCellIndex] = getPolyInPoints(_sampleCellIndex);
                         _sampleCellIndex = -1;
-                    } 
+                    }
                 }
                 drawPolygon();
             }
@@ -151,7 +146,7 @@ namespace Giwer.dataStock.Clustering.View
         {
             System.Diagnostics.Debug.WriteLine("SamplePointIndexes.Count: " + SamplePointIndexes.Count);
             System.Diagnostics.Debug.WriteLine("SamplePolyInPointIndexes.Count: " + SamplePolyInPointIndexes.Count);
-            int d = (int)numberOfClustersChanger.Value - dgvMCS.Rows.Count +1;
+            int d = (int)numberOfClustersChanger.Value - dgvMCS.Rows.Count + 1;
             int count = dgvMCS.Rows.Count;
             if (d == 0) return;
             if (d < 0)
@@ -168,7 +163,7 @@ namespace Giwer.dataStock.Clustering.View
             {
                 for (int i = 0; i < d; i++)
                 {
-                    dgvMCS.Rows.Add();                    
+                    dgvMCS.Rows.Add();
                     dgvMCS.Rows[dgvMCS.Rows.Count - 2].Cells["Color"].Style.BackColor = Color.Gray;
                     dgvMCS.Rows[dgvMCS.Rows.Count - 2].Cells["Sample"].Value = "Click to sample";
                     SamplePointIndexes.Add(0);
@@ -180,14 +175,14 @@ namespace Giwer.dataStock.Clustering.View
 
         private void cmbColPaletteTables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbColPaletteTables.SelectedItem == null)  return;
+            if (cmbColPaletteTables.SelectedItem == null) return;
 
             actualCPName = cmbColPaletteTables.SelectedItem.ToString();
             _colorPalette = loadColorPalette(Application.StartupPath + "\\" + cmbColPaletteTables.SelectedItem + ".cp");
-            if (File.Exists(Application.StartupPath + "\\" + actualCPName + ".lut"))            
-                loadTable(actualCPName + ".lut");            
-            else            
-                InitTable();            
+            if (File.Exists(Application.StartupPath + "\\" + actualCPName + ".lut"))
+                loadTable(actualCPName + ".lut");
+            else
+                InitTable();
         }
 
         void loadTable(string fname)
@@ -215,7 +210,7 @@ namespace Giwer.dataStock.Clustering.View
                         SamplePointIndexes.Add(i);
                         SampleAreasIndexes.Add(new List<int>(0));
                         SamplePolyInPointIndexes.Add(new List<int>(0));
-                        System.Diagnostics.Debug.WriteLine("Row " +i+ " added!");
+                        System.Diagnostics.Debug.WriteLine("Row " + i + " added!");
                         line = sr.ReadLine();
                         ln = line.Split(';');
                         dgvMCS.Rows[i].Cells["Sample"].Value = "Click to sample";
@@ -290,7 +285,7 @@ namespace Giwer.dataStock.Clustering.View
                 using (StreamWriter sr = new StreamWriter(fs))
                 {
                     int ClusterCount = SamplePointIndexes.Count;
-                    System.Collections.Generic.List<String> categories =getCategories();
+                    System.Collections.Generic.List<String> categories = getCategories();
                     System.Collections.Generic.List<Color> colors = getColors();
                     string wrSt = "Start;Color;Category";
                     sr.WriteLine(wrSt);
@@ -332,10 +327,10 @@ namespace Giwer.dataStock.Clustering.View
 
         private void dgvMCS_MouseEnter(object sender, EventArgs e)
         {
-            if (typeCmbx.SelectedItem.Equals("Point"))                            
-                drawCrosses();            
-            else                           
-                drawPolygons();           
+            if (typeCmbx.SelectedItem.Equals("Point"))
+                drawCrosses();
+            else
+                drawPolygons();
         }
 
         private void drawCrosses()
@@ -370,7 +365,7 @@ namespace Giwer.dataStock.Clustering.View
                         _imW.DrawCross(vertices[0], col);
                     }
                 }
-                
+
             }
         }
 
@@ -385,10 +380,10 @@ namespace Giwer.dataStock.Clustering.View
                     _imW.DrawLine(vertices[v - 1], vertices[v], col);
                 }
 
-                if (vertices[0] == vertices[vertices.Count - 1] && vertices.Count>1)                
-                    _imW.fillPolygon(vertices, col);                
-                else                
-                    _imW.DrawCross(vertices[0], col);                
+                if (vertices[0] == vertices[vertices.Count - 1] && vertices.Count > 1)
+                    _imW.fillPolygon(vertices, col);
+                else
+                    _imW.DrawCross(vertices[0], col);
             }
         }
 
@@ -416,30 +411,30 @@ namespace Giwer.dataStock.Clustering.View
             List<int> vertices = sampleAreasIndexes[ind];
             if (vertices.Count > 0)
             {
-            float minX = vertices[0] % imgWidth;
-            float maxX = minX; 
-            float minY = vertices[0] / imgWidth;
-            float maxY = minY;
-            PointF[] polygon = new PointF[vertices.Count];
-            for (int i = 0; i < vertices.Count; ++i)
-            {
-                float y = vertices[i] / imgWidth;
-                float x = vertices[i] % imgWidth;
-                polygon[i] = new PointF(x, y);
-
-                if (x < minX) minX = x;
-                if (x > maxX) maxX = x;
-                if (y < minY) minY = y;
-                if (y > maxY) maxY = y;
-            }
-                
-            for (int i = (int)minX; i<maxX; ++i)
-            {
-                for (int j = (int)minY; j < maxY; ++j)
+                float minX = vertices[0] % imgWidth;
+                float maxX = minX;
+                float minY = vertices[0] / imgWidth;
+                float maxY = minY;
+                PointF[] polygon = new PointF[vertices.Count];
+                for (int i = 0; i < vertices.Count; ++i)
                 {
-                        if (IsPointInPolygon(polygon, i, j)) polyInPoints.Add(imgWidth * j + i);                        
+                    float y = vertices[i] / imgWidth;
+                    float x = vertices[i] % imgWidth;
+                    polygon[i] = new PointF(x, y);
+
+                    if (x < minX) minX = x;
+                    if (x > maxX) maxX = x;
+                    if (y < minY) minY = y;
+                    if (y > maxY) maxY = y;
                 }
-            }
+
+                for (int i = (int)minX; i < maxX; ++i)
+                {
+                    for (int j = (int)minY; j < maxY; ++j)
+                    {
+                        if (IsPointInPolygon(polygon, i, j)) polyInPoints.Add(imgWidth * j + i);
+                    }
+                }
 
             }
             return polyInPoints;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 
 namespace Giwer.dataStock
 {
@@ -115,15 +114,15 @@ namespace Giwer.dataStock
             byte[] kernel1 = new byte[kSize];
             int ks = kSize / 2;
 
-            for (int i=ks; i<byIn.Length-ks; i++)
+            for (int i = ks; i < byIn.Length - ks; i++)
             {
-                for (int j=0; j<kSize; j++)
+                for (int j = 0; j < kSize; j++)
                 {
                     kernel1[j] = byIn[i - ks + j];
                 }
                 Array.Sort(kernel1);
-                byOut[i] = kernel1[ks + 1]; 
-            }         
+                byOut[i] = kernel1[ks + 1];
+            }
             return byOut;
         }
 
@@ -181,7 +180,7 @@ namespace Giwer.dataStock
                     int c5 = 4 * (byIn[ind5]);
                     int c6 = byIn[ind6];
                     int c8 = byIn[ind8];
-                    byOut[ind5] = (byte)((c2 + c4 - c5 + c6 + c8)/9);
+                    byOut[ind5] = (byte)((c2 + c4 - c5 + c6 + c8) / 9);
                 }
             }
             return byOut;
@@ -233,9 +232,9 @@ namespace Giwer.dataStock
         public byte[] vectorize(byte[] byIn, int Width, int Height)
         {
             byte[] byOut = new byte[byIn.Length];
-            for (int i = 0; i < Height-1; i++)
+            for (int i = 0; i < Height - 1; i++)
             {
-                for (int j = 0; j < Width-1; j++)
+                for (int j = 0; j < Width - 1; j++)
                 {
                     Int32 ind = i * Width + j;
                     if (byIn[ind] == 0)
@@ -263,9 +262,9 @@ namespace Giwer.dataStock
             {
                 for (int k = -kernHalf; k < kernHalf; k++)
                 {
-                    val += arrIn[i + k] * kern[k+ kernHalf];
+                    val += arrIn[i + k] * kern[k + kernHalf];
                 }
-                arrOut[ind] =(byte)(int)( val/ kernsum);
+                arrOut[ind] = (byte)(int)(val / kernsum);
                 ind++;
                 val = 0;
             }
@@ -273,7 +272,7 @@ namespace Giwer.dataStock
         }
 
         [UserAttr("u")]
-        public byte[] ConvolSingleBand(double[,] kernel, byte[] byteIn, int Width, int Height) 
+        public byte[] ConvolSingleBand(double[,] kernel, byte[] byteIn, int Width, int Height)
         {
             byte[] byteOut = new byte[byteIn.Length];
             int kernelLength = (int)Math.Sqrt(kernel.Length);
@@ -282,14 +281,14 @@ namespace Giwer.dataStock
             {
                 for (int col = kernelHalf; col < Width - kernelHalf; col++)
                 {
-                    Int32 index = row * Width + col; 
+                    Int32 index = row * Width + col;
                     double Bsum = 0;
                     byteOut[index] = byteIn[index];
                     for (int irow = 0; irow < kernelLength; irow++)
                     {
                         for (int icol = 0; icol < kernelLength; icol++)
                         {
-                            Int32 curindex = (row + irow - kernelHalf)*Width + (col + icol - kernelHalf);
+                            Int32 curindex = (row + irow - kernelHalf) * Width + (col + icol - kernelHalf);
                             Bsum = Bsum + byteIn[curindex] * kernel[irow, icol];
                         }
                     }
@@ -373,11 +372,11 @@ namespace Giwer.dataStock
         [UserAttr("u")]
         public double[,] lowPassKernelGauss(int Kernlength)
         {
-            int Klength = 2* Kernlength + 1;
+            int Klength = 2 * Kernlength + 1;
             double[,] kern = new double[Klength, Klength];
             double kernSum = 0;
             double kernHalf = (Klength - 1D) / 2D;
-            double sigma = kernHalf/2D;
+            double sigma = kernHalf / 2D;
             for (int i = 0; i < Klength; i++)
             {
                 for (int j = 0; j < Klength; j++)
@@ -403,31 +402,31 @@ namespace Giwer.dataStock
         [UserAttr("u")]
         public double[,] lowPassKernelSinc(double limitFreq)
         {
-            double[,] kern; 
+            double[,] kern;
             List<double> lstValues = new List<double>();
             double kernSum = 0;
-            double eps = 1D/limitFreq;
+            double eps = 1D / limitFreq;
             int i = 1;
             double val;
             double valPrev = 0;
             do
             {
                 double a = Math.PI * i * eps;
-                double fx = Math.Sin(Math.PI * i * eps) ;
+                double fx = Math.Sin(Math.PI * i * eps);
                 val = fx / a;
                 lstValues.Add(val);
-                if (Math.Abs(val-valPrev) < 0.01) { break; }
+                if (Math.Abs(val - valPrev) < 0.01) { break; }
                 valPrev = val;
                 i += 1;
             } while (true);
 
-            int klength = 2 * i+1;
+            int klength = 2 * i + 1;
             kern = new double[klength, klength];
             int half = klength / 2;
             for (int j = 0; j < i; j++)
             {
-                kern[j, half] = lstValues[i-j-1];
-                kern[j + i+1, half] = lstValues[j];
+                kern[j, half] = lstValues[i - j - 1];
+                kern[j + i + 1, half] = lstValues[j];
                 kernSum += 2 * kern[j, half];
             }
             kern[i, half] = 1D;
@@ -451,7 +450,7 @@ namespace Giwer.dataStock
             {
                 for (int j = 0; j < Klength; j++)
                 {
-                    box[i, j] = 1F/kernsum;
+                    box[i, j] = 1F / kernsum;
                 }
             }
             return box;
@@ -460,22 +459,22 @@ namespace Giwer.dataStock
         //resampling
         public Bitmap resampling(int rate, Bitmap bmpIn)
         {
-            double[,] kernel=lowPassKernelGauss(2 * rate - 1);
+            double[,] kernel = lowPassKernelGauss(2 * rate - 1);
             int newWidth = (int)(bmpIn.Width / rate);
             int newHeight = (int)(bmpIn.Height / rate);
             int length = 2 * rate - 1;
             Bitmap bmpOut = new Bitmap(newWidth, newHeight, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            for (int i=0; i < newHeight-1; i++)
+            for (int i = 0; i < newHeight - 1; i++)
             {
-                for (int j=0; j < newWidth-1;j++)
+                for (int j = 0; j < newWidth - 1; j++)
                 {
-                    Single avgColorR=0;
-                    Single avgColorG=0;
-                    Single avgColorB=0;
+                    Single avgColorR = 0;
+                    Single avgColorG = 0;
+                    Single avgColorB = 0;
 
-                    for (int k=0; k < length ; k++)
+                    for (int k = 0; k < length; k++)
                     {
-                        Color c = bmpIn.GetPixel(j*rate + k, i*rate + k);
+                        Color c = bmpIn.GetPixel(j * rate + k, i * rate + k);
                         avgColorR += c.R;
                         avgColorG += c.G;
                         avgColorB += c.B;

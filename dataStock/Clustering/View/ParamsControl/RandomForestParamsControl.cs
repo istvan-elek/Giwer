@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Giwer.dataStock.Clustering.Model.Supervised;
+using Giwer.dataStock.Clustering.Model.Supervised.RandomForest;
+using System;
 using System.IO;
 using System.Windows.Forms;
-using Giwer.dataStock.Clustering.Model.Supervised;
-using Giwer.dataStock.Clustering.Model.Supervised.RandomForest;
 
 namespace Giwer.dataStock.Clustering.View
 {
@@ -14,7 +14,7 @@ namespace Giwer.dataStock.Clustering.View
 
         public ISupervisedModel Model { get; private set; }
         public int RequiredBandCount { get { return HasModel ? Model.BandCount : 0; } }
- 
+
         private bool HasModel { get { return Model != null; } }
 
         public RandomForestParamsControl()

@@ -70,7 +70,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
         #region Constructors
         public IsodataClustering(
             uint maxIter = MaxIterDefaultVal,
-            uint initClusterNum = InitClusterNumDefaultVal, 
+            uint initClusterNum = InitClusterNumDefaultVal,
             uint maxClusterNum = MaxClusterNumDefaultVal,
             uint minClusterSize = MinClusterSizeDefaultVal,
             float pointsFromCentroidSDLimit = SDLimitDefaultVal,
@@ -263,7 +263,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
             }
             return totalSSE / _points.Length;
         }
-        
+
         private Dictionary<Cluster, float> AllAvgPointToCentroidDists(Dictionary<Cluster, float> SSEs)
         {
             var avgDists = new Dictionary<Cluster, float>();
@@ -491,7 +491,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
                         .Select(x => (x.Item1, x.Item2))
                         .ToList();
         }
-        
+
         /// <summary>
         /// Merges two clusters into one. The new cluster has the id of the first to-be-merged centroid,
         /// and a new centroid that is the weighted average of the original two centroids.

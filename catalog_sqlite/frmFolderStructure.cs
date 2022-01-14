@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using catalog;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace catalog
 {
@@ -24,7 +19,7 @@ namespace catalog
         {
             InitializeComponent();
             LoadDrives();
-            this.Location = new Point(loc,0);
+            this.Location = new Point(loc, 0);
             this.destinationFolder = Properties.Settings.Default.destinationFolder;
             lblDestination.Text = "Destination folder -> " + destinationFolder;
             bttnCopy2FileSystem.ToolTipText = "Save files to '" + destinationFolder + "' folder";
@@ -118,7 +113,7 @@ namespace catalog
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Sorry, you are not authorized to enter this folder", "Unauthorized access",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                MessageBox.Show("Sorry, you are not authorized to enter this folder", "Unauthorized access", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -141,10 +136,10 @@ namespace catalog
 
         private void bttnDisplayImage_Click(object sender, EventArgs e)
         {
-            if (selectedFile =="") 
-            { 
+            if (selectedFile == "")
+            {
                 MessageBox.Show("No image file is selected to display. Select one.", "No selected file", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return; 
+                return;
             }
             imageViewer = new frmImageViewer(selectedFile);
             imageViewer.Location = new Point(this.Location.X, this.Location.Y + this.Height);
@@ -165,23 +160,23 @@ namespace catalog
 
         private void bttnCopy2FileSystem_Click(object sender, EventArgs e)
         {
-            if (lsv.Items.Count==0) { MessageBox.Show("There is no files in the selected folder"); return; }
+            if (lsv.Items.Count == 0) { MessageBox.Show("There is no files in the selected folder"); return; }
             string file0 = dirsTreeView.SelectedNode.Tag.ToString() + "\\" + lsv.Items[0].Text;
             string createdTime = File.GetLastWriteTime(file0).ToString();
             string[] d = createdTime.Trim().Split(' ', '_');
-            string destiDir = destinationFolder + "\\" + d[0].Replace('.','-') + d[1].Replace('.', '-') + d[2].Replace('.', '-') + d[3].Replace(':', '-') + "\\";
+            string destiDir = destinationFolder + "\\" + d[0].Replace('.', '-') + d[1].Replace('.', '-') + d[2].Replace('.', '-') + d[3].Replace(':', '-') + "\\";
             Directory.CreateDirectory(destiDir);
 
             progb.Maximum = lsv.Items.Count;
             progb.Visible = true;
-            for (int i=0; i< lsv.Items.Count;i++)
+            for (int i = 0; i < lsv.Items.Count; i++)
             {
                 progb.PerformStep();
                 string SourceFile = dirsTreeView.SelectedNode.Tag.ToString() + "\\" + lsv.Items[i].Text;
                 string destiFile = destiDir + "\\" + Path.GetFileName(destiDir + "\\" + lsv.Items[i].Text);
                 try
                 {
-                    File.Copy(SourceFile, destiFile,true);
+                    File.Copy(SourceFile, destiFile, true);
                 }
                 catch (Exception err)
                 {
@@ -203,7 +198,7 @@ namespace catalog
             FolderBrowserDialog fb = new FolderBrowserDialog();
             fb.ShowNewFolderButton = false;
             fb.SelectedPath = destinationFolder;
-            if (fb.ShowDialog()==DialogResult.OK)
+            if (fb.ShowDialog() == DialogResult.OK)
             {
                 destinationFolder = fb.SelectedPath;
             }
@@ -241,7 +236,7 @@ namespace catalog
 
         private void lblDestination_Click(object sender, EventArgs e)
         {
-            string tex = lblDestination.Text.Split('>')[1].Trim() ;
+            string tex = lblDestination.Text.Split('>')[1].Trim();
         }
 
 

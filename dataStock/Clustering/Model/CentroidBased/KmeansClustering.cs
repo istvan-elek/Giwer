@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Giwer.dataStock.Clustering.Model.CentroidBased
 {
     public class KmeansClustering : CentroidBasedClustering
     {
         #region Constants
-            public const float ChangeThresholdMinVal = 0.0F;
-            public const float ChangeThresholdMaxVal = 1.0F;
-            public const float ChangeThresholdDefaultVal = 0.96F;
+        public const float ChangeThresholdMinVal = 0.0F;
+        public const float ChangeThresholdMaxVal = 1.0F;
+        public const float ChangeThresholdDefaultVal = 0.96F;
 
-            public const uint MinClusterNumMinVal = 2;
-            public const uint MinClusterNumMaxVal = 256;
-            public const uint MinClusterNumDefaultVal = 2;
+        public const uint MinClusterNumMinVal = 2;
+        public const uint MinClusterNumMaxVal = 256;
+        public const uint MinClusterNumDefaultVal = 2;
         #endregion
 
         #region Input parameters
@@ -114,12 +113,12 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
                     ++iter;
                     System.Diagnostics.Debug.WriteLine("(currentSSE / prevSSE): " + (currentSSE / prevSSE));
                 }
-                System.Diagnostics.Debug.WriteLine("Clusternum: " + ClusterNum + " with iterations: " + (iter-1) +
+                System.Diagnostics.Debug.WriteLine("Clusternum: " + ClusterNum + " with iterations: " + (iter - 1) +
                     " and SSE = " + currentSSE + " and relative change = " + (currentSSE / GlobalPrevSSE) + " current elbow: " + Elbow);
-                RelativeChange = (1-(currentSSE / GlobalPrevSSE) < Elbow);
+                RelativeChange = (1 - (currentSSE / GlobalPrevSSE) < Elbow);
                 GlobalPrevSSE = currentSSE;
                 ++ClusterNum;
-                
+
             }
 
             FinalSSE = GlobalPrevSSE;
@@ -127,7 +126,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
         }
 
         public float ClusteringAtGivenNumber(uint numberOfClusters)
-        {           
+        {
             InitEmptyKmeansClusters(numberOfClusters);
             AssignPointsToClusters();
             uint iter = 1;

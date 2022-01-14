@@ -36,7 +36,7 @@ namespace Giwer.dataStock
             }
             catch (Exception e)
             {
-                MessageBox.Show("Loading 'config.cfg' file has failed. " + e.Message,"Error in loading config file",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Loading 'config.cfg' file has failed. " + e.Message, "Error in loading config file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -50,7 +50,7 @@ namespace Giwer.dataStock
                 {
                     string key = sarray[i];
                     string val = sarray[i + 1];
-                    if (!(key == "" && val ==""))
+                    if (!(key == "" && val == ""))
                     {
                         config.Add(key, val);
                         dgvConfig.Rows.Add(key, val);
@@ -110,7 +110,7 @@ namespace Giwer.dataStock
                 }
             }
         }
-        
+
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {

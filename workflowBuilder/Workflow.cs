@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Giwer.workflowBuilder
@@ -20,8 +17,10 @@ namespace Giwer.workflowBuilder
         public List<string> Methods
         {
             get { return _methods; }
-            set { 
-                _methods = value; }
+            set
+            {
+                _methods = value;
+            }
         }
 
         List<List<string>> _pars = new List<List<string>>();
@@ -50,7 +49,7 @@ namespace Giwer.workflowBuilder
                         {
                             List<string> lstPara = new List<string>();
                             _methods.Add(line);
-                            int  p = Convert.ToInt16(line.Split(' ')[1].Trim('(').Trim(')'));
+                            int p = Convert.ToInt16(line.Split(' ')[1].Trim('(').Trim(')'));
                             for (int i = 0; i < p; i++)
                             {
                                 string para = sr.ReadLine().Trim();
@@ -70,13 +69,13 @@ namespace Giwer.workflowBuilder
 
         public void saveWorkflowFile(string fname)
         {
-            using (FileStream fs=new FileStream(fname,FileMode.Create,FileAccess.Write))
+            using (FileStream fs = new FileStream(fname, FileMode.Create, FileAccess.Write))
             {
-                using (StreamWriter sw=new StreamWriter(fs))
+                using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.WriteLine("#Description:" + Environment.NewLine + _description);
                     sw.WriteLine("#Methods:");
-                    for (int i=0; i<_methods.Count; i++)
+                    for (int i = 0; i < _methods.Count; i++)
                     {
                         sw.WriteLine(_methods[i]);
                         foreach (var lsitem in _pars[i])

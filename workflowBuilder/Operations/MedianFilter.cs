@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Giwer.dataStock;
+﻿using Giwer.dataStock;
 
 namespace Giwer.workflowBuilder.Operations
 {
@@ -11,7 +6,7 @@ namespace Giwer.workflowBuilder.Operations
     {
         public int KernelLength { get; set; }
 
-        public MedianFilter(GeoImageData image, int band) 
+        public MedianFilter(GeoImageData image, int band)
             : base(image, band)
         {
         }

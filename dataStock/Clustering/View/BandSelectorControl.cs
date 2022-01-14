@@ -15,15 +15,15 @@ namespace Giwer.dataStock.Clustering.View
 
         public event EventHandler StateChangedEvent;
 
-        public bool IsFilled 
-        { 
-            get 
+        public bool IsFilled
+        {
+            get
             {
                 if (HasSelectionCountRequirement)
                     return SelectionCount == RequiredSelectionCount;
                 else
                     return SelectionCount > 0;
-            } 
+            }
         }
         public int[] SelectedBands
         {

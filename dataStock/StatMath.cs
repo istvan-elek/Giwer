@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using MathNet.Numerics.LinearAlgebra;
+﻿using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Factorization;
+using System;
+using System.Collections.Generic;
+using System.Numerics;
 
 namespace Giwer.dataStock
 {
@@ -14,7 +14,7 @@ namespace Giwer.dataStock
         string GiwerDataFolder;
 
 
-        public StatMath(GeoImageData gid,GeoImageTools git, string gwrDatDir)
+        public StatMath(GeoImageData gid, GeoImageTools git, string gwrDatDir)
         {
             gida = gid;
             gito = git;
@@ -27,12 +27,12 @@ namespace Giwer.dataStock
         }
 
         //compute derivatives of an image: f'(x,y) = {[f(x+Dx,y+Dy)-f(x+Dx,y-Dy)]-[f(x-Dx,y+Dy)-f(x-Dx,y-Dy)]}/(4*Dx*Dy)
-       public byte[] derivatives(byte[] byIn)
+        public byte[] derivatives(byte[] byIn)
         {
             byte[] byDerivative = new byte[byIn.Length];
-            for (Int32 row = 1; row < gida.Nrows-1; row++)
+            for (Int32 row = 1; row < gida.Nrows - 1; row++)
             {
-                for (Int32 col = 1; col < gida.Ncols-1; col++)
+                for (Int32 col = 1; col < gida.Ncols - 1; col++)
                 {
                     Int32 ind = row * gida.Ncols + col;
                     Int32 idpx = ind + 1;
@@ -97,8 +97,8 @@ namespace Giwer.dataStock
             double max = -1000000000;
             for (Int32 i = 0; i < ArrIn.Length; i++)
             {
-                if (ArrIn[i]< min) { min = ArrIn[i]; }
-                if (ArrIn[i]>max) { max = ArrIn[i]; }
+                if (ArrIn[i] < min) { min = ArrIn[i]; }
+                if (ArrIn[i] > max) { max = ArrIn[i]; }
             }
             MinMax = min + ";" + max;
             return MinMax;
@@ -118,7 +118,7 @@ namespace Giwer.dataStock
             MinMax = min + ";" + max;
             return MinMax;
         }
-        
+
         [UserAttr("u")]
         // standardize image
         public double[] imageStandardization(byte[] imIn, double aver, double scat)
@@ -179,13 +179,13 @@ namespace Giwer.dataStock
         {
             int length = (int)Math.Sqrt(corrMatrix.Length);
             double[,] eigenVectors = new double[length, length];
-            Matrix<double> A = DenseMatrix.OfArray(corrMatrix); 
+            Matrix<double> A = DenseMatrix.OfArray(corrMatrix);
             Evd<double> eigen = A.Evd();
             Matrix<double> eigenvectors = eigen.EigenVectors;
             Vector<Complex> eigenvalues = eigen.EigenValues;
-            for (int i=0; i< length; i++)
+            for (int i = 0; i < length; i++)
             {
-                for (int j=0; j < length; j++)
+                for (int j = 0; j < length; j++)
                 {
                     eigenVectors[i, j] = eigenvectors[i, j];
                 }
@@ -197,19 +197,19 @@ namespace Giwer.dataStock
         public double[] PCA(List<int> lst, double[,] eigenvec, int pcN)
         {
             double[] eigen = new double[(int)Math.Sqrt(eigenvec.Length)];
-            for (int k=0; k< eigen.Length;k++)
+            for (int k = 0; k < eigen.Length; k++)
             {
-                eigen[k] = eigenvec[pcN,k];
+                eigen[k] = eigenvec[pcN, k];
             }
             Int32 bsize = gida.Ncols * gida.Nrows;
             byte[] curBand = new byte[bsize];
             double[] pca = new double[bsize];
-            
-            for (int i=0; i < lst.Count; i++)
+
+            for (int i = 0; i < lst.Count; i++)
             {
                 string fileNamme = GiwerDataFolder + @"\" + System.IO.Path.GetFileNameWithoutExtension(gida.FileName) + @"\" + lst[i] + ".gwr";
                 curBand = System.IO.File.ReadAllBytes(fileNamme);
-                for (Int32 j=0; j< bsize; j++)
+                for (Int32 j = 0; j < bsize; j++)
                 {
                     pca[j] += curBand[j] * eigen[i];
                 }
@@ -217,10 +217,10 @@ namespace Giwer.dataStock
             string minmax = getMinMax(pca);
             double min = Convert.ToDouble(minmax.Split(';')[0]);
             double max = Convert.ToDouble(minmax.Split(';')[1]);
-            double mamimi=max - min;
-            for (int i=0; i<pca.Length; i++)
+            double mamimi = max - min;
+            for (int i = 0; i < pca.Length; i++)
             {
-                pca[i] = 255 *(pca[i] - min) / (mamimi);
+                pca[i] = 255 * (pca[i] - min) / (mamimi);
             }
             return pca;
         }

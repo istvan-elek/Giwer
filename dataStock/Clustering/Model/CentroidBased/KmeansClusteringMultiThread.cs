@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Management;
+using System.Threading.Tasks;
 
 namespace Giwer.dataStock.Clustering.Model.CentroidBased
 {

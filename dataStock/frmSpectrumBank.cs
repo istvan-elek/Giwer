@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
 
 namespace Giwer.dataStock
@@ -16,7 +10,7 @@ namespace Giwer.dataStock
     {
         SQLiteConnectionStringBuilder cnsb = new SQLiteConnectionStringBuilder();
         string spectrumBankName;
-        string currentBank="";
+        string currentBank = "";
         public frmSpectrumBank()
         {
             InitializeComponent();
@@ -146,7 +140,7 @@ namespace Giwer.dataStock
         {
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Spectrum bank files (*.s3db)|*.s3db";
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 cnsb.DataSource = of.FileName;
                 LoadAvailableBankNames();
@@ -193,11 +187,11 @@ namespace Giwer.dataStock
                 }
             }
         }
-        
+
         private void tscmbAvailableSpectrums_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentBank = tscmbAvailableSpectrums.SelectedItem.ToString();
-            dgv.DataSource = loadTableData("SELECT * FROM banks WHERE name='" + currentBank  + "'");
+            dgv.DataSource = loadTableData("SELECT * FROM banks WHERE name='" + currentBank + "'");
             this.Text = "Current bank: " + currentBank;
         }
     }

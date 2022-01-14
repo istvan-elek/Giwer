@@ -1,18 +1,15 @@
-﻿using System;
+﻿using catalog.Properties;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using catalog;
-using System.Data.SQLite;
-using System.IO;
-using System.Diagnostics;
-using System.Globalization;
-using catalog.Properties;
 
 namespace catalog
 {
@@ -28,7 +25,7 @@ namespace catalog
         frmImageViewer imageViewer;
         string[] cols;
         List<string> selectedMaps = new List<string>();
-        
+
 
         public frmMain()
         {
@@ -39,7 +36,7 @@ namespace catalog
             //this.initDir = Properties.Settings.Default.InitDir; 
             this.destinationFolder = Properties.Settings.Default.destinationFolder;
             this.defaultFileName = Properties.Settings.Default.defaultFileName;
-            dbConnection();           
+            dbConnection();
         }
 
 
@@ -100,7 +97,7 @@ namespace catalog
                 else
                 {
                     menuStrip1.Visible = true;
-                    MessageBox.Show("Missing database. Create new one by clicking " + Environment.NewLine + "'Catalog/Create new catalog' menu item","Missing database",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Missing database. Create new one by clicking " + Environment.NewLine + "'Catalog/Create new catalog' menu item", "Missing database", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -118,7 +115,7 @@ namespace catalog
                         SQLiteDataReader dr = cmd.ExecuteReader();
                         dt.Load(dr);
                     }
-                    if (dt.Rows.Count !=0)
+                    if (dt.Rows.Count != 0)
                     {
                         bttnDisplayEXIF.Enabled = true;
                         bttnDisplayReport.Enabled = true;
@@ -185,7 +182,7 @@ namespace catalog
         double convertDegree2Decimal(string inSt)
         {
             string[] outSt = inSt.Split(' ');
-            int deg = Convert.ToInt16(outSt[0]); 
+            int deg = Convert.ToInt16(outSt[0]);
             int min = Convert.ToInt16(outSt[2].Substring(0, outSt[2].Length - 1), CultureInfo.InvariantCulture);
             Single sec = Convert.ToSingle(outSt[3].Substring(0, outSt[3].Length - 1), CultureInfo.InvariantCulture);
             double coord = deg + Convert.ToDouble(min) / 60D + Convert.ToDouble(sec) / 3600D;
@@ -238,7 +235,7 @@ namespace catalog
             bindingNavigatorDeleteItem.Enabled = false;
         }
 
-    
+
         void deleteSelectedRecord(Int32 id)
         {
             using (SQLiteConnection cnn = new SQLiteConnection(cnsb.ConnectionString))
@@ -258,7 +255,7 @@ namespace catalog
         private void tbSqlCommand_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-            {          
+            {
                 loadTableData(tbSqlCommand.Text);   //loadTableData("select * from " + tableName);
                 dataGridView1.DataSource = null;
                 bs.DataSource = loadTableData(tbSqlCommand.Text);
@@ -292,7 +289,7 @@ namespace catalog
             if (inpBox.ShowDialog() == DialogResult.OK)
             {
                 FolderBrowserDialog fb = new FolderBrowserDialog();
-                if (fb.ShowDialog()==DialogResult.OK)
+                if (fb.ShowDialog() == DialogResult.OK)
                 {
                     defaultFileName = fb.SelectedPath + "\\" + inpBox.inputText + ".s3db";
                     createNewCatalog(defaultFileName);
@@ -355,14 +352,14 @@ namespace catalog
                         "image_size character varying," +
                         "file_size integer," +
                         "location character varying," +
-                        "longitude double precision," + 
-                        "latitude double precision," + 
+                        "longitude double precision," +
+                        "latitude double precision," +
                         "dron_type character varying," +
                         "camera character varying," +
                         "purpose character varying," +
                         "operator character varying," +
                         "author character varying," +
-                        "meteo character varying," +                       
+                        "meteo character varying," +
                         "content character varying," +
                         "public boolean," +
                         "comment character varying," +
@@ -403,7 +400,7 @@ namespace catalog
             }
         }
 
-       
+
 
         private void bttnImageViewer_Click(object sender, EventArgs e)
         {
@@ -430,16 +427,16 @@ namespace catalog
             //if (dataGridView1.Rows.Count == 0) return;
             //if (dataGridView1.Rows[dataGridView1.Rows.Count].Selected) return;
             if (dataGridView1.Rows.Count <= 1) return;
-            lblCursorPos.Text = (bs.Position+1).ToString() + "/" + (dataGridView1.Rows.Count-1).ToString();
-            string filename="";
+            lblCursorPos.Text = (bs.Position + 1).ToString() + "/" + (dataGridView1.Rows.Count - 1).ToString();
+            string filename = "";
             if (bs.Position == -1) return;
             filename = dataGridView1.Rows[bs.Position].Cells["filename"].Value.ToString();
             string folder = dataGridView1.Rows[bs.Position].Cells["folder"].Value.ToString();
             this.Text = filename;
             string fullname = folder + "\\" + filename;
-            if (File.Exists(folder + "\\report")) bttnDisplayReport.Image = imglist.Images[1]; 
+            if (File.Exists(folder + "\\report")) bttnDisplayReport.Image = imglist.Images[1];
             else bttnDisplayReport.Image = imglist.Images[0];
-            if (imageViewer != null) 
+            if (imageViewer != null)
             {
                 if (imageViewer.Visible == true) imageViewer.loadImage(fullname);
             }
@@ -471,8 +468,8 @@ namespace catalog
                         string[] exif = getExifData(files);
 
                         Int32 filesize = (Int32)fi.Length;
-                        string imagesize="";
-                        string camera="";
+                        string imagesize = "";
+                        string camera = "";
                         int bitspersample = 0;
                         int sampleperpixel = 0;
                         string fname = Path.GetFileName(files);
@@ -522,7 +519,7 @@ namespace catalog
                         string comment = attributes.comment;
                         string drontipus = attributes.drontype;
                         string oper = attributes.opera;
-                        insertFile(fname, tipus, Path.GetDirectoryName(files), dt, location, met, content, longit, latit, auth, purpose, pub, comment, filesize, imagesize,camera,bitspersample, sampleperpixel, drontipus, oper);
+                        insertFile(fname, tipus, Path.GetDirectoryName(files), dt, location, met, content, longit, latit, auth, purpose, pub, comment, filesize, imagesize, camera, bitspersample, sampleperpixel, drontipus, oper);
                     }
                     bs.DataSource = refreshDatagrid();
                     this.Cursor = Cursors.Default;
@@ -532,7 +529,7 @@ namespace catalog
             }
         }
 
-        void insertFile(string fname, string typ, string folder, DateTime creationTime, string location, string meteo, string content, double longi, double lati, string author, string purpose, Boolean publi, string comm, Int32 filesize, string imagesize, string camera, int bitspersample,  int sampleperpixel, string drontip, string operat)
+        void insertFile(string fname, string typ, string folder, DateTime creationTime, string location, string meteo, string content, double longi, double lati, string author, string purpose, Boolean publi, string comm, Int32 filesize, string imagesize, string camera, int bitspersample, int sampleperpixel, string drontip, string operat)
         {
             using (SQLiteConnection cnn = new SQLiteConnection(cnsb.ConnectionString))
             {
@@ -735,7 +732,7 @@ namespace catalog
 
         private void bttnFolderTree_Click(object sender, EventArgs e)
         {
-            frmFolderStructure folderStruc = new frmFolderStructure( this.Location.X + this.Size.Width);
+            frmFolderStructure folderStruc = new frmFolderStructure(this.Location.X + this.Size.Width);
             folderStruc.Show();
         }
 
@@ -743,7 +740,7 @@ namespace catalog
         {
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "SqLite database file|*.s3db";
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 defaultFileName = of.FileName;
                 dbConnection();
@@ -754,7 +751,7 @@ namespace catalog
         private void bttnQuery_Click(object sender, EventArgs e)
         {
             frmQueryEditor query = new frmQueryEditor(cnsb, getFieldNames());
-            if ( query.ShowDialog() == DialogResult.OK)
+            if (query.ShowDialog() == DialogResult.OK)
             {
                 bs.DataSource = query.dtOut;
             }
@@ -763,7 +760,7 @@ namespace catalog
         List<string> getFieldNames()
         {
             List<string> fields = new List<string>();
-            for(int i=0; i< dataGridView1.Columns.Count; i++)
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
                 fields.Add(dataGridView1.Columns[i].Name);
             }

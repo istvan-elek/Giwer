@@ -10,7 +10,7 @@ namespace Giwer.dataStock
         enum direction { UP, DOWN };
         direction dir = new direction();
 
-        public segmentationEdge( GeoImageData gimda)
+        public segmentationEdge(GeoImageData gimda)
         {
             gida = gimda;
         }
@@ -30,7 +30,7 @@ namespace Giwer.dataStock
             byte[] bndX = DetectBoundaries(byIn); //new byte[byIn.Length];  // szegmenshatárok X irányban
             byte[] bndY = transpose(DetectBoundaries(transpose(byIn)));   // szegmenshatárok Y irányban
             byte[] byOut = new byte[byIn.Length];
-            for (Int32 i=0; i<byIn.Length; i++)
+            for (Int32 i = 0; i < byIn.Length; i++)
             {
                 byOut[i] = (byte)(Math.Sqrt(bndX[i] * bndX[i] + bndY[i] * bndY[i]));
             }
@@ -70,7 +70,7 @@ namespace Giwer.dataStock
         byte[] bndOR(byte[] X, byte[] Y)
         {
             byte[] byOut = new byte[X.Length];
-            for (int i=0; i<X.Length;i++)
+            for (int i = 0; i < X.Length; i++)
             {
                 if (X[i] != 0 || Y[i] != 0) byOut[i] = 255;// (byte)(X[i] / 2 + Y[i] / 2);
             }
@@ -115,8 +115,8 @@ namespace Giwer.dataStock
                 {
                     if (puff.Count > 3) // csak akkor fut ez a rész, ha azélen futó pontok száma nagyobb 2-nél
                     {
-                        int ind = puff.Count / 2 ;
-                        if (!((i-ind) < 0))  bnd[i - ind] = byIn[i - ind];
+                        int ind = puff.Count / 2;
+                        if (!((i - ind) < 0)) bnd[i - ind] = byIn[i - ind];
                         if (diff < 0)
                         {
                             dir = direction.DOWN;
