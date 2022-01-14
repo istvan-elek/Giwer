@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Giwer.dataStock.Clustering.Model;
+using Giwer.dataStock.Clustering.Model.Supervised;
+using Giwer.dataStock.Clustering.Model.Supervised.RandomForest;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Giwer.dataStock.Clustering.Model;
-using Giwer.dataStock.Clustering.Model.Supervised;
-using Giwer.dataStock.Clustering.Model.Supervised.RandomForest;
 
 namespace Giwer.dataStock.Clustering.View
 {
@@ -202,10 +202,10 @@ namespace Giwer.dataStock.Clustering.View
 
         private Task<ISupervisedModel> GetModel(ISupervisedTrainer trainer)
         {
-             Progress<ClusteringProgress> progress = new Progress<ClusteringProgress>(ReportProgress);
+            Progress<ClusteringProgress> progress = new Progress<ClusteringProgress>(ReportProgress);
 
-             return trainer.TrainAsync(_trainingImage, bandSelectorControl.SelectedBands, _clusteringImage, SelectedClusteringBand,
-                                       progress, _cancellationTokenSource.Token);
+            return trainer.TrainAsync(_trainingImage, bandSelectorControl.SelectedBands, _clusteringImage, SelectedClusteringBand,
+                                      progress, _cancellationTokenSource.Token);
         }
 
         private void ShowPixelCountErrorMessage()
@@ -232,7 +232,7 @@ namespace Giwer.dataStock.Clustering.View
         }
 
         private void EndProgress()
-        { 
+        {
             _cancellationTokenSource.Dispose();
             ChangeInProgressState(false);
         }
@@ -311,7 +311,7 @@ namespace Giwer.dataStock.Clustering.View
             }
             return confirmed;
         }
-        
+
         private void InterruptionInProgress(bool state)
         {
             UseWaitCursor = state;

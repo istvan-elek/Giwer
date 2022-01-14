@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
 
 namespace Giwer.dataStock
 {
@@ -17,15 +14,15 @@ namespace Giwer.dataStock
         #region properties
         string _nameOfWorkflow;
         [CategoryAttribute("Workflow"), DescriptionAttribute("Name of wf")]
-        public string NameOfWorkflow 
+        public string NameOfWorkflow
         {
             get { return _nameOfWorkflow; }
-            set 
-            { 
+            set
+            {
                 _nameOfWorkflow = value;
                 if (!flagCreate) loadWorkflowFile();
                 proj.ProjectFileName = this.NameOfProject;
-            } 
+            }
         }
 
         string _nameOfProject;

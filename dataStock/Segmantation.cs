@@ -45,7 +45,7 @@ namespace Giwer.dataStock
                 {
                     sum += histo[j];  //összegzés a segmensen belül
                 }
-                sum /= (indEnd - indStart+1);
+                sum /= (indEnd - indStart + 1);
                 sValues.Add((byte)sum);
                 indStart = indEnd + 1;
             }
@@ -68,7 +68,7 @@ namespace Giwer.dataStock
 
             int indStart = 0;
             int indEnd = segBoundaries[0];
-            for (int i=0; i<segBoundaries.Length; i++)
+            for (int i = 0; i < segBoundaries.Length; i++)
             {
                 indEnd = segBoundaries[i];
                 for (int j = indStart; j < indEnd; j++)
@@ -79,7 +79,7 @@ namespace Giwer.dataStock
                 indStart = indEnd + 1;
             }
 
-            for (Int32 i=0; i<byIn.Length; i++)
+            for (Int32 i = 0; i < byIn.Length; i++)
             {
                 byOut[i] = h[byIn[i]];
             }
@@ -113,7 +113,7 @@ namespace Giwer.dataStock
         List<byte> DiffOneDimension(byte[] byIn, int eps)
         {
             List<byte> sBounds = new List<byte>();
-            for (byte i = 0; i < byIn.Length-1; i++)
+            for (byte i = 0; i < byIn.Length - 1; i++)
             {
                 int diff = Math.Abs(byIn[i] - byIn[i + 1]);
                 if (diff > eps)

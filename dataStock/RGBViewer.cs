@@ -19,12 +19,12 @@ namespace Giwer.dataStock
         //string DisplayImageSize;
         //Boolean flagGWR;
 
-        public RGBViewer(GeoImageData imgIn, string giwerDataFolder) 
+        public RGBViewer(GeoImageData imgIn, string giwerDataFolder)
         {
             InitializeComponent();
             imgDat = imgIn;
             imgTools = new GeoImageTools(imgDat);
-            if (imgDat.Nbands < 2) { MessageBox.Show("You have too few bands, thus RGB creation is not possible","Missing band", MessageBoxButtons.OK,MessageBoxIcon.Error); this.Close(); return; }
+            if (imgDat.Nbands < 2) { MessageBox.Show("You have too few bands, thus RGB creation is not possible", "Missing band", MessageBoxButtons.OK, MessageBoxIcon.Error); this.Close(); return; }
             //this.Location = Giwer.Properties.Settings.Default.StartLocation;
             loadChecklist(imgDat.Nbands);
             gwrDataFolder = giwerDataFolder;
@@ -40,7 +40,7 @@ namespace Giwer.dataStock
 
         void loadChecklist(int bands) //load the first 3 bands for creating rgb
         {
-            for (int i=0;i<bands;i++)
+            for (int i = 0; i < bands; i++)
             {
                 cmbBlue.Items.Add(i);
                 cmbGreen.Items.Add(i);
@@ -60,7 +60,7 @@ namespace Giwer.dataStock
                 imw.Dock = DockStyle.Fill;
                 imw.Show();
 
-                if (imgDat.FileType==GeoImageData.fTypes.BIL || imgDat.FileType == GeoImageData.fTypes.BSQ || imgDat.FileType == GeoImageData.fTypes.ENVI) // if files are ibn bil or envi format
+                if (imgDat.FileType == GeoImageData.fTypes.BIL || imgDat.FileType == GeoImageData.fTypes.BSQ || imgDat.FileType == GeoImageData.fTypes.ENVI) // if files are ibn bil or envi format
                 {
                     //flagGWR = false;
                     //createRGB_bil();
@@ -82,11 +82,11 @@ namespace Giwer.dataStock
                     imw.DrawImageRGB(imgDat, red, green, blue);
                     bttnHisto.Enabled = true;
                     bttnHistoEq.Enabled = true;
-                    tsBttnSaveImage.Enabled = true;                    
+                    tsBttnSaveImage.Enabled = true;
                 }
                 this.Cursor = Cursors.Default;
             }
-            else { MessageBox.Show("Too few bands were selected for RGB", "Missing band",MessageBoxButtons.OK,MessageBoxIcon.Exclamation); }
+            else { MessageBox.Show("Too few bands were selected for RGB", "Missing band", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
         }
 
         void getRGBbandsfromBil()
@@ -127,7 +127,7 @@ namespace Giwer.dataStock
 
             bmp = imgTools.ByteArrayToBitmap(byOut, imgDat.Ncols, imgDat.Nrows);
             this.Cursor = Cursors.Default;
-            return bmp;        
+            return bmp;
         }
 
         byte[] readGwrFile(string fName) // read the given giwer file

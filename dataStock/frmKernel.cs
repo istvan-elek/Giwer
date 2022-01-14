@@ -11,9 +11,9 @@ namespace Giwer.dataStock
         public double[,] Kernel;
         public int threshold = 0;
         byte[] byteIn;
-        int maxkernelSize=51;
+        int maxkernelSize = 51;
         string filterName;
-        
+
         public frmKernel(string filtername)
         {
             InitializeComponent();
@@ -21,7 +21,7 @@ namespace Giwer.dataStock
             setUpGroups();
         }
 
-        public frmKernel(string filtername,byte[] byIn)
+        public frmKernel(string filtername, byte[] byIn)
         {
             InitializeComponent();
             filterName = filtername;
@@ -92,12 +92,12 @@ namespace Giwer.dataStock
 
         void fillComboMedian()
         {
-            for (int i=3; i< maxkernelSize; i+=2) { cmbMedianLength.Items.Add(i); }
+            for (int i = 3; i < maxkernelSize; i += 2) { cmbMedianLength.Items.Add(i); }
         }
 
         void fillComboGauss()
         {
-            for (int i = 1; i < maxkernelSize/2; i++) { cmbPixelNumber.Items.Add(i); }
+            for (int i = 1; i < maxkernelSize / 2; i++) { cmbPixelNumber.Items.Add(i); }
         }
 
         private void cmbLenght_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace Giwer.dataStock
 
         private void tbThreshold_KeyDown(object sender, KeyEventArgs e)
         {
-            if (tbThreshold.Text=="Threshold value") { tbThreshold.Text = ""; }
+            if (tbThreshold.Text == "Threshold value") { tbThreshold.Text = ""; }
             int parsedValue;
             if (e.KeyCode == Keys.Enter)
             {
@@ -184,7 +184,7 @@ namespace Giwer.dataStock
         {
             Histogram3 histo = new Histogram3(byteIn, "");
             histo.bttnRecalcEqualiz.Text = "Set threshold";
-            if (histo.ShowDialog()==DialogResult.OK)
+            if (histo.ShowDialog() == DialogResult.OK)
             {
                 threshold = histo.IntMin;
                 tbThreshold.Text = threshold.ToString();
@@ -198,14 +198,14 @@ namespace Giwer.dataStock
             DataGridViewRow row = dgv.SelectedRows[0];
             int rowLength = dgv.Columns.Count;
             float[] val = new float[rowLength];
-            for (int i=0; i<rowLength;i++)
+            for (int i = 0; i < rowLength; i++)
             {
-                val[i] = Convert.ToSingle( row.Cells[i].Value);
+                val[i] = Convert.ToSingle(row.Cells[i].Value);
             }
-            string[] minmax= getMinMax(Kernel);
+            string[] minmax = getMinMax(Kernel);
             Single min = Convert.ToSingle(minmax[0]);
             Single max = Convert.ToSingle(minmax[1]);
-            frmShowKernel showKern = new frmShowKernel(val,min,max,e.RowIndex+1);
+            frmShowKernel showKern = new frmShowKernel(val, min, max, e.RowIndex + 1);
             showKern.Show();
         }
 

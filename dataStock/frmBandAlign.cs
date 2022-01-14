@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Giwer.dataStock
 {
@@ -49,7 +44,7 @@ namespace Giwer.dataStock
             bttnOK.Enabled = true;
             currentFolder = System.IO.Path.GetDirectoryName(gimda.FileName) + @"\" + System.IO.Path.GetFileNameWithoutExtension(gimda.FileName);
             stLabFolder.Text = "Current folder: " + currentFolder;
-            for (int i=0; i<gimda.Nbands; i++)
+            for (int i = 0; i < gimda.Nbands; i++)
             {
                 lstFiles.Items.Add("Band_" + i);
             }
@@ -60,7 +55,7 @@ namespace Giwer.dataStock
             lstFiles.Items.Clear();
             bttnOK.Enabled = true;
             currentFolder = System.IO.Path.GetDirectoryName(gimda.FileName);
-            stLabFolder.Text = "Current folder: " + currentFolder ;
+            stLabFolder.Text = "Current folder: " + currentFolder;
             fillList();
         }
 
@@ -86,7 +81,7 @@ namespace Giwer.dataStock
                 lstFiles.Items.RemoveAt(lstFiles.SelectedIndex);
                 imw.Clear(gimda);
                 panel1.Visible = false;
-                if (lstFiles.Items.Count==0) bttnOK.Enabled = false;
+                if (lstFiles.Items.Count == 0) bttnOK.Enabled = false;
             }
             else { MessageBox.Show("There is no selected item"); }
 
@@ -97,7 +92,7 @@ namespace Giwer.dataStock
             if (lstFiles.SelectedItem != null)
             {
                 GeoImageTools gtools = new GeoImageTools();
-                 
+
                 string fn = currentFolder + @"\" + lstFiles.SelectedItem.ToString().Split('_')[1] + ".gwr";
                 byte[] by = gtools.readGwrFile(fn);
                 imw.DrawImage(gimda, by, loadColorPalette(Application.StartupPath + "\\" + "default.cp"));
@@ -144,17 +139,17 @@ namespace Giwer.dataStock
         {
             shifts.Clear();
             pbar.Minimum = 0;
-            pbar.Maximum = lstFiles.Items.Count-1;
+            pbar.Maximum = lstFiles.Items.Count - 1;
             pbar.Step = 1;
             pbar.Value = 0;
             pbar.Visible = true;
-            cropMargin = 100*(int)(gimda.Nrows / 300);
-            offset = (int)(cropMargin/15);
+            cropMargin = 100 * (int)(gimda.Nrows / 300);
+            offset = (int)(cropMargin / 15);
             GeoImageTools gtools = new GeoImageTools(gimda);
             List<float> listOfDiffs;
             List<string> listOfInds;
-            Point startp1 = new Point(gimda.Ncols / 2- cropMargin/2 , gimda.Nrows / 2 - cropMargin/2);
-            string fname1 = currentFolder + "\\" +  lstFiles.Items[0].ToString().Split('_')[1] + ".gwr";
+            Point startp1 = new Point(gimda.Ncols / 2 - cropMargin / 2, gimda.Nrows / 2 - cropMargin / 2);
+            string fname1 = currentFolder + "\\" + lstFiles.Items[0].ToString().Split('_')[1] + ".gwr";
             byte[] fileToCombine1 = ClipImage(gtools.readGwrFile(fname1), startp1, new Size(cropMargin, cropMargin), gimda.Ncols, gimda.Nrows);
             Point startp2 = startp1;
             shifts.Add("0;0");
@@ -233,7 +228,7 @@ namespace Giwer.dataStock
             int miny = min;
             int maxx = max;
             int maxy = max;
-            int minindex=min;
+            int minindex = min;
             int maxindex = -min; ;
             for (int i = 0; i < shifts.Count; i++)
             {
@@ -258,9 +253,9 @@ namespace Giwer.dataStock
             byte[] difference; // = new byte[im3.Length];
             GeoImageTools gtools = new GeoImageTools(gimda);
             int halfoffset = offset / 2;
-            for (Int32 i= -halfoffset; i< halfoffset; i++)
+            for (Int32 i = -halfoffset; i < halfoffset; i++)
             {
-                for (Int32 j= -halfoffset; j < halfoffset; j++)
+                for (Int32 j = -halfoffset; j < halfoffset; j++)
                 {
                     im3 = ClipImage(im2, new Point(startpoint.X + j, startpoint.Y + i), sz, gimda.Ncols, gimda.Nrows);
                     difference = gtools.combine2Images(GeoImageTools.OperationType.Minus, im1, im3);

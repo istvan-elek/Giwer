@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GMap.NET;
 
 namespace catalog
 {
     public partial class frmGMap : Form
     {
-        double longi = 47.47495D; 
+        double longi = 47.47495D;
         double lati = 19.06222D;
         List<string> maplist = new List<string>();
         public frmGMap(List<string> pnt)
@@ -61,8 +54,8 @@ namespace catalog
                     gMap.Position = new GMap.NET.PointLatLng(longi, lati);
                 }
             }
-            else 
-            { 
+            else
+            {
                 gMap.Position = new GMap.NET.PointLatLng(longi, lati);
                 GMap.NET.WindowsForms.GMapOverlay markers = new GMap.NET.WindowsForms.GMapOverlay("markers");
                 GMap.NET.WindowsForms.GMapMarker marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(new GMap.NET.PointLatLng(longi, lati), GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_small);

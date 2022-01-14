@@ -7,57 +7,57 @@ namespace Giwer.dataStock
     public class dtm
     {
 
-//public properties
+        //public properties
         private string _secName;
-        public string SectionName 
+        public string SectionName
         {
-            get { return _secName;}
+            get { return _secName; }
         }
 
         private string _spatialSystem;
-        public string SpatialSystem 
+        public string SpatialSystem
         {
-            get {return _spatialSystem ;}
+            get { return _spatialSystem; }
         }
 
         private int _nrow;
-        public int nRow 
+        public int nRow
         {
-            get { return _nrow;} 
+            get { return _nrow; }
         }
 
         private int _ncol;
-        public int nCol 
+        public int nCol
         {
-            get {return _ncol ;} 
+            get { return _ncol; }
         }
 
         private int _gridsize;
-        public int gridSize 
+        public int gridSize
         {
             get { return _gridsize; }
         }
 
         private float _xmin;
-        public float Xmin 
+        public float Xmin
         {
-            get { return _xmin;} 
+            get { return _xmin; }
         }
 
         private float _xmax;
-        public float Xmax 
+        public float Xmax
         {
             get { return _xmax; }
         }
 
         private float _ymin;
-        public float Ymin 
+        public float Ymin
         {
             get { return _ymin; }
         }
 
         private float _ymax;
-        public float Ymax 
+        public float Ymax
         {
             get { return _ymax; }
         }
@@ -75,16 +75,16 @@ namespace Giwer.dataStock
         }
 
         private string _filename;
-        public string FileName 
+        public string FileName
         {
-            get { return _filename;}
+            get { return _filename; }
 
-            set 
+            set
             {
-                _filename=value;
-                readParameters(Path.ChangeExtension(_filename,"hdr"));
+                _filename = value;
+                readParameters(Path.ChangeExtension(_filename, "hdr"));
                 readDDM();
-            } 
+            }
         }
 
         private float[,] _dem;
@@ -92,7 +92,7 @@ namespace Giwer.dataStock
         {
             get { return _dem; }
         }
-        
+
         private Bitmap _demBitmap;
         public Bitmap demBitmap
         {
@@ -102,7 +102,7 @@ namespace Giwer.dataStock
 
         private void readDDM()
         {
-            _demBitmap = new Bitmap(_ncol,_nrow,System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            _demBitmap = new Bitmap(_ncol, _nrow, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             _dem = new float[_ncol, _nrow];
 
             using (FileStream fs = new FileStream(_filename, FileMode.Open, FileAccess.Read))
@@ -112,7 +112,7 @@ namespace Giwer.dataStock
                 float max = 0F;
                 for (int i = 0; i < _nrow; i++) // min max search
                 {
-                    for (int j = 0; j < _ncol; j++ )
+                    for (int j = 0; j < _ncol; j++)
                     {
                         int b = br.ReadInt16();
                         _dem[j, i] = b;
@@ -122,15 +122,15 @@ namespace Giwer.dataStock
                 }
                 _elevmin = min;
                 _elevmax = max;
-                float minmax=max-min;
-                fs.Position = 0;               
+                float minmax = max - min;
+                fs.Position = 0;
                 for (int i = 0; i < _nrow; i++)  //convert to 0 - 255 interval
                 {
                     for (int j = 0; j < _ncol; j++)
                     {
                         float b = br.ReadInt16();
                         int c = (int)((b - min) / minmax * 255F);
-                        Color col=Color.FromArgb(c,c,c);
+                        Color col = Color.FromArgb(c, c, c);
                         _demBitmap.SetPixel(j, i, col);
                     }
                 }
@@ -150,7 +150,7 @@ namespace Giwer.dataStock
             _nrow = Convert.ToInt16(s[10].Split(' ')[0]);
             _ncol = Convert.ToInt16(s[10].Split(' ')[1]);
 
-            string xmn = (s[2].Split(' ')[0]).Replace('.',',');
+            string xmn = (s[2].Split(' ')[0]).Replace('.', ',');
             _xmin = Convert.ToSingle(xmn);
             string ymn = s[2].Split(' ')[1].Replace('.', ',');
             _ymin = Convert.ToSingle(ymn);

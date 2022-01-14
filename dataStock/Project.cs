@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System;
 
 
 namespace Giwer.dataStock
 {
     public class Project
     {
-#region properties
-        string _projfilename ="";
+        #region properties
+        string _projfilename = "";
         public string ProjectFileName
         {
             get { return _projfilename; }
@@ -62,9 +62,9 @@ namespace Giwer.dataStock
             get { return _projectDescription; }
             set { _projectDescription = value; }
         }
-#endregion
+        #endregion
 
-#region methods
+        #region methods
         public void loadProjectFile()
         {
             string flag = "";
@@ -112,7 +112,7 @@ namespace Giwer.dataStock
             _filenames.Clear();
             _projectDescription = "";
         }
-#endregion
+        #endregion
 
     }
 }

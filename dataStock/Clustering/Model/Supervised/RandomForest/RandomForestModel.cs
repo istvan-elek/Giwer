@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Concurrent;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Giwer.dataStock.Clustering.Model.Supervised.RandomForest
 {
@@ -33,7 +33,7 @@ namespace Giwer.dataStock.Clustering.Model.Supervised.RandomForest
         }
 
         private RandomForestModel()
-        { 
+        {
         }
 
         private void SetMajorityCount()

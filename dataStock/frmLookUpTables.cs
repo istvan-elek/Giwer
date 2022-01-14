@@ -38,7 +38,7 @@ namespace Giwer.dataStock
         void fillBaseColors()
         {
             dgvLUT.Columns.Clear();
-            colorStep = (int)(256/Convert.ToInt16(tbNumOfColors.Text));
+            colorStep = (int)(256 / Convert.ToInt16(tbNumOfColors.Text));
             dgvLUT.Columns.Add("Start", "Start");
             //dgvLUT.Columns[0].ReadOnly = true;
             dgvLUT.Columns.Add("Color", "Color");
@@ -46,13 +46,13 @@ namespace Giwer.dataStock
             dgvLUT.Columns.Add("Category", "Category");
 
             numOfColors = Convert.ToInt16(tbNumOfColors.Text);
-            for (int i=0; i<numOfColors;i++)
+            for (int i = 0; i < numOfColors; i++)
             {
                 dgvLUT.Rows.Add();
-                dgvLUT.Rows[i].Cells[0].Value = i*colorStep;
+                dgvLUT.Rows[i].Cells[0].Value = i * colorStep;
             }
             dgvLUT.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            for (int j=0; j< numOfColors; j++)
+            for (int j = 0; j < numOfColors; j++)
             {
                 dgvLUT.Rows[j].Cells["Color"].Style.BackColor = dgvCP.Rows[j * colorStep].Cells["Color"].Style.BackColor;
             }
@@ -69,7 +69,7 @@ namespace Giwer.dataStock
             dgvCP.Columns.Add("Alfa", "Alfa");
             dgvCP.Columns.Add("Color", "Color");
             dgvCP.Columns["Color"].ReadOnly = true;
-            for (int i=0; i<256; i++)
+            for (int i = 0; i < 256; i++)
             {
                 dgvCP.Rows.Add();
                 dgvCP.Rows[i].Cells[0].Value = i;
@@ -100,7 +100,7 @@ namespace Giwer.dataStock
                     dgvCP.Columns.Add("Alfa", "Alfa");  // Alfa column
                     dgvCP.Columns.Add("Color", "Color");  // Color column
                     for (int i = 0; i < 256; i++)
-                    {                       
+                    {
                         dgvCP.Rows.Add();
                         line = sr.ReadLine();
                         ln = line.Split(';');
@@ -117,7 +117,7 @@ namespace Giwer.dataStock
             }
         }
 
-        private void bttnSave_Click(object sender, EventArgs e) 
+        private void bttnSave_Click(object sender, EventArgs e)
         {
             saveCP2File(actualCPName + ".cp");
             MessageBox.Show(actualCPName + ".cp successfuly saved");
@@ -127,13 +127,13 @@ namespace Giwer.dataStock
         {
             using (FileStream fs = new FileStream(fname, FileMode.Create, FileAccess.Write))
             {
-                using (StreamWriter sr=new StreamWriter(fs))
+                using (StreamWriter sr = new StreamWriter(fs))
                 {
                     string wrSt = "Index;Color";
                     sr.WriteLine(wrSt);
                     for (int i = 0; i < 256; i++)
                     {
-                        wrSt = dgvCP.Rows[i].Cells[0].Value + ";"  + ColorTranslator.ToWin32(dgvCP.Rows[i].Cells[5].Style.BackColor);
+                        wrSt = dgvCP.Rows[i].Cells[0].Value + ";" + ColorTranslator.ToWin32(dgvCP.Rows[i].Cells[5].Style.BackColor);
                         sr.WriteLine(wrSt);
                     }
                     sr.Flush();
@@ -144,7 +144,7 @@ namespace Giwer.dataStock
         private void bttnCreateNewCP_Click(object sender, EventArgs e) // create new color palette and LUT
         {
             frmTextInput frmNewLut = new frmTextInput("LUT name");
-            if (frmNewLut.ShowDialog()==DialogResult.OK)
+            if (frmNewLut.ShowDialog() == DialogResult.OK)
             {
                 actualCPName = frmNewLut.inpuText;
                 createNewCP();
@@ -198,7 +198,7 @@ namespace Giwer.dataStock
             {
                 if (cmbColPaletteTables.SelectedIndex > -1)
                 {
-                    if (MessageBox.Show("Are you going to delete this colorpalette and LUT?","Delete colorpalette and LUT", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK)
+                    if (MessageBox.Show("Are you going to delete this colorpalette and LUT?", "Delete colorpalette and LUT", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     {
                         actualCPName = cmbColPaletteTables.SelectedItem.ToString();
                         cmbColPaletteTables.Items.RemoveAt(cmbColPaletteTables.SelectedIndex);
@@ -213,7 +213,7 @@ namespace Giwer.dataStock
 
         private void dgvBaseColors_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex==1)
+            if (e.ColumnIndex == 1)
             {
                 int[] custom_colors = new int[1];
                 ColorDialog cold = new ColorDialog();
@@ -235,11 +235,11 @@ namespace Giwer.dataStock
         {
             int k = 0;
             int l = 0;
-            for (int i=1; i < dgvLUT.Rows.Count-1; i++)
+            for (int i = 1; i < dgvLUT.Rows.Count - 1; i++)
             {
-                for (int j= Convert.ToInt16(dgvLUT.Rows[i-1].Cells[0].Value); j < Convert.ToInt16(dgvLUT.Rows[i].Cells[0].Value); j++)
+                for (int j = Convert.ToInt16(dgvLUT.Rows[i - 1].Cells[0].Value); j < Convert.ToInt16(dgvLUT.Rows[i].Cells[0].Value); j++)
                 {
-                    dgvCP.Rows[k].Cells["Color"].Style.BackColor = dgvLUT.Rows[i-1].Cells["Color"].Style.BackColor;
+                    dgvCP.Rows[k].Cells["Color"].Style.BackColor = dgvLUT.Rows[i - 1].Cells["Color"].Style.BackColor;
                     k++;
                 }
                 l = i;
@@ -284,7 +284,7 @@ namespace Giwer.dataStock
                         Int32 c = Convert.ToInt32(ln[1]);
                         Color col = ColorTranslator.FromWin32(c);
                         dgvLUT.Rows[i].Cells[2].Value = ln[2];
-                        dgvLUT.Rows[i].Cells[1].Style.BackColor = col; 
+                        dgvLUT.Rows[i].Cells[1].Style.BackColor = col;
                         i += 1;
                     }
                 }
@@ -305,7 +305,7 @@ namespace Giwer.dataStock
                 {
                     string wrSt = "Start;Color;Category";
                     sr.WriteLine(wrSt);
-                    for (int i = 0; i < dgvLUT.Rows.Count-1; i++)
+                    for (int i = 0; i < dgvLUT.Rows.Count - 1; i++)
                     {
                         wrSt = dgvLUT.Rows[i].Cells[0].Value + ";" + ColorTranslator.ToWin32(dgvLUT.Rows[i].Cells[1].Style.BackColor) + ";" + dgvLUT.Rows[i].Cells[2].Value;
                         sr.WriteLine(wrSt);
@@ -319,14 +319,14 @@ namespace Giwer.dataStock
         {
             if (e.KeyCode == Keys.Enter)
             {
-                int d = Convert.ToInt16(tbNumOfColors.Text) - dgvLUT.Rows.Count+1;
+                int d = Convert.ToInt16(tbNumOfColors.Text) - dgvLUT.Rows.Count + 1;
                 int count = dgvLUT.Rows.Count;
                 if (d == 0) return;
                 if (d < 0)
                 {
-                    for (int i=0; i < -d; i++)
+                    for (int i = 0; i < -d; i++)
                     {
-                        dgvLUT.Rows.RemoveAt(dgvLUT.Rows[count -2 - i].Index);
+                        dgvLUT.Rows.RemoveAt(dgvLUT.Rows[count - 2 - i].Index);
                     }
                 }
                 if (d > 0)

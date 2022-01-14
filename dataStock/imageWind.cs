@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Giwer.dataStock
 {
@@ -21,8 +20,8 @@ namespace Giwer.dataStock
         byte[] imageIn;
         //byte[,] imIn2D;
         byte[] actualImage;
-        Point startPosImage; 
-        Point endPosImage; 
+        Point startPosImage;
+        Point endPosImage;
         byte[] iminRed;
         byte[] iminGreen;
         byte[] iminBlue;
@@ -31,10 +30,10 @@ namespace Giwer.dataStock
         byte[] actualiminBlue;
         Int32[] colorPal;
         Size sizeClipedImage;
-        Point imageStartIndex=new Point(0,0);
+        Point imageStartIndex = new Point(0, 0);
         Boolean flagRGB;
-        frmSpectrum spectrum=new frmSpectrum();
-        Point [] spec;
+        frmSpectrum spectrum = new frmSpectrum();
+        Point[] spec;
 
         public event EventHandler<Tuple<int, int, int>> MouseClicked;
 
@@ -45,8 +44,8 @@ namespace Giwer.dataStock
             Point cur = imgPoint2WindowPoint(new Point(x, y));
             Graphics gr = pb.CreateGraphics();
             Pen p = new Pen(col, 2.0f);
-            gr.DrawLine(p, cur.X, cur.Y-10, cur.X, cur.Y+10);
-            gr.DrawLine(p, cur.X-10, cur.Y, cur.X+10, cur.Y);
+            gr.DrawLine(p, cur.X, cur.Y - 10, cur.X, cur.Y + 10);
+            gr.DrawLine(p, cur.X - 10, cur.Y, cur.X + 10, cur.Y);
         }
 
         public void DrawLine(int locInd1, int locInd2, Color col)
@@ -65,7 +64,7 @@ namespace Giwer.dataStock
         public void fillPolygon(List<int> vertices, Color col)
         {
             Point[] curvePoints = new Point[vertices.Count];
-            for (int i=0; i<vertices.Count; ++i)
+            for (int i = 0; i < vertices.Count; ++i)
             {
                 int y = vertices[i] / gimda.Ncols;
                 int x = vertices[i] % gimda.Ncols;
@@ -106,7 +105,7 @@ namespace Giwer.dataStock
         public void LoadImageFromFile(string fileName)  // load an image to picture box (pb) from files (jpg vagy tif)
         {
             Image img = Image.FromFile(fileName);
-            pb.Image = img;            
+            pb.Image = img;
         }
 
         public void LoadImageFromFile(Bitmap bmp)
@@ -209,7 +208,7 @@ namespace Giwer.dataStock
                 newX += diffWidth;
                 newY /= ratioHeight;
             }
-            return new Point((int)newX , (int)newY );
+            return new Point((int)newX, (int)newY);
         }
 
         public Point TranslateZoomMousePosition(Point coordinates, Image pbImage) // convert cursor position to image pixels' position
@@ -291,7 +290,7 @@ namespace Giwer.dataStock
             Graphics gr = pb.CreateGraphics();
             Pen p = new Pen(Color.White);
             //gr.DrawRectangle(new Pen(Color.White), startx, starty, Math.Abs((newx - startx)), Math.Abs((newy - starty)));
-            gr.DrawLine(p, startx, starty, startx , newy);
+            gr.DrawLine(p, startx, starty, startx, newy);
             gr.DrawLine(p, startx, starty, newx, starty);
             gr.DrawLine(p, newx, starty, newx, newy);
             gr.DrawLine(p, newx, newy, startx, newy);
@@ -326,7 +325,7 @@ namespace Giwer.dataStock
 
 
         private void Pb_MouseMove(object sender, MouseEventArgs e)
-        {        
+        {
             if (tsbttnSpectrum.Checked)
             {
                 if (e.Button == MouseButtons.Right)
@@ -406,7 +405,7 @@ namespace Giwer.dataStock
                 float clipedImageAspect = (int)((float)(startPosImage.X - endPosImage.X) / (float)(startPosImage.Y - endPosImage.Y));
                 if (clipedImageAspect >= controlAspect) sizeClipedImage = new Size((int)(float)((endPosImage.Y - startPosImage.Y) * controlAspect), endPosImage.Y - startPosImage.Y);
                 else sizeClipedImage = new Size((int)(endPosImage.X - startPosImage.X), (int)(float)((endPosImage.X - startPosImage.X) / controlAspect + 0.5F));
-                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width+10) / 20);
+                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20);
                 if (startPosImage.X + sizeClipedImage.Width > width) startPosImage.X = width - sizeClipedImage.Width;
                 if (startPosImage.Y + sizeClipedImage.Height > height) startPosImage.Y = height - sizeClipedImage.Height;
                 if (!flagRGB)  // if we are drawing a single band image
@@ -432,16 +431,16 @@ namespace Giwer.dataStock
             }
             if (bttnPan.Checked)  // if pan mode is active
             {
-                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width+10) / 20);
+                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20);
                 if ((width == gimda.Ncols) && (height == gimda.Nrows)) return;
                 drawRectangleBool = false;
                 Point loc = TranslateZoomMousePosition(e.Location, pb.Image);
                 Point cur = new Point(imageStartIndex.X + loc.X, imageStartIndex.Y + loc.Y);
                 //lb1.Text = "Pan point in image: (X:" + cur.X + " Y:" + cur.Y + ")";
-                imageStartIndex.X = cur.X - sizeClipedImage.Width / 2; 
+                imageStartIndex.X = cur.X - sizeClipedImage.Width / 2;
                 if (imageStartIndex.X < 0) imageStartIndex.X = 0;
                 if (imageStartIndex.X + sizeClipedImage.Width > gimda.Ncols) imageStartIndex.X = gimda.Ncols - sizeClipedImage.Width;
-                imageStartIndex.Y = cur.Y - sizeClipedImage.Height / 2; 
+                imageStartIndex.Y = cur.Y - sizeClipedImage.Height / 2;
                 if (imageStartIndex.Y < 0) imageStartIndex.Y = 0;
                 if (imageStartIndex.Y + sizeClipedImage.Height > gimda.Nrows) imageStartIndex.Y = gimda.Nrows - sizeClipedImage.Height;
                 if (!flagRGB) // if we are drawing a single band image
@@ -473,7 +472,7 @@ namespace Giwer.dataStock
             {
                 for (Int32 j = imStart.X; j < endx; j++)
                 {
-                    byOut[k] = byIn[j + i*IWidth];
+                    byOut[k] = byIn[j + i * IWidth];
                     k++;
                 }
             }
@@ -559,8 +558,8 @@ namespace Giwer.dataStock
         {
             width = gimda.Ncols;
             height = gimda.Nrows;
-            sizeClipedImage.Width=width;
-            sizeClipedImage.Height=height;
+            sizeClipedImage.Width = width;
+            sizeClipedImage.Height = height;
             if (!flagRGB)
             {
                 DrawImage(gimda, imageIn, colorPal);
@@ -570,7 +569,7 @@ namespace Giwer.dataStock
                 DrawImageRGB(gimda, iminRed, iminGreen, iminBlue);
             }
             imageStartIndex = new Point(0, 0);
-             bttnPlus.Checked = true;
+            bttnPlus.Checked = true;
             bttnPan.Checked = false;
             pb.Cursor = Cursors.Default;
             bttnPan.Enabled = false;
@@ -601,7 +600,7 @@ namespace Giwer.dataStock
 
         public Bitmap GetImage()
         {
-            return (Bitmap)pb.Image;           
+            return (Bitmap)pb.Image;
         }
 
         private void tsbttnCompas_Click(object sender, EventArgs e)
@@ -622,15 +621,15 @@ namespace Giwer.dataStock
             Pen pen = new Pen(Color.FromArgb(255, 0, 0), 8);
             pen.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
             pen.EndCap = System.Drawing.Drawing2D.LineCap.NoAnchor;
-            double alfa = -Math.PI * gimda.Camera_yaw/180;
+            double alfa = -Math.PI * gimda.Camera_yaw / 180;
             int centerX = 30;
             int centerY = 30;
             int eps = 10;
             int radius = 25;
-            int x2 = Convert.ToInt16(centerX - (centerX-eps)* Math.Sin(alfa));
-            int y2 = Convert.ToInt16(centerY +(centerY-eps) * Math.Cos(alfa));
-            int x1 = Convert.ToInt16(centerX + (centerX-eps)* Math.Sin(alfa));
-            int y1 = Convert.ToInt16(centerY - (centerY-eps) * Math.Cos(alfa));
+            int x2 = Convert.ToInt16(centerX - (centerX - eps) * Math.Sin(alfa));
+            int y2 = Convert.ToInt16(centerY + (centerY - eps) * Math.Cos(alfa));
+            int x1 = Convert.ToInt16(centerX + (centerX - eps) * Math.Sin(alfa));
+            int y1 = Convert.ToInt16(centerY - (centerY - eps) * Math.Cos(alfa));
             SolidBrush rBrush = new SolidBrush(Color.FromArgb(100, 255, 255, 255));
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             e.Graphics.FillEllipse(rBrush, centerX - radius, centerY - radius, radius + radius, radius + radius);

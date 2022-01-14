@@ -44,7 +44,7 @@ namespace Giwer.dataStock
 
         void setSegValuesforChart()
         {
-            for (int i=0; i< seg.segBoundaries.Length; i++)
+            for (int i = 0; i < seg.segBoundaries.Length; i++)
             {
                 y2[seg.segBoundaries[i]] = seg.segValues[i];
             }
@@ -52,7 +52,7 @@ namespace Giwer.dataStock
 
         private void bttnDisplayResult_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;           
+            DialogResult = DialogResult.OK;
             segmentedImage = seg.computeSegmentedImage();  //seg.segmentedImage;
             this.Close();
         }
@@ -98,7 +98,7 @@ namespace Giwer.dataStock
 
         private void tbThresh_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 PerformSeg();
             }

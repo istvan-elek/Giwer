@@ -42,7 +42,7 @@ namespace Giwer.dataStock.Clustering.Model.Loader
         }
 
         private byte[][] InitJagged(int firstDim, int secondDim)
-        { 
+        {
             byte[][] jaggedArray = new byte[firstDim][];
             for (int i = 0; i < firstDim; i++)
             {
@@ -50,7 +50,7 @@ namespace Giwer.dataStock.Clustering.Model.Loader
             }
             return jaggedArray;
         }
-        
+
         private byte[] LoadContinuous(Action<byte[], byte[], int> setAtBand)
         {
             byte[] values = new byte[PointCount * BandCount];

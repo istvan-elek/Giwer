@@ -24,7 +24,7 @@ namespace Giwer.dataStock
                 int d = bNIR[i] + bIR[i];
                 if (d > 0)
                 {
-                    int nd = (255 * (bNIR[i] - 
+                    int nd = (255 * (bNIR[i] -
                         bIR[i])) / d;
                     if (nd < 0) { nd = 0; }
                     ndvi[i] = (byte)nd;

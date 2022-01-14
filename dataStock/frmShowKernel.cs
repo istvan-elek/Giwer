@@ -6,7 +6,7 @@ namespace Giwer.dataStock
     public partial class frmShowKernel : Form
     {
         int Xmax = 15;
-        int Xmin=-15;
+        int Xmin = -15;
         int[] x;
         float[] y;
         //float[] hiperbola;
@@ -29,7 +29,7 @@ namespace Giwer.dataStock
             y = new float[values.Length];
             zeroAxis = new int[values.Length];
             //hiperbola = new float[values.Length];
-            initChart(values.Length,values);
+            initChart(values.Length, values);
             drawHisto();
         }
 
@@ -38,13 +38,13 @@ namespace Giwer.dataStock
         {
             for (int i = 0; i < length; i++)
             {
-                x[i] = i-halflength;
+                x[i] = i - halflength;
                 y[i] = val[i];
                 zeroAxis[i] = 0;
 
                 //if (i != halflength)
                 //{
-                    //hiperbola[i] = 1F / ( i - halflength - 1 +0.00000000001F);
+                //hiperbola[i] = 1F / ( i - halflength - 1 +0.00000000001F);
                 //}
                 //else
                 //{

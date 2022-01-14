@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Giwer.dataStock.Clustering.Model.Loader;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Giwer.dataStock.Clustering.Model.Loader;
 
 namespace Giwer.dataStock.Clustering.Model.Supervised
 {
@@ -12,7 +12,7 @@ namespace Giwer.dataStock.Clustering.Model.Supervised
         public SupervisedClustering(ISupervisedModel model)
         {
             _model = model;
-        }        
+        }
 
         public override int ClusterNum { get; protected set; }
 

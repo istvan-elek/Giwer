@@ -22,7 +22,7 @@ namespace Giwer.dataStock
 
         void fillCombo()
         {
-            for (int i=0; i< gimda.Nbands; i++)
+            for (int i = 0; i < gimda.Nbands; i++)
             {
                 cmbBand1.Items.Add(i);
                 cmbBand2.Items.Add(i);
@@ -32,7 +32,7 @@ namespace Giwer.dataStock
         private void bttnCombineOK_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
-            filename1 = System.IO.Path.GetDirectoryName(gimda.FileName) + "\\" +  System.IO.Path.GetFileNameWithoutExtension(gimda.FileName) + "\\" + cmbBand1.SelectedItem + ".gwr";
+            filename1 = System.IO.Path.GetDirectoryName(gimda.FileName) + "\\" + System.IO.Path.GetFileNameWithoutExtension(gimda.FileName) + "\\" + cmbBand1.SelectedItem + ".gwr";
             filename2 = System.IO.Path.GetDirectoryName(gimda.FileName) + "\\" + System.IO.Path.GetFileNameWithoutExtension(gimda.FileName) + "\\" + cmbBand2.SelectedItem + ".gwr";
             this.Close();
         }

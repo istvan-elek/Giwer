@@ -1,17 +1,10 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 //using Npgsql;
 //using NpgsqlTypes;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
 namespace catalog
 {
@@ -69,7 +62,7 @@ namespace catalog
                 using (SQLiteCommand cmd = new SQLiteCommand())
                 {
                     cmd.Connection = cnn;
-                    
+
                     SQLiteParameter par = cmd.CreateParameter();
                     par.ParameterName = field;
                     //par.DbType = DbType.;
@@ -115,9 +108,9 @@ namespace catalog
                     }
                     string wh = "";
 
-                    for (int j=0; j< field.Count; j++)
+                    for (int j = 0; j < field.Count; j++)
                     {
-                        wh += " " + field[j] + " " + oper[j] + " '" + @pars[j].Value + "' " + AndOr[j];                     
+                        wh += " " + field[j] + " " + oper[j] + " '" + @pars[j].Value + "' " + AndOr[j];
                     }
 
                     sql = "SELECT * FROM images WHERE " + wh;
@@ -174,7 +167,7 @@ namespace catalog
                 whereOperators.Insert(0, cmbOperator.SelectedItem.ToString());
                 whereValues.Insert(0, tbValue.Text);
                 whereAndOr.Add("");
-                for (int i=0; i<whereFields.Count;i++)
+                for (int i = 0; i < whereFields.Count; i++)
                 {
                     where += whereFields[i].ToString() + " " + whereOperators[i].ToString() + " " + whereValues[i].ToString() + " " + whereAndOr[i] + " ";
                 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Giwer.dataStock;
+﻿using Giwer.dataStock;
 
 namespace Giwer.workflowBuilder
 {

@@ -30,15 +30,15 @@ namespace Giwer.dataStock
 
         private void bttnGo_Click(object sender, EventArgs e)
         {
-            if (tbValue.Text=="" )
+            if (tbValue.Text == "")
             {
                 MessageBox.Show("Selection value has not been set"); return;
             }
-            if (Convert.ToInt16(tbSelectedIntValue.Text) >255 || Convert.ToInt16(tbElseValue.Text) >255)
+            if (Convert.ToInt16(tbSelectedIntValue.Text) > 255 || Convert.ToInt16(tbElseValue.Text) > 255)
             {
                 MessageBox.Show("The given value is biger then 255"); return;
             }
-            if (Convert.ToInt16(tbSelectedIntValue.Text) <  0 || Convert.ToInt16(tbElseValue.Text) <0)
+            if (Convert.ToInt16(tbSelectedIntValue.Text) < 0 || Convert.ToInt16(tbElseValue.Text) < 0)
             {
                 MessageBox.Show("The marked value (selected) is smaller then 0"); return;
             }
@@ -52,15 +52,15 @@ namespace Giwer.dataStock
                 case "=":
                     for (Int32 i = 0; i < byIn.Length; i++)
                     {
-                        if (byIn[i] == Convert.ToByte(tbValue.Text)) 
+                        if (byIn[i] == Convert.ToByte(tbValue.Text))
                         { byOut[i] = Convert.ToByte(tbSelectedIntValue.Text); }
                         else { byOut[i] = Convert.ToByte(tbElseValue.Text); }
-                    }                    
+                    }
                     break;
                 case "!=":
                     for (Int32 i = 0; i < byIn.Length; i++)
                     {
-                        if (byIn[i] != Convert.ToByte(tbValue.Text)) 
+                        if (byIn[i] != Convert.ToByte(tbValue.Text))
                         { byOut[i] = Convert.ToByte(tbSelectedIntValue.Text); }
                         else { byOut[i] = Convert.ToByte(tbElseValue.Text); }
                     }
@@ -70,15 +70,15 @@ namespace Giwer.dataStock
                     {
                         if (byIn[i] < Convert.ToByte(tbValue.Text))
                         { byOut[i] = Convert.ToByte(tbSelectedIntValue.Text); }
-                        else { byOut[i] = Convert.ToByte(tbElseValue.Text); } 
+                        else { byOut[i] = Convert.ToByte(tbElseValue.Text); }
                     }
                     break;
                 case ">":
                     for (Int32 i = 0; i < byIn.Length; i++)
                     {
-                        if (byIn[i] > Convert.ToByte(tbValue.Text)) 
+                        if (byIn[i] > Convert.ToByte(tbValue.Text))
                         { byOut[i] = Convert.ToByte(tbSelectedIntValue.Text); }
-                        else { byOut[i] = Convert.ToByte(tbElseValue.Text); } 
+                        else { byOut[i] = Convert.ToByte(tbElseValue.Text); }
                     }
                     break;
             }
@@ -118,11 +118,11 @@ namespace Giwer.dataStock
             {
                 MessageBox.Show("Upper or Lower values have not been set"); return;
             }
-            if (Convert.ToInt16(tbUpperValue.Text) > 255 || Convert.ToInt16(tbLowerValue.Text) > 255 )
+            if (Convert.ToInt16(tbUpperValue.Text) > 255 || Convert.ToInt16(tbLowerValue.Text) > 255)
             {
                 MessageBox.Show("Upper or Lower value is biger then 255"); return;
             }
-            if (Convert.ToInt16(tbValueIntBetween.Text) > 255 )
+            if (Convert.ToInt16(tbValueIntBetween.Text) > 255)
             {
                 MessageBox.Show("The marked value (selected) is biger then 255"); return;
             }

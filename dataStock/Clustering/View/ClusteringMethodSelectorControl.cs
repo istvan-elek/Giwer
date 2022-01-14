@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-
-using Giwer.dataStock.Clustering.Model;
+﻿using Giwer.dataStock.Clustering.Model;
 using Giwer.dataStock.Clustering.Model.CentroidBased;
 using Giwer.dataStock.Clustering.Model.Supervised;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Giwer.dataStock.Clustering.View
 {

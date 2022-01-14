@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using Giwer.dataStock.Clustering.Model.Distance;
+using System.Collections;
 using System.Collections.Generic;
-using Giwer.dataStock.Clustering.Model.Distance;
 
 namespace Giwer.dataStock.Clustering.Model.CentroidBased
 {
@@ -39,7 +39,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
             {
                 PointIndices.Add(pointInd);
             }
-            
+
             public IEnumerator<byte[]> GetEnumerator()
             {
                 var iter = PointIndices.GetEnumerator();

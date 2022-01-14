@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace catalog
@@ -47,7 +40,7 @@ namespace catalog
 
         private void bttnSave_Click(object sender, EventArgs e)
         {
-            File.WriteAllText(fileName,tbReport.Text);
+            File.WriteAllText(fileName, tbReport.Text);
             this.Close();
         }
 

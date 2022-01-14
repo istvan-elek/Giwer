@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using Giwer.dataStock.Clustering.Model;
+using System;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using Giwer.dataStock.Clustering.Model;
 
 namespace Giwer.dataStock.Clustering.View
 {
@@ -24,14 +23,14 @@ namespace Giwer.dataStock.Clustering.View
         #region Properties
         public byte[] Result { get; private set; }
 
-        private bool IsResultReady { get { return Result != null;  } }
+        private bool IsResultReady { get { return Result != null; } }
         private bool IsClusteringInProgress { get; set; }
 
         private bool IsCurrentBandAvailable { get { return _currentBand != null; } }
         private bool IsCurrentBandSelected { get { return radioBtnCurrentBand.Checked; } }
 
         private bool AreAllInputsFilled
-        { 
+        {
             get
             {
                 return (bandSelectorControl.IsFilled || IsCurrentBandSelected) && clusteringMethodSelector.IsMethodReady;
@@ -210,7 +209,7 @@ namespace Giwer.dataStock.Clustering.View
         #region Methods controlling the initiation of the clustering
         private void ComputableStateChanged()
         {
-            if (!IsClusteringInProgress) 
+            if (!IsClusteringInProgress)
             {
                 btnCompute.Text = "Compute Clustering";
                 btnCompute.Enabled = AreAllInputsFilled;
@@ -259,7 +258,7 @@ namespace Giwer.dataStock.Clustering.View
                 ex is OperationCanceledException
                 || ex is System.Threading.Tasks.TaskCanceledException
             )
-            { 
+            {
                 InterruptionInProgress(false);
                 ShowErrorStatus();
             }
@@ -304,15 +303,15 @@ namespace Giwer.dataStock.Clustering.View
         private void ShowClusteringResult()
         {
 
-                if (Result == null)
-                {
-                    imgWindow.Hide();
-                }
-                else
-                {
-                    imgWindow.DrawImage(_gImgData, Result, _colorPalette);
-                    imgWindow.Show();
-                }
+            if (Result == null)
+            {
+                imgWindow.Hide();
+            }
+            else
+            {
+                imgWindow.DrawImage(_gImgData, Result, _colorPalette);
+                imgWindow.Show();
+            }
         }
 
         private void ResultReadyStateChanged()
@@ -342,7 +341,7 @@ namespace Giwer.dataStock.Clustering.View
         }
 
         private void EndProgress()
-        { 
+        {
             IsClusteringInProgress = false;
             _cancellationTokenSource.Dispose();
             ProgressStateChanged();
@@ -367,7 +366,7 @@ namespace Giwer.dataStock.Clustering.View
             }
 
         }
-        
+
         private void SetProgressBarToBlocks(int maxProgress)
         {
             toolStripProgressBar.Style = ProgressBarStyle.Blocks;
@@ -412,7 +411,7 @@ namespace Giwer.dataStock.Clustering.View
                 return interrupted;
             }
             else
-                return true; 
+                return true;
         }
 
         private bool ConfirmExecutionInterruption()
@@ -457,7 +456,7 @@ namespace Giwer.dataStock.Clustering.View
             {
                 _defaultColorPalette = loadColorPalette(Application.StartupPath + "\\default.cp");
             }
-           
+
             if (clusteringMethodSelector.SelectedMethod != Method.KMEANSMANUAL)
             {
                 manualClusterSelectControl1.Hide();
@@ -476,7 +475,7 @@ namespace Giwer.dataStock.Clustering.View
                 imgWindow.DrawImage(_gImgData, firstBand, _defaultColorPalette);
                 imgWindow.Show();
             }
-            
+
         }
     }
 }

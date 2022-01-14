@@ -14,7 +14,7 @@ namespace Giwer.dataStock.Clustering.Model.Loader
             BandCount = 1;
         }
 
-        protected override void SetValuesFromLoadedBands<T>(T values, Action<T,  byte[], int> setAtBand)
+        protected override void SetValuesFromLoadedBands<T>(T values, Action<T, byte[], int> setAtBand)
         {
             setAtBand(values, _band, 0);
         }

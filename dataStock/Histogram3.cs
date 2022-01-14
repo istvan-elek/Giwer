@@ -31,7 +31,7 @@ namespace Giwer.dataStock
         byte[] bandBlue;
         byte[] bandGray;
 
-        
+
         public Histogram3(byte[] r, byte[] g, byte[] b, string fileName)
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace Giwer.dataStock
             reHistoR = computeHistogram(bandRed);
             reHistoG = computeHistogram(bandGreen);
             reHistoB = computeHistogram(bandBlue);
-            drawDiagram(reHistoR, reHistoG, reHistoB, fileName, RIntMin,RIntMax,GIntMin,GIntMax,BIntMin,BIntMax,0,255);
+            drawDiagram(reHistoR, reHistoG, reHistoB, fileName, RIntMin, RIntMax, GIntMin, GIntMax, BIntMin, BIntMax, 0, 255);
             this.Text = "Histogram of " + System.IO.Path.GetFileName(fileName);
             label1.Text = "Select min/max values for each band: \r\nLeft mouse click: Set min value \r\nRight  mouse click: set max value";
             this.DialogResult = DialogResult.No;
@@ -98,12 +98,12 @@ namespace Giwer.dataStock
 
             int min = 0;
             int max = 0;
-            for (int i=0; i<256; i++)
+            for (int i = 0; i < 256; i++)
             {
-                if (histo[i]>0 && min==0) { min = i; }
+                if (histo[i] > 0 && min == 0) { min = i; }
             }
 
-            for (int i=255; i>0; i--)
+            for (int i = 255; i > 0; i--)
             {
                 if (histo[i] > 0 && max == 0) { max = i; }
             }
@@ -132,7 +132,7 @@ namespace Giwer.dataStock
         {
             float[] Fhisto = new float[256];
             byte[] histo = new byte[256];
-            for (int k = 0; k < histo.Length; k++) { Fhisto[k] = 0;}  // histogram init
+            for (int k = 0; k < histo.Length; k++) { Fhisto[k] = 0; }  // histogram init
 
             for (Int64 i = 0; i < byIn.Length; i++)
             {
@@ -178,7 +178,7 @@ namespace Giwer.dataStock
 
 
         private void drawDiagram(byte[] histogR, byte[] histogG, byte[] histogB, string fname, int Rmin, int Rmax, int Gmin, int Gmax, int Bmin, int Bmax, int Hmin, int Hmax)  // for three bands
-        { 
+        {
             //----red
             ch1.ChartAreas[0].AxisX.LabelStyle.Font = new System.Drawing.Font("Trebuchet MS", 9, System.Drawing.FontStyle.Italic);
             ch1.ChartAreas[0].AxisX.Maximum = Hmax;
@@ -247,13 +247,13 @@ namespace Giwer.dataStock
             if (e.Button == MouseButtons.Left)
             {
                 try
-                {                
-                lblIntensityMin.Text = "Min value: " + Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
-                y[IntMin] = -1;
-                IntMin = Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
-                y[IntMin] = 255;
-                chart1.Series[1].Points.DataBindXY(x, y);
-                drawDiagram(reHisto, fname, 0, 255);
+                {
+                    lblIntensityMin.Text = "Min value: " + Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
+                    y[IntMin] = -1;
+                    IntMin = Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
+                    y[IntMin] = 255;
+                    chart1.Series[1].Points.DataBindXY(x, y);
+                    drawDiagram(reHisto, fname, 0, 255);
                 }
                 catch (Exception)
                 {
@@ -264,12 +264,12 @@ namespace Giwer.dataStock
             {
                 try
                 {
-                lblIntensityMax.Text = "Max value: " + chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##");
-                y[IntMax] = -1;
-                IntMax = Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
-                y[IntMax] = 255;
-                chart1.Series[1].Points.DataBindXY(x, y);
-                drawDiagram(reHisto, fname, 0, 255);
+                    lblIntensityMax.Text = "Max value: " + chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##");
+                    y[IntMax] = -1;
+                    IntMax = Convert.ToInt16(chart1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
+                    y[IntMax] = 255;
+                    chart1.Series[1].Points.DataBindXY(x, y);
+                    drawDiagram(reHisto, fname, 0, 255);
                 }
                 catch (Exception)
                 {
@@ -291,10 +291,10 @@ namespace Giwer.dataStock
             {
                 Ry[RIntMin] = -1;
                 RIntMin = Convert.ToInt16(ch1.ChartAreas[0].AxisX.PixelPositionToValue(e.X).ToString("##"));
-                lblRedMinMax.Text = "RedMinMax:"+ RIntMin + "," + RIntMax;
+                lblRedMinMax.Text = "RedMinMax:" + RIntMin + "," + RIntMax;
                 Ry[RIntMin] = 255;
                 ch1.Series[1].Points.DataBindXY(x, Ry);
-                drawDiagram(reHistoR,reHistoG,reHistoB, fname, RIntMin,RIntMax,GIntMin,GIntMax,BIntMin,BIntMax,0,255);
+                drawDiagram(reHistoR, reHistoG, reHistoB, fname, RIntMin, RIntMax, GIntMin, GIntMax, BIntMin, BIntMax, 0, 255);
 
             }
             if (e.Button == MouseButtons.Right)

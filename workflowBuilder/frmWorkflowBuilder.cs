@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using Giwer.dataStock;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using Giwer.dataStock;
 
 namespace Giwer.workflowBuilder
 {
@@ -14,8 +14,8 @@ namespace Giwer.workflowBuilder
         Workflow currentWorkflow = new Workflow();
         public Dictionary<string, string> config = new Dictionary<string, string>();
         frmConfig conf = new frmConfig();
-        string ProjectFolder="";
-        string WorkflowFolder="";
+        string ProjectFolder = "";
+        string WorkflowFolder = "";
 
         public WorkflowBuilder()
         {
@@ -29,8 +29,8 @@ namespace Giwer.workflowBuilder
             WorkflowFolder = conf.config["WorkflowFolder"];
         }
 
-         private void FillAvailableMethods()
-        { 
+        private void FillAvailableMethods()
+        {
             lstAvailableOperations.Items.Clear();
             var operations = Assembly
                 .GetAssembly(typeof(SingleBandOperation))
@@ -68,9 +68,9 @@ namespace Giwer.workflowBuilder
             if (lstAvailableOperations.SelectedItem.ToString()[0] == '=') return;
 
             WorkflowItem wItem = (WorkflowItem)lstAvailableOperations.SelectedItem;
-           
+
             lstSelectedOperations.Items.Add(new WorkflowItem(wItem.Operation));
-            currentWorkflow.Methods.Add(lstSelectedOperations.Items[lstSelectedOperations.Items.Count-1].ToString());
+            currentWorkflow.Methods.Add(lstSelectedOperations.Items[lstSelectedOperations.Items.Count - 1].ToString());
             //List<string> lstnewpar = new List<string>();
             //currentWorkflow.Pars.Add(lstnewpar);
             //currentWorkflow.Pars.Add(new List<string>() { "" }); //{ wItem.Parameters.Values.ToString() });
@@ -98,7 +98,7 @@ namespace Giwer.workflowBuilder
                     for (int i = 0; i < wItem.Parameters.Count; i++)
                     {
                         pTbx.Text = currentWorkflow.Pars[lstSelectedOperations.SelectedIndex][0]; // nemcsak az első kellhet!!
-                    }                   
+                    }
                 }
                 pTbx.TextChanged += ParameterChanged;
                 pTbx.Tag = param.Key;
@@ -113,7 +113,7 @@ namespace Giwer.workflowBuilder
 
         private void ParameterChanged(object sender, EventArgs e)
         {
-            TextBox tSender = (TextBox) sender;
+            TextBox tSender = (TextBox)sender;
             WorkflowItem wItem = (WorkflowItem)lstSelectedOperations.SelectedItem;
             wItem.Parameters[tSender.Tag.ToString()] = tSender.Text;
         }
@@ -167,7 +167,7 @@ namespace Giwer.workflowBuilder
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Project files (*.proj)|*.proj";
             of.InitialDirectory = ProjectFolder;
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 Project prj = new Project();
                 prj.ProjectFileName = of.FileName;
@@ -177,7 +177,7 @@ namespace Giwer.workflowBuilder
 
         void RunWorkflow(Project proj)
         {
-            foreach(string item in proj.FileNames)
+            foreach (string item in proj.FileNames)
             {
                 //itt kell alkalmazni a workflowt az adott fájlra (a fájl beolvasás: a proj fileból fognak jönni a fájlnevek)
             }
@@ -271,7 +271,7 @@ namespace Giwer.workflowBuilder
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = "Workflow files (wkf)|*.wkf";
             of.Title = "Remove selected workflow file";
-            if (of.ShowDialog()==DialogResult.OK)
+            if (of.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -280,8 +280,8 @@ namespace Giwer.workflowBuilder
                 }
                 catch (IOException err)
                 {
-                    MessageBox.Show("Deletion is failed: " + err.Message, "Failed action",MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } 
+                    MessageBox.Show("Deletion is failed: " + err.Message, "Failed action", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

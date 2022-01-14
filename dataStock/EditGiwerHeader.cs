@@ -15,7 +15,7 @@ namespace Giwer.dataStock
                 dgv.Rows.Add(prop.Name, prop.GetValue(giDa)); //tbH.AppendText( prop.Name + ", " + prop.GetValue(giDa, null));
             }
             dgv.Columns[0].ReadOnly = true;
-            dgv.Columns[1].ReadOnly = true;           
+            dgv.Columns[1].ReadOnly = true;
         }
 
 
@@ -49,7 +49,7 @@ namespace Giwer.dataStock
                         break;
                 }
             }
-            
+
         }
 
         private void EditHeader_FormClosed(object sender, FormClosedEventArgs e)

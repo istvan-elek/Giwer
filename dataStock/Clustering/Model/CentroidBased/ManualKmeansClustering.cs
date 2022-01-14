@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Giwer.dataStock.Clustering.Model.CentroidBased
 {
@@ -36,7 +35,7 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
         public ManualKmeansClustering(
             uint maxIter,
             float changeThreshold,
-            List<int> Clusters, 
+            List<int> Clusters,
             bool isPoly,
             List<List<int>> polysInPoints)
             : base(maxIter, (uint)Clusters.Count)
@@ -80,6 +79,6 @@ namespace Giwer.dataStock.Clustering.Model.CentroidBased
             return GetResultInByteArray();
         }
 
-       
+
     }
 }

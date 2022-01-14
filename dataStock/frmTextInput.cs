@@ -23,7 +23,7 @@ namespace Giwer.dataStock
 
         private void bttnOk_Click(object sender, EventArgs e)
         {
-            inpuText = tbText.Text;        
+            inpuText = tbText.Text;
             this.DialogResult = DialogResult.OK;
         }
 
