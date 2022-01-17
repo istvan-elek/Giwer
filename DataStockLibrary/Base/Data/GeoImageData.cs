@@ -1,4 +1,6 @@
 ﻿using BitMiracle.LibTiff.Classic;
+using DataStockLibrary.Base.Data.Bil;
+using DataStockLibrary.Base.Data.Tiff;
 using OSGeo.GDAL;
 using OSGeo.OGR;
 using System.ComponentModel;
@@ -42,7 +44,7 @@ namespace DataStockLibrary.Base.Data
             JPG,
             [field: Description("ENVI")]
             ENVI,
-            [field: Description("DDM")]
+            [field: Description("Hungarian DTM")]
             DDM,
             [field: Description("UNSUPPORTED")]
             UNKOWN
@@ -70,6 +72,9 @@ namespace DataStockLibrary.Base.Data
         {
             get { return _fileType; }
         }
+
+        ImageAttribute _imageAttribute;
+        public ImageAttribute Attribute { get { return _imageAttribute; } }
 
         string _time;
         public string Time
@@ -349,11 +354,11 @@ namespace DataStockLibrary.Base.Data
             {
                 case GeoImageType.BIL:
                     resetImageParameters();
-                    parseBILHeader();
+                    ParseBILHeader();
                     return;
                 case GeoImageType.BSQ:
                     resetImageParameters();
-                    parseBILHeader();
+                    ParseBILHeader();
                     return;
                 case GeoImageType.ENVI:
                     resetImageParameters();
@@ -361,7 +366,7 @@ namespace DataStockLibrary.Base.Data
                     return;
                 case GeoImageType.TIF:
                     resetImageParameters();
-                    parseTifParams();
+                    ParseTifParams();
                     //parseGeoTifParams();
                     return;
                 case GeoImageType.JPG:
@@ -470,124 +475,19 @@ namespace DataStockLibrary.Base.Data
         #endregion
 
         #region Parse bil header
-        public void parseBILHeader() // parse bil header content from the given bil file (bil extension needed)
+        public void ParseBILHeader() // parse bil header content from the given bil file (bil extension needed)
         {
-            using (FileStream fs = new FileStream(Path.ChangeExtension(_fileName, ".hdr"), FileMode.Open, FileAccess.Read))
-            {
-                StreamReader sr = new StreamReader(fs);
-                string line;
-                while (!sr.EndOfStream)
-                {
-                    line = System.Text.RegularExpressions.Regex.Replace(sr.ReadLine(), @"\s{2,}", " "); // multi space are removed and substitute with one space " "
-                    getBILParams(line);
-                }
-                if (_bytesPerPixel == 0) _bytesPerPixel = (_nBits / 8) * _nBands;
-
-                if (_cellsize != 0) { _xdim = _cellsize; _ydim = _xdim; }
-                if (_cellsize == 0 && _xdim == _ydim) _cellsize = _xdim;
-                if (_lrxmap == 0 && Lrymap == 0) { _lrxmap = _ulxmap + _nCols * _xdim; _lrymap = _ulymap + _nRows * _ydim; }
-                if (_xllcenter != 0 && _yllcenter != 0)
-                {
-                    _ulxmap = _xllcenter - (_nCols * _xdim) / 2F;
-                    _lrxmap = _xllcenter + (_nCols * _xdim) / 2F;
-                    _ulymap = _yllcenter - (_nRows * _ydim) / 2F;
-                    _lrymap = _yllcenter + (_nRows * _ydim) / 2F;
-                }
-                //int res = (_nCols) % 4;
-                _stride = 4 * ((_nCols * _bytesPerPixel + 3) / 4);  //* _nBands;                
-            }
+            BilParser bilParser = new();
+            _imageAttribute = bilParser.Parse(_fileName);
         }
 
-        void getBILParams(string line)  //parsing bil parameters from the given bil file
-        {
-            if (line.ToLower().Contains("byteorder")) { _byteorder = line.Split(' ')[1]; }
-            if (line.ToLower().Contains("layout")) { _layout = line.Split(' ')[1]; }
-            if (_layout == "layout") { _dataType = "ENVI BIL"; }
-            if (_layout == "" || _layout == "bil") { _dataType = "ESRI BIL"; }
-            if (line.ToLower().Contains("datatype")) { _dataType = line.Split(' ')[1]; }
-            if (line.ToLower().Contains("nbits")) { _nBits = Convert.ToInt16(line.Split(' ')[1]); }
-            if (line.ToLower().Contains("xdim")) { _xdim = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("ydim")) { _ydim = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("ncols")) { _nCols = Convert.ToInt32(line.Split(' ')[1]); }
-            if (line.ToLower().Contains("nrows")) { _nRows = Convert.ToInt32(line.Split(' ')[1]); }
-            if (line.ToLower().Contains("nbands")) { _nBands = Convert.ToInt16(line.Split(' ')[1]); }
-            if (line.ToLower().Contains("ulxmap")) { _ulxmap = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("ulymap")) { _ulymap = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("lrxmap")) { _lrxmap = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("lrymap")) { _lrymap = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.Substring(0, 1) == "#") { _comment = line; }
-            if (line.ToLower().Contains("xllcenter")) { _xllcenter = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("yllcenter")) { _yllcenter = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-            if (line.ToLower().Contains("cellsize")) { _cellsize = Convert.ToDouble(line.Split(' ')[1], System.Globalization.CultureInfo.InvariantCulture); }
-        }
         #endregion
 
         #region Parse tiff parameters (active)
-        void parseTifParams()
+        void ParseTifParams()
         {
-            string[] exif = getExifData(_fileName);
-            foreach (string line in exif)
-            {
-                string l = line.ToLower();
-                if (l.Contains("gps latitude ref")) { _gpslatitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps latitude") && !l.Contains("gps latitude ref"))
-                {
-                    string st = l.Split(';')[1].Trim();
-                    st = st.Substring(0, st.Length - 1);
-                    _gpslatitude = convertDegree2Decimal(st);
-                    //_gpslatitude = Convert.ToDouble(l.Split(';')[1], CultureInfo.InvariantCulture);
-                }
-                if (l.Contains("gps longitude ref")) { _gpslongitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps longitude") && !l.Contains("gps longitude ref"))
-                {
-                    string st = l.Split(';')[1].Trim();
-                    _gpslongitude = convertDegree2Decimal(st);
-                    //_gpslongitude = Convert.ToDouble(l.Split(';')[1].Split(' ')[0], CultureInfo.InvariantCulture); 
-                }
-                if (l.Contains("gps altitude ref")) { _gpsaltitudeRef = l.Split(';')[1]; }
-                if (l.Contains("gps altitude") && !l.Contains("gps altitude ref"))
-                {
-                    string s1 = l.Split(';')[1].Trim();
-                    _gpsaltitude = Convert.ToSingle(s1.Split(' ')[0].Trim(), CultureInfo.InvariantCulture);
-                }
-                _absolute_altitude = _gpsaltitude;
-                if (l.Contains("byte order")) { _byteorder = l.Split(';')[1]; }
-                if (l.Contains("image width")) { _nCols = Convert.ToInt16(l.Split(';')[1]); }
-                if (l.Contains("image height")) { _nRows = Convert.ToInt16(l.Split(';')[1]); }
-                if (l.Contains("samples per pixel")) { _nBands = Convert.ToInt16(l.Split(';')[1]); }
-                if (l.Contains("bits per sample"))
-                {
-                    string s2 = l.Split(';')[1].Trim();
-                    if (s2.Split(' ') == null) { _nBits = Convert.ToInt16(l.Split(';')[1]); }
-                    else { _nBits = Convert.ToInt16(s2.Split(' ')[0]); }
-
-                }
-
-                if (l.Contains("pitch") && !l.Contains("<pitch>")) { _camera_pitch = Convert.ToSingle(l.Split(';')[1], CultureInfo.InvariantCulture); }
-                else
-                {
-                    var doc = new XmlDocument();
-                    if (l.IndexOf('<') != -1)
-                    {
-                        try
-                        {
-                            doc.LoadXml(l.Substring(l.IndexOf('<')));
-                            var element = (XmlElement)doc.GetElementsByTagName("location_name")[0];
-                            _locationName = element.InnerText;
-                            element = (XmlElement)doc.GetElementsByTagName("pitch")[0];
-                            _camera_pitch = Convert.ToSingle(element.InnerText, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-
-                    }
-                }
-                if (l.Contains("yaw")) { _camera_yaw = Convert.ToSingle(l.Split(';')[1], CultureInfo.InvariantCulture); }
-                if (l.Contains("relative altitude")) { _relative_altitude = Convert.ToSingle(l.Split(';')[1], CultureInfo.InvariantCulture); }
-            }
-            _bytesPerPixel = _nBands * _nBits / 8;
+            TiffParser tiffParser = new();
+            _imageAttribute = tiffParser.Parse(_fileName);
         }
         #endregion
 
@@ -617,7 +517,7 @@ namespace DataStockLibrary.Base.Data
             if (val != null) { _xdim = val[0].ToInt(); }
             val = tf.GetField(TiffTag.CELLLENGTH);
             if (val != null) { _ydim = val[0].ToInt(); }
-            string[] exif = getExifData(_fileName);
+            string[] exif = FileHelper.GetExifData(_fileName);
             //var doc = new XmlDocument();
             foreach (string item in exif)
             {
@@ -643,7 +543,7 @@ namespace DataStockLibrary.Base.Data
                     {
                         st = item.Split(';')[1].Trim();
                         st = st.Substring(0, st.Length - 1);
-                        _gpslongitude = convertDegree2Decimal(st);
+                        _gpslongitude = Utility.ConvertDegree2Decimal(st);
                     }
 
                     if (item.Contains("GPS Longitude Ref"))
@@ -657,7 +557,7 @@ namespace DataStockLibrary.Base.Data
                     {
                         st = item.Split(';')[1].Trim();
                         st = st.Substring(0, st.Length - 1);
-                        _gpslatitude = convertDegree2Decimal(st);
+                        _gpslatitude = Utility.ConvertDegree2Decimal(st);
                     }
 
                     if (item.Contains("GPS Latitude Ref"))
@@ -775,7 +675,7 @@ namespace DataStockLibrary.Base.Data
                 _dataType = "JPG";
             }
             bmpJpg.Dispose();
-            string[] exif = getExifData(_fileName);
+            string[] exif = FileHelper.GetExifData(_fileName);
             foreach (string itm in exif)
             {
                 string item = itm.ToLower();
@@ -792,7 +692,7 @@ namespace DataStockLibrary.Base.Data
                 {
                     st = item.Split(';')[1].Trim();
                     st = st.Substring(0, st.Length - 1);
-                    _gpslongitude = convertDegree2Decimal(st);
+                    _gpslongitude = Utility.ConvertDegree2Decimal(st);
                 }
 
                 if (item.Contains("gps longitude ref"))
@@ -806,7 +706,7 @@ namespace DataStockLibrary.Base.Data
                 {
                     st = item.Split(';')[1].Trim();
                     st = st.Substring(0, st.Length - 1);
-                    _gpslatitude = convertDegree2Decimal(st);
+                    _gpslatitude = Utility.ConvertDegree2Decimal(st);
                 }
 
                 if (item.Contains("gps latitude ref"))
@@ -851,15 +751,6 @@ namespace DataStockLibrary.Base.Data
             }
         }
         #endregion
-        double convertDegree2Decimal(string inSt)
-        {
-            string[] outSt = inSt.Split(' ');
-            int deg = Convert.ToInt16(outSt[0]); //.Substring(0, outSt[0].Length - 1));
-            int min = Convert.ToInt16(outSt[2].Substring(0, outSt[2].Length - 1), CultureInfo.InvariantCulture);
-            Single sec = Convert.ToSingle(outSt[3].Substring(0, outSt[3].Length - 1), CultureInfo.InvariantCulture);
-            double coord = deg + Convert.ToDouble(min) / 60D + Convert.ToDouble(sec) / 3600D;
-            return coord;
-        }
 
         void parseDDMHeader()
         {
@@ -955,27 +846,6 @@ namespace DataStockLibrary.Base.Data
         //    }
         //    return Tags.ToArray();
         //}
-        public string[] getExifData(string file)
-        {
-            //string fname = Path.GetFileNameWithoutExtension(this.FileName) + ".exif";
-            string dir = AppDomain.CurrentDomain.BaseDirectory.ToString();
-            Process proc = new Process();
-            proc.StartInfo.FileName = dir + "exiftool.exe"; // + " > " + dir + fname;
-            proc.StartInfo.Arguments = file;
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.CreateNoWindow = true;
-            proc.Start();
-            string ex = proc.StandardOutput.ReadToEnd();
-            string[] exi = ex.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            List<string> l = new List<string>();
-            for (int i = 0; i < exi.Length; i++)
-            {
-                if (exi[i] != "") l.Add(exi[i].Split(':')[0].Trim() + ";" + exi[i].Split(':')[1]);
-            }
-            string[] exif = l.ToArray();
-            return exif;
-        }
 
         void computeStride()
         {

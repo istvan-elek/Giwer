@@ -6,7 +6,7 @@ namespace DataStockLibrary.Base.Data.Bsq
 {
     internal class BsqParser : IHeaderParser
     {
-        public void parse(string fileName)
+        public void Parse(string fileName)
         {
             throw new NotImplementedException();
         }

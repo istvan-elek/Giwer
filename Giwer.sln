@@ -17,7 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catalog_sqlite", "catalog_sqlite\catalog_sqlite.csproj", "{12229B8A-A214-4EFF-81CE-DFA603992943}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "micasense", "micasense\micasense.csproj", "{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStockLibrary", "..\DataStockLibrary\DataStockLibrary.csproj", "{31F1E7F2-1D71-423F-855F-4BEF8BAD751F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStockLibrary", "DataStockLibrary\DataStockLibrary.csproj", "{1C465288-802C-4150-AD23-B7DC8AE17CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +46,10 @@ Global
 		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ADBE49D-2D34-4754-8A09-C4C06D424FE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31F1E7F2-1D71-423F-855F-4BEF8BAD751F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31F1E7F2-1D71-423F-855F-4BEF8BAD751F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31F1E7F2-1D71-423F-855F-4BEF8BAD751F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31F1E7F2-1D71-423F-855F-4BEF8BAD751F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C465288-802C-4150-AD23-B7DC8AE17CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C465288-802C-4150-AD23-B7DC8AE17CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C465288-802C-4150-AD23-B7DC8AE17CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C465288-802C-4150-AD23-B7DC8AE17CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,6 @@ namespace DataStockLibrary.Base.Data
 {
     internal interface IHeaderParser
     {
-        void parse(string fileName);
+        ImageAttribute Parse(string fileName);
     }
 }
