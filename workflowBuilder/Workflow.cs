@@ -20,8 +20,7 @@ namespace Giwer.workflowBuilder
         public List<string> Methods
         {
             get { return _methods; }
-            set { 
-                _methods = value; }
+            set { _methods = value; }
         }
 
         List<List<string>> _pars = new List<List<string>>();
@@ -45,18 +44,22 @@ namespace Giwer.workflowBuilder
                     {
                         string line = sr.ReadLine().Trim();
                         if (line.Contains("#Description")) { flag = "description"; line = sr.ReadLine().Trim(); }
-                        if (line.Contains("#Methods")) { flag = "methods"; line = sr.ReadLine().ToLower().Trim(); }
+                        if (line.Contains("#Methods")) { flag = "methods"; line = sr.ReadLine().Trim(); }
                         if (flag == "methods")
                         {
                             List<string> lstPara = new List<string>();
-                            _methods.Add(line);
-                            int  p = Convert.ToInt16(line.Split(' ')[1].Trim('(').Trim(')'));
-                            for (int i = 0; i < p; i++)
+                            int p = 0;
+                            if (line != "")
                             {
-                                string para = sr.ReadLine().Trim();
-                                lstPara.Add(para);
+                                _methods.Add(line);
+                                p = Convert.ToInt16(line.Split(' ')[1].Trim('(').Trim(')'));
+                                for (int i = 0; i < p; i++)
+                                {
+                                    string para = sr.ReadLine().Trim();
+                                    lstPara.Add(para);
+                                }
+                                _pars.Add(lstPara);
                             }
-                            _pars.Add(lstPara);
                         }
                         if (flag == "description")
                         {
@@ -83,8 +86,11 @@ namespace Giwer.workflowBuilder
                         {
                             if (_pars[i].Count > 0)
                             {
-                                string s = lsitem[0].ToString();
-                                sw.WriteLine(s);
+                                if (lsitem != "-")
+                                {
+                                    string s = lsitem.ToString();
+                                    sw.WriteLine(s);
+                                }
                             }
                         }
                     }

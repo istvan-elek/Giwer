@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("MicaSense image processing library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ELTE IK")]
-[assembly: AssemblyProduct("micasense")]
+[assembly: AssemblyProduct("Giwer MicaSense")]
 [assembly: AssemblyCopyright("Copyright © ELTE IK 2021-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

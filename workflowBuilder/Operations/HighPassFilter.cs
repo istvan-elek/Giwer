@@ -11,10 +11,16 @@ namespace Giwer.workflowBuilder.Operations
     {
         public int KernelLength { get; set; }
 
-        public HighPassFilter(GeoImageData image, int band) 
-            : base(image, band)
+        public HighPassFilter(GeoImageData image, int band, List<string> par) 
+            : base(image, band, par)
         {
         }
+
+        public HighPassFilter(byte[] inputBand, GeoImageData image, List<string> par)
+            : base(inputBand, image, par)
+        {
+        }
+
 
         public override void Execute()
         {

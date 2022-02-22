@@ -11,9 +11,16 @@ namespace Giwer.workflowBuilder.Operations
     {
         public int KernelLength { get; set; }
 
-        public MedianFilter(GeoImageData image, int band) 
-            : base(image, band)
+        public MedianFilter(GeoImageData image, int band, List<string> par) 
+            : base(image, band, par)
         {
+            KernelLength = int.Parse( par[0]);
+        }
+
+        public MedianFilter(byte[] inputBand, GeoImageData image, List<string> par)
+            : base(inputBand, image, par)
+        {
+            KernelLength = int.Parse(par[0]);
         }
 
         public override void Execute()

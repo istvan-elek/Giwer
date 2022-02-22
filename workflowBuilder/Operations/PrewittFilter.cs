@@ -9,8 +9,13 @@ namespace Giwer.workflowBuilder.Operations
 {
     public class PrewittFilter : SingleBandOperation
     {
-        public PrewittFilter(GeoImageData image, int band)
-            : base(image, band)
+        public PrewittFilter(GeoImageData image, int band, List<string> par)
+            : base(image, band, par)
+        {
+        }
+
+        public PrewittFilter(byte[] inputBand, GeoImageData image, List<string> par)
+            : base(inputBand, image, par)
         {
         }
 

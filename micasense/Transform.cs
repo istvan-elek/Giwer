@@ -105,6 +105,7 @@ namespace Giwer.micasense
 
             // Save final output
             CvInvoke.Imwrite(outputPath, imageAligned);
+          
         }
 
         /// <summary>

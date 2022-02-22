@@ -1,5 +1,6 @@
 ﻿using System;
 using Giwer.dataStock;
+using System.Collections.Generic;
 
 namespace Giwer.workflowBuilder
 {
@@ -13,12 +14,19 @@ namespace Giwer.workflowBuilder
 
         public byte[] Output => outputBand;
 
-        public SingleBandOperation(GeoImageData imageData, int band)
-        {
-            this.imageData = imageData;
-            this.imageTools = new GeoImageTools(imageData);
-            this.inputBand = imageTools.getOneBandBytes(band);
+        public List<string> pars;
 
+        public SingleBandOperation(GeoImageData imgData, int band, List<string> par)
+        {
+            this.imageData = imgData;
+            this.imageTools = new GeoImageTools(imgData);
+            this.inputBand = imageTools.getOneBandBytes(band);
+        }
+
+        public SingleBandOperation(byte[] byIn, GeoImageData gimda, List<string> par)
+        {
+            imageData = gimda;
+            inputBand = byIn;
         }
 
         public abstract void Execute();

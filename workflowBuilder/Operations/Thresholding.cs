@@ -9,17 +9,22 @@ namespace Giwer.workflowBuilder.Operations
 {
     public class Thresholding : SingleBandOperation
     {
-        public int threshold { get; set; }
+        public int Threshold { get; set; }
 
-        public Thresholding(GeoImageData image, int band) 
-            : base(image, band)
+        public Thresholding(GeoImageData image, int band, List<string> par) 
+            : base(image, band, par)
+        {
+        }
+
+        public Thresholding(byte[] inputBand, GeoImageData image, List<string> par)
+            : base(inputBand, image, par)
         {
         }
 
         public override void Execute()
         {
-            Filter Threshold = new Filter();
-            outputBand = Threshold.Thresholding(inputBand, imageData.Ncols, imageData.Nrows, threshold);
+            Filter filter = new Filter();
+            outputBand = filter.Thresholding(inputBand, imageData.Ncols, imageData.Nrows, Threshold);
         }
     }
 }

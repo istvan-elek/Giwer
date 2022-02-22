@@ -7,21 +7,27 @@ using Giwer.dataStock;
 
 namespace Giwer.workflowBuilder
 {
-    public abstract class MultibandOperation
+    public abstract class MultiBandOperation
     {
         protected GeoImageData imageData;
         protected GeoImageTools imageTools;
-        protected byte[] inputBand, outputBand;
+        protected IList<byte[]> inputBands;
+        protected byte[] outputBand;
 
-        public byte[] Input => inputBand;
+        public IList<byte[]> Input => inputBands;
 
         public byte[] Output => outputBand;
 
-        public MultibandOperation(GeoImageData imageData, int band)
+        public MultiBandOperation(GeoImageData imageData, int[] bands)
         {
             this.imageData = imageData;
             this.imageTools = new GeoImageTools(imageData);
-            this.inputBand = imageTools.getOneBandBytes(band);
+            this.inputBands = new List<byte[]>();
+
+            foreach (int band in bands)
+            {
+                this.inputBands.Add(imageTools.getOneBandBytes(band));
+            }
         }
 
         public abstract void Execute();

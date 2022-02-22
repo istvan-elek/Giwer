@@ -188,5 +188,10 @@ namespace Giwer.dataStock
                 }
             }
         }
+
+        private void frmSpectrum_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
     }
 }

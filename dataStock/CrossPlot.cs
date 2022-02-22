@@ -6,31 +6,44 @@ using System.Windows.Forms;
 
 namespace Giwer.dataStock
 {
-    //public delegate void MyEventHandler(object source, MyEventArgs e);
-    //public class MyEventArgs : EventArgs
-    //{
-    //    private string EventInfo;
-    //    public MyEventArgs(string Text)
-    //    {
-    //        EventInfo = Text;
-    //    }
-    //    public string GetInfo()
-    //    {
-    //        return EventInfo;
-    //    }
-    //}
+
     public partial class CrossPlot : Form
     {
-        public byte[] band1;
+        public delegate void EventHandlerDelegate();
+        public event EventHandlerDelegate Apply2Image;
+
+        byte[] band1;
         byte[] band2;
-        Color clr= System.Drawing.Color.DarkBlue;
+        public byte[] bandResult;
+        Color clr = System.Drawing.Color.DarkBlue;
         int msize = 2;
         Point startP;
         public Point s1;
         public Point s2;
         Boolean flUpper = true;
 
-        //public event MyEventHandler Apply2Image;
+        public void OnApply2Image()
+        {
+            if (Apply2Image !=null) Apply2Image();
+        }
+
+        private void bttnApply2Image_Click(object sender, EventArgs e)
+        {
+            float m = (float)(s2.Y - s1.Y) / (float)(s2.X - s1.X);
+            for (int i = 0; i < band1.Length; i++)
+            {
+                if (flUpper)
+                {
+                    if (band2[i] > (byte)(s1.Y + (int)(m * (float)band1[i]))) bandResult[i] = 255; else bandResult[i] = band1[i];
+                }
+                else
+                {
+                    if (band2[i] < (byte)(s1.Y + (int)(m * (float)band1[i]))) bandResult[i] = 255; else bandResult[i] = band1[i];
+                }
+            }
+            OnApply2Image();
+        }
+
 
         GeoImageData gida;
         public CrossPlot(GeoImageData gimda)
@@ -56,6 +69,7 @@ namespace Giwer.dataStock
         {
             GeoImageTools gimt = new GeoImageTools(gida);
             band1 = gimt.getOneBandBytes(cmbXaxis.SelectedIndex);
+            bandResult = new byte[band1.Length];
         }
 
         private void cmbYaxis_SelectedIndexChanged(object sender, EventArgs e)
@@ -121,6 +135,7 @@ namespace Giwer.dataStock
         private void ch1_MouseDown(object sender, MouseEventArgs e)
         {
             var result = ch1.HitTest(e.X, e.Y);
+            //if (result.Object == null) { ch1.Series[1].Points.Clear(); return; }
             double x = result.ChartArea.AxisX.PixelPositionToValue(e.X);
             double y = result.ChartArea.AxisY.PixelPositionToValue(e.Y); 
             ch1.Series[1].Points.Clear();
@@ -131,6 +146,14 @@ namespace Giwer.dataStock
         private void ch1_MouseUp(object sender, MouseEventArgs e)
         {
             var result = ch1.HitTest(e.X, e.Y);
+            if (result.Object == null) 
+            { 
+                ch1.Series[1].Points.Clear();
+                startP.X = 0;
+                startP.Y = 0;
+                grBox.Visible = false;
+                return; 
+            }
             double x = result.ChartArea.AxisX.PixelPositionToValue(e.X);
             double y = result.ChartArea.AxisY.PixelPositionToValue(e.Y);
             if (startP.X == (int)x || startP.Y == (int)y)
@@ -187,23 +210,7 @@ namespace Giwer.dataStock
             ch1.Series[1].Points.AddXY(s2.X, s2.Y);
         }
 
-        private void bttnApply2Image_Click(object sender, EventArgs e)
-        {
-            float m = (float)(s2.Y - s1.Y) / (float)(s2.X - s1.X);
-            for (int i = 0; i < band1.Length; i++)
-            {
-                if (flUpper)
-                {
-                    if (band1[i] > (byte)(s1.Y + (int)(m * (float)band2[i]))) band1[i] = 255;
-                }
-                else
-                {
-                    if (band1[i] < (byte)(s1.Y + (int)(m * (float)band2[i]))) band1[i] = 255;
-                }
-            }
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
+
 
         private void bttnAbove_Click(object sender, EventArgs e)
         {

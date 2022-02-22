@@ -71,7 +71,6 @@ namespace Giwer.dataStock
             gida.Comment = desc;
             convertByteArray2GiwerFormat(curBand, newDirName + "\\0" + ".gwr");
             saveHeader2Giwer(fName);
-
         }
 
 
@@ -101,10 +100,12 @@ namespace Giwer.dataStock
                         hdr[k] = hdrs.Substring(0, hdrs.Length - 1);
                         k += 1;
                     }
-                }
-                
+                }                
             }
-            File.WriteAllLines(destFname, hdr); 
+            if (!File.Exists(destFname))
+            {
+                File.WriteAllLines(destFname, hdr);
+            }
         }
 
         [UserAttr("u")]
@@ -837,7 +838,24 @@ namespace Giwer.dataStock
                 frmImageDisplay.Size = new Size(wd, hgt);
                 frmImageDisplay.Controls.Add(imwindow);
                 frmImageDisplay.Text = Path.GetFileName(gimd.FileName) + " -> Band_" + whichBand;
-                frmImageDisplay.Icon = new System.Drawing.Icon(System.Windows.Forms.Application.StartupPath + "\\monitor.ico");
+                imwindow.Dock = System.Windows.Forms.DockStyle.Fill;
+                imwindow.DrawImage(gimd, byIn, colp);
+                frmImageDisplay.Show();
+            }
+            else System.Windows.Forms.MessageBox.Show("There is no image to display");
+        }
+
+        public void displayBandOnNewForm(GeoImageData gimd, byte[] byIn, Int32[] colp)
+        {
+            if (byIn != null)
+            {
+                System.Windows.Forms.Form frmImageDisplay = new System.Windows.Forms.Form();
+                ImageWindow imwindow = new ImageWindow();
+                int wd = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width / 3;
+                int hgt = wd * gimd.Nrows / gimd.Ncols + (frmImageDisplay.Height - frmImageDisplay.ClientSize.Height);
+                frmImageDisplay.Size = new Size(wd, hgt);
+                frmImageDisplay.Controls.Add(imwindow);
+                frmImageDisplay.Text = "Cross-plot selected pixels";
                 imwindow.Dock = System.Windows.Forms.DockStyle.Fill;
                 imwindow.DrawImage(gimd, byIn, colp);
                 frmImageDisplay.Show();

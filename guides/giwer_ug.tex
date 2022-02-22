@@ -1,5 +1,5 @@
 
-\documentclass[a4paper,12pt]{book}
+\documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[magyar]{babel}
@@ -32,30 +32,30 @@ Az ED\_18-1-2019-0030 szerződésszámú projekt (Alkalmazásiterület-specifiku
 
 
 
-\chapter{A Giwer rövid bemutatása}
+\section{A Giwer rövid bemutatása}
 
-\section{A keretrendszer}
+\subsection{A keretrendszer}
 
 Egy keretprogram vezérli a különböző programrészeket, modulokat. Ez a \textbf{giwer.exe} nevű program. Célja a a rendszer működésének irányítása. Segítségével indíthatjuk el a különböző modulokat, a \textbf{catalog.exe}-t, \textbf{dataStock.exe}-t, és a \textbf{workflowBuilder.exe}-t (szerkesztőt és futtatót). 
 
 Itt indíthatjuk el a programok konfigurálását végző programrészt (Config), valamint a program használatát segítő leírást (Help), végül pedig a program metaadatait bemutató információs részt (Info).
 A A \textbf{Catalog}, a \textbf{DataStock} és a \textbf{Workflow builder} önállóan is elindítható a keretrendszer nélkül, ha éppen úgy akarja a felhasználó.
 
-\section{Catalog}
+\subsection{Catalog}
 
 A képek igen nagy mennyiségben keletkeznek, így ezek áttekintése egy idő után lehetetlenné válik. Ezért létrehoztunk egy kép katalógust, egy nyilvántartó, kezelő alrendszert, amely adatbázisban tárolja, rendszerezi a képeket, ezáltal biztosítva az eligazodást, keresés a nagy mennyiségű kép között.
 
-\section{Data stock}
+\subsection{Data stock}
 
 Ez az alkalmazás egy interaktív működő képfeldolgozó rendszer. Számos függvényt implementáltunk, amelyek az adatok olvasását, írását, manipulálását végzik. Ezek a program menürendszerében jelennek meg, amit a felhasználó interaktívan, az egyes eljárások eredményességét vizsgálandó, aktivizálhat.
 
 
-\section{Workflow builder}
+\subsection{Workflow builder}
 
 Ezzel a modullal a rendelkezésre álló függvényekből tetszőleges munkafolyamatot (workflowt) állíthatunk elő, amelyet tárolhatunk, futtathatunk, szerkeszthetünk. A workflow csak az összeállított eljárásokat tartalmazza, így futtatáskor meg kell adnunk, hogy mely adatcsoportokra kívánjuk futtatni. Ezek lehetnek egy-egy képfájl, vagy sok képből álló projekt.
 
 
-\section{Config}
+\subsection{Config}
 
 A \textbf{Config} editorral, amelyet a keretprogramból indíthatunk el, a rendszer adatforrásait állíthatjuk be (\ref{fig:config}. ábra). Megadhatjuk, hogy hol találhatjuk a fájlrendszerben az idegen formátumú adatokat (\textit{bil}, \textit{tif}, \textit{jpg}, \textit{3D}), és a rendszer saját adatformátumú fájljait (\textit{gwh}), a projekteket(\textit{prj}) és a workflowkat (\textit{wkf}). 
  
@@ -71,19 +71,19 @@ A kiválasztott nevű paraméter (\textit{Name}) nem változtatható meg, csak a
 
 
 
-\section{Help}
+\subsection{Help}
 
 A rendszer használatát users' guide-ok támogatják, amelyek a \textit{Help} ikonnal aktivizálhatók. Itt kiválaszthatjuk, hogy melyik alrendszert szeretnénk megismerni, mivel külön users' guide áll rendelkezésre a \textbf{Giwer/DataStock}, a \textbf{Catalog} és \textbf{Workflow builder} alrendszerekhez. Ugyaninnen indíthatunk tutorialokat is.
 
 
-\section{Info}
+\subsection{Info}
 
 Az \textit{Info} ikonra klikkeléssel a rendszer metaadatait nézhetjük meg (szerzők, évszámok, verziószámok, copyright, néhány mondatos leírás, jogok stb.)
 %\\
 %\newpage
 
 
-\chapter{A keretrendszer}
+\section{A keretrendszer}
 
 \begin{figure}[h]
 	\centering
@@ -97,11 +97,11 @@ A keretrendszer arra szolgál a \textbf{Giwer} programrendszer különböző kom
 
 
 
-\chapter{DataStock}
+\section{DataStock}
 
 A \textbf{Giwer} rendszer interaktív modulja a \textbf{DataStock}, ami a menürendszeren keresztül teszi elérhetővé a függvénykönyvtárat és az adatokat. Különböző típusú grafikus fájlok (\textit{bil, tif, jpg}) beolvasását és manipulálását végzi. Speciális, saját fájlformátuma a \textit{GWR/GWH} formátum. A \textit{GWH} egy header fájl, amely az adott kép metaadatait tartalmazza, míg a \textit{GWR} egy bináris formátum, amely egységesen kezelhetővé teszi a legkülönbözőbb forrásokból származó adatokat, és lényegesen gyorsabbá teszi a feldolgozási műveleteket.
 
-\section{Menürendszer}
+\subsection{Menürendszer}
 
 A menürendszer (\ref{fig:datastock_fomenu}. ábra) \textit{File}, \textit{One band processes}, \textit{Multiband processes}, \textit{Data tools} és \textit{Workflow} menüelemekből áll, valamint  az aktuális \textit{Lookup table} beállítást mutatja (default, hypsometric, ndvi, user stb), amelyet szükség szerint átállíthatunk egy másikra. A \textit{default} beállítás greyscale megjelenítést végez. A \textit{hypsometric} egy 8 bites, maximum 256 színű színezést tesz lehetővé attól függően, hogy a \textit{lookup table}-ben hány színt állítottunk be. Ez a hagyományos hipszometrikus megjelenítés stílusa, amely az alacsony területeket a zöld árnyalataival, a kissé magasabb területek a sárga árnyalataival, és a magas területeket a barna árnyalataival jeleníti meg. Az \textit{ndvi} az ndvi számításkor használatos színes megjelenítést teszi lehetővé. A \textit{user} a felhasználó által beállított \textit{lookup table}-t mutatja, amelynek az osztályozáskor lesz jelentősége.
 
@@ -112,7 +112,7 @@ A menürendszer (\ref{fig:datastock_fomenu}. ábra) \textit{File}, \textit{One b
 	\label{fig:datastock_fomenu}
 \end{figure}
 
-\subsection{File}
+\subsubsection{File}
 
 A \textit{File} menüvel (\ref{fig:filemenu_datastock}. ábra) meg tudunk nyitni \textit{gwh, bil, tif, jpg, ddm} típusú fájlokat, valamint projekt fájlokat, amelyek egyszerre több kép kezelésére szolgálnak. Törölhetjük valamely (akár több) \textit{gwh} fájlt. A \textit{gwh, gwr} fájlok a \textbf{Giwer} rendszer saját formátumú fájljai. Elmenthetjük egy feldolgozás eredményét giwer formátumban, vagy egyszerű bitmapként. 
 
@@ -152,7 +152,7 @@ A \textit{tiff, jpg} fájlok jól ismert képformátumok, amelyek különböző 
 A menüsor alatti ikonosztázon (gyors gombok) láthatók a leggyakoribb fájltípusok megnyitására szolgáló ikonok, mint például \includegraphics[width=0.5cm]{opengiwer.png} (open giwer file format, ami a gwh fájlt jelent), \includegraphics[width=0.5cm]{openbil.png} (open bil format), \includegraphics[width=0.5cm]{opentif.png} (open tif format), \includegraphics[width=0.5cm]{openjpg.png} (open jpg format), \includegraphics[width=0.5cm]{3d.png} (open 3D, egyelőre csak a magyar ddm formátmot érti) és \includegraphics[width=0.5cm]{openvideo.png} (open video).
 
 	
-\subsection{One band processes}
+\subsubsection{One band processes}
 
  
 Ez a menü akkor használható, amikor egy kiválasztott frekvenciasávval kívánunk műveleteket végrehajtani. Kiválasztás után meg is jelenik a képablakban. %(\ref{fig:ug_datastock2}. ábra).
@@ -190,7 +190,7 @@ Ez a menü akkor használható, amikor egy kiválasztott frekvenciasávval kív�
 \end{itemize}
 	
 	 
-\subsection{Multiband processes}
+\subsubsection{Multiband processes}
 
 A\textit{ Multiband processes} csoportba azok a funkciók tartoznak, amelyek egyszerre több frekvenciasáv adatait igénylik mint pl. RGB képek létrehozása, PCA (főkomponens analízis a megadott frekvenciasávokra), NDVI (vegetációs index), több frekvenciasáv alapján történő osztályozás, képek kombinálása, stb ( \ref{fig:multiband_menu}. ábra). 
 
@@ -226,7 +226,7 @@ A\textit{ Multiband processes} csoportba azok a funkciók tartoznak, amelyek egy
 
 \end{itemize}
 
-\subsection{Data tools}
+\subsubsection{Data tools}
 
 A \textit{Data tools} menü az adatok előkészítésére való funkciókat tartalmazza (\ref{fig:datatools_menu}. ábra). Különböző formátumok konverzióját, egyesítését, kombinálást végzi. Néhány, a drón képek konverziójával kapcsolatos problémát old meg. A \textit{Lookup table} szerkesztését is lehetővé teszi. Legfontosabb funkciója azonban a \textit{Convert to Giwer format} almenü. Ennek segítségével bármely nyers képformátumot (bil, tif, jpg) giwer formátumba konvertálja. Tömeges konverzióra a \textit{Convert selected files to Giwer format} menü szolgál.
 
@@ -258,7 +258,7 @@ A \textit{Merge text files(3D)} menüre kattintva egyesíthetünk text formátum
 
 A \textit{Workflow} menüre kattintva elindul a \textit{WorkflowBuilder}, ami amúgy a keretprogramból is indítható.
 
-\section{Ikonosztáz}
+\subsection{Ikonosztáz}
 
 A főbb funkciócsoportok után néhány apróbb, inkább kényelmi funkciót is ismertetünk. A menüsor alatt található egy ikonosztáz, amely a menürendszerből bizonyos funkciókat gyorsabban elérhetővé tesz:\\
 \includegraphics[height=0.55cm]{ikonosztaz.png} \\Balról jobbra a következő funkciók érhetők el: gwr(G), bil(B), tif(T), jpg(J), 3D (\includegraphics[height=0.55cm]{3dikon.png}) és videó fájlok megnyitása, RGB (\includegraphics[height=0.55cm]{rgbikon}) kép készítése, kétféle hisztogram művelet, ahol az első (\includegraphics[height=0.55cm]{histo1ikon}) interaktív, és meg is jeleníti a hisztogramot, a másik automatikus (\includegraphics[height=0.55cm]{histo2ikon}). Cross plot rajzoló (\includegraphics[height=0.55cm]{cpikon}) két frekvenciasáv adatait jeleníti meg egy grafikonon, ahol ahol grafikus is szelektálhatunk a pixelek között. A \includegraphics[height=0.55cm]{headerikon} ikon a header adatok elrejtését/megjelenítését végzi. 
@@ -271,17 +271,126 @@ Egyenként is törölhetünk is a listáról, de csak a fájlcsoportokat, az egy
 
 Ha valamelyik sávra a jobb egérgombbal kattintunk, akkor lehetőségünk van egy külön ablakban megjeleníteni azt.
 
-\subsection{Layerlist, Header, Exif, Project description}
+\subsubsection{Layerlist, Header, Exif, Project description}
 
-A gyors menüből a \includegraphics[height=0.55cm]{headerikon}-ra kattintva ki/be kapcsolatható a bal oldali metaadatokat mutató sáv. A \textit{Layers} fül a réteglistát mutatja meg. A \textit{Header} fülre kattintva megnézhetjük az éppen aktuális kép header adatait. Ha a header területére bárhová kattintunk, szerkeszthetővé válik a header, persze csak azok az adatok, amelyek írhatók. Az \textit{Exif} fülre kattintással megjelennek az exif adatok (ha vannak ilyenek, mert ilyesmi csak \textit{tif} és \textit{jpg} adatoknak van). A \textit{Proj.Desc} fülre klikkelve megjelennek a projekt leíró adatai, ha vannak ilyenek. Ha szeretnénk a megnyitott képeket projektbe szervezve menteni, akkor ide beírhatjuk a projekt leírását.
+A gyors menüből a \includegraphics[height=0.55cm]{headerikon}-ra kattintva ki/be kapcsolatható a bal oldali metaadatokat mutató sáv. A \textit{Layers} fül a réteglistát mutatja meg. A \textit{Header} fülre kattintva megnézhetjük az éppen aktuális kép header adatait (\ref{fig:header}. ábra). 
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=12.5cm]{header}
+	\caption{A header. Üres mezők is láthatók, amely azt jelenti, hogy ezek nem relevánsak az adott képre nézve, vagy nem állnak rendelkezésre}
+	\label{fig:header}
+	\end{figure}
 
 
 
-\chapter{Catalog}
+Ha a header területére bárhová kattintunk, szerkeszthetővé válik a header, persze csak azok az adatok, amelyek írhatók. Az \textit{Exif} fülre kattintással megjelennek az exif adatok (ha vannak ilyenek, mert ilyesmi csak \textit{tif} és \textit{jpg} adatoknak van). A \textit{Proj.Desc} fülre klikkelve megjelennek a projekt leíró adatai, ha vannak ilyenek. Ha szeretnénk a megnyitott képeket projektbe szervezve menteni, akkor ide beírhatjuk a projekt leírását.
+
+\subsection{Megjelenítő}
+
+Amikor a réteglistán kijelölünk egy frekvenciasávot, akkor annak megjelenik a képe. Ahogy mozog a kurzor az ablakban, úgy látjuk az éppen aktuális pixel pozícióját és intenzitás értékét. A nagyító ikonra klikkelve (\includegraphics[height=0.55cm]{magnifyikon}) nagyítás üzemmódba kerül az ablak. Tetszőleges területet jelölhetünk ki a nagyításra. Ennek az ellenkezője, a zoom out funkció akkor hajtódik végre, amikor a \includegraphics[height=0.55cm]{zoomoutikon} ikonra kattintunk. A \includegraphics[height=0.55cm]{panikon} ikonra kattintva pan üzemmódba kerülünk. Ha ilyenkor a képen valahová klikkelünk, akkor a kép úgy fog eltolódni (változatlan nagyítás mellett), hogy a kép közepe a klikkelés helyére fog kerülni. A \includegraphics[height=0.55cm]{zoomfullikon} ikonra kattintva a kép teljes egészében meg fog jelenni.
+
+Ha ráklikkelünk a \includegraphics[height=0.55cm]{compassikon} ikonra, akkor a kép bal felső sarkában megjelenik az északi irányt mutató nyíl (feltéve, hogy a kép leíró adataiból ez megállapítható). Ha a \includegraphics[height=0.55cm]{spektrumikon} ikonra kattintunk, akkor spektrum néző üzemmódba kerülünk. Ha bárhova klikkelünk a képen a bal egérgombbal, akkor az adott pixel spektruma fog megjelenni az ablak jobb oldalán grafikusan és táblázatos formában. Ha jobb oldali egérgombbal klikkelünk, akkor ahogy mozog a kurzor, úgy láthatjuk a pixelről pixelre változó spektrumot.
+
+A \ref{fig:spektrum_compass}. ábrán egy hiperspektrális képet láthatunk az iránytűvel és a az egyik pixelhez tartozó spektrummal.
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=13cm]{spect_compass}
+	\caption{Egy hiperspektrális kép (37 sávos) az iránytűvel és egy pixel spektrumával}
+	\label{fig:spektrum_compass}
+	\end{figure}
+
+
+%\includegraphics[height=0.55cm]{}
+\subsubsection{Példák}
+
+A fentebb leírt függvényekből bemutatunk néhányat:
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{gw1.png}
+	\caption{Greyscale, RGB and histogram ablak}
+	\label{fig:gw1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{ds1.png}
+	\caption{RGB ablak egy hyperspectral képről}
+	\label{fig:ds1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{ndvi.png}
+	\caption{RGB versus NDVI}
+	\label{fig:ndvi}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{crossplot.png}
+	\caption{Crossplot: green band versus red band}
+	\label{fig:crossplot}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{pca2.png}
+	\caption{A korrelációs mátrix és az első főkomponens egy Landsat képre}
+	\label{fig:pca2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{dtm.png}
+	\caption{Digital terrain modell a Dunakanyarra (greyscale és hypsometric shading)}
+	\label{fig:dtm}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=9cm]{cluster.png}
+	\caption{A klaszterezés eredménye}
+	\label{fig:cluster}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=9cm]{cloud.png}
+	\caption{Példa egy workflow eredményéről: pontfelhő határ detektálás}
+	\label{fig:cloud}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm]{rastcalc.png}
+	\caption{Raszter kalkulátor ablak}
+	\label{fig:rastcalc}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm]{lut.png}
+	\caption{View/edit lookup table és a colour palette}
+	\label{fig:lut}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=14cm]{aligning.png}
+	\caption{Korrigált Micasense kép (jobb oldali ábra), korrekció előtti (bal oldali ábra)}
+	\label{fig:aligning}
+\end{figure}
+
+
+
+\section{Catalog}
 
 A \textbf{Catalog} alrendszer nagy tömegben keletkező képek (csak \textit{jpg} és \textit{tif} formátumú képek) rendszerezésére, adatbázisba szervezésére való (ehhez sqlite-ot használ a program). Az adatok és a képek gyors szemrevételezését is lehetővé teszi. A \textbf{DataStock} alrendszer használata enélkül is lehetséges, hiszen bármely képet használatba vehetjük vele. A \textbf{Catalog}ot olyankor célszerű használni, amikor több száz vagy több ezer képet kívánunk egységesen kezelni, a leíró adataik alapján keresést végezni.
 
-\section{Első lépések}
+\subsection{Első lépések}
 
 \begin{itemize}
 	\item Másoljuk be egy könyvtárba a catalog.zip fájlt.
@@ -322,7 +431,7 @@ A \textbf{Catalog} alrendszer nagy tömegben keletkező képek (csak \textit{jpg
 	
 \end{itemize}
 
-\section{A fájlrendszer előkészítése}
+\subsection{A fájlrendszer előkészítése}
 
 \begin{itemize}
 	\item Kreáljunk egy könyvtárat 'DRON\_IMAGES' néven valahol a fájlrendszerben.
@@ -343,7 +452,7 @@ A \textbf{Catalog} alrendszer nagy tömegben keletkező képek (csak \textit{jpg
 	\label{fig:folder_struc}
 \end{figure}
 
-\section{Az adatbázis feltöltése}
+\subsection{Az adatbázis feltöltése}
 
 \begin{itemize}
 	\item Kétféleképpen tölthetjük fel az adatbázist: vagy egyenként (vagy multiselecttel több fájlt is) vagy egy directory-t kijelölve tömegesen, annak teljes tartalmát (csak jpg és tif fájl, más nem). A fájlonkénti kijelöléshez klikkeljünk a sárga plusz jelre (\includegraphics[width=0.5cm]{plus.png}), a teljes directory kijelöléséhez a zöld karikában fehér kereszt ikonra (\includegraphics[width=0.5cm]{addfolder.png}).
@@ -362,7 +471,7 @@ A \textbf{Catalog} alrendszer nagy tömegben keletkező képek (csak \textit{jpg
 	\item A fényképezőgép ikonra \includegraphics[width = 0.5 cm]{camera.png}) kattintva megjelenik az aktuális rekordhoz tartózó kép. Az 'Exif' (\includegraphics[width = 0.6 cm]{exif.png}) feliratú ikon az aktuális rekordhoz tartozó kép exif adatait mutatja meg egy külön ablakban.
 \end{itemize}
 
-\section{Funkciók}
+\subsection{Funkciók}
 
 Az adatokat mutató táblázat felett egy ikonosztáz látható, amelyen a főbb funkciók lettek elhelyezve. A \includegraphics[width = 0.5 cm]{filesystem.png} ikon megnyit egy a fájlrendszert nézegető ablakot, hol megnézhetjük az adatok forrását, mint pl. egy pendrive-ot, ami közvetlenül a drón adattároló eszköze, és amelyen a legfrissebb mérési adatok vannak(\ref{fig:folder_struc}. ábra). A kiválasztott fájlokat (az egész könyvtárat) a \textit{DRON\_IMAGES} nevű könyvtárba másolja be. Amúgy ezt az első használat során meg kell adni (\textit{Set destination folder}). A másolást a \includegraphics[width=0.5cm]{save.png} ikonra való klikkelés végzi.
 
@@ -383,7 +492,7 @@ Az \includegraphics[width=0.5cm]{sql.png} ikonnal SQL parancsokat állíthatunk 
 
 A \includegraphics[width = 0.5 cm]{sheet.png} ikonnal egy adott mérésre vonatkozó riport fájlt nézhetünk meg, vagy hozhatunk létre, amelybe olyan adatokat tehetünk bele, amelyeket a mérési körülmények miatt, vagy bármilyen szempontból érdekesnek találunk, de nem az egyes képekhez kötöttek.
 
-\section{Lekérdezés}
+\subsection{Lekérdezés}
 
 \begin{itemize}
 	\item  Az 'SQL' feliratú ikonra klikkelve (\includegraphics[width=0.5cm]{sql.png}) megjelenik egy 'Query editor' nevű ablak. Itt ki lehet választani, hogy melyik mezőre kérdezünk, milyen feltételt szabunk.
@@ -401,7 +510,7 @@ A \includegraphics[width = 0.5 cm]{sheet.png} ikonnal egy adott mérésre vonatk
 	
 	\item A 'Select all' feliratú gombra a bal egérgombbal klikkelve az összes képet legyűjthetjük az adatbázisból, amelyek adatai meg is jelennek az adatrácsban.
 	
-	\item A 'Select all' feliratú gombra a jobb egérgombbal klikkelve az összes képet kijelölhetjük az  adatrácsban (\ref{fig:mapviewer_select_all}. ábra). Ezt olyankor hasznos, amikor térképen akarjuk megjeleníteni a legyűjtött képek centroidjait. Ehhez még rá kell kattintani a \includegraphics[width = 0.5 cm]{mapviewer_ikon.png} ikonra. Ekkor megjelennek a 'Map viewer' ablakban (\ref{fig:mapviewer}. ábra felső része) a képek centroidjai. Ha úgy klikkeltünk a \includegraphics[width = 0.5 cm]{mapviewer_ikon.png} ikonra, hogy nem jelöltünk ki egyetlen képet sem, akkor az ELTE Térképtudományi és Geoinformatikai Intézet helye jelenik meg a térképen (a \ref{fig:mapviewer}. ábra alsó része).
+	\item A 'Select all' feliratú gombra a jobb egérgombbal klikkelve az összes képet kijelölhetjük az  adatrácsban (\ref{fig:mapviewer_select_all}. ábra). Ez olyankor hasznos, amikor térképen akarjuk megjeleníteni a legyűjtött képek centroidjait. Ehhez még rá kell kattintani a \includegraphics[width = 0.5 cm]{mapviewer_ikon.png} ikonra. Ekkor megjelennek a 'Map viewer' ablakban (\ref{fig:mapviewer}. ábra felső része) a képek centroidjai. Ha úgy klikkeltünk a \includegraphics[width = 0.5 cm]{mapviewer_ikon.png} ikonra, hogy nem jelöltünk ki egyetlen képet sem, akkor az ELTE Térképtudományi és Geoinformatikai Intézet helye jelenik meg a térképen (a \ref{fig:mapviewer}. ábra alsó része).
 	
 	\begin{figure}
 		\centering
@@ -421,7 +530,7 @@ A \includegraphics[width = 0.5 cm]{sheet.png} ikonnal egy adott mérésre vonatk
 \end{itemize}
 
 
-\chapter{Workflow builder}
+\section{Workflow builder}
 
 A \textbf{Giwer}-ben igen sok funkciót implementáltunk, melyeket a \textbf{DataStock} modulban a menürendszeren keresztül érhetünk el. Interaktívan dolgozhatunk, egy-egy fájlon mindenféle eljárást kombinálva juthatunk el kívánt eredményig. 
 
@@ -429,7 +538,7 @@ Amikor azonban több száz kép vár feldolgozásra, akkor ez az egyenkénti fel
 
 Az implementált függvények közül nem mindegyik való végfelhasználó kezébe, mert valami olyasmit csinál, amit a felhasználó nem használna önállóan (pl. konverzió bitmapből bytetömbbe), de a rendszernek szüksége van rá. Vannak azonban olyan eljárások (szűrők, osztályozók, NDVI, PCA), amire viszont szüksége lehet egy feldolgozási folyamat összeállításakor. Ezért összegyűjtöttük ezeket a függvényeket, és a \textbf{workflow builder}ben felajánljuk egy listán a végfelhasználónak. Ezek közül választva összeállíthatja a saját munkafolyamatát, amit elmenthet és futtathat.
 
-\section{Használat}
+\subsection{Használat}
 
 A modult vagy a keretrendszerből indíthatjuk el a \textbf{Workflow builder} feliratú gombbal, vagy a DataStock modul \textit{Workflow} menüpontjára klikkelve aktivizálhatjuk. Elindítás után megjelenik a fő ablak (\ref{fig:workflowmain}. ábra).
 
@@ -444,7 +553,7 @@ Az ablak bal oldalán látható az \textit{Operations} lista, amely az elérhet�
 
 Mivel az eljárásoknak vannak paraméterei, ezért ezeket úgy adhatjuk meg, ha ráklikkelünk a kiválasztott eljárásra. Ekkor a \textit{Parameteres} ablakban megjelennek a megadandó paraméterek nevei és egy szöveg doboz, ahol megadhatjuk ezeket az értékeket.
 
-\subsection{Menürendszer}
+\subsubsection{Menürendszer}
 
 A menürendszer igen egyszerű. A \textit{File} menü elemeit mutatja a \ref{fig:workflowmenu}. ábra. A \textit{Create new workflow}-val új workflowt hozhatunk létre. Ilyenkor az elérhető eljárások listáját tartalmazó lista kivétel minden törölve lesz. Új eljárás esetén ki kell tölteni a \textit{Name} mezőt, amely a workflow mentéskori nevét hivatott megadni. A workflow fájlok kiterjesztése \textit{wkf}.
 

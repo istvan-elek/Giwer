@@ -185,7 +185,7 @@
             this.bttnBandAligner.Name = "bttnBandAligner";
             this.bttnBandAligner.Size = new System.Drawing.Size(36, 36);
             this.bttnBandAligner.Text = "Band aligner";
-            this.bttnBandAligner.Visible = false;
+            this.bttnBandAligner.Click += new System.EventHandler(this.bttnBandAligner_Click);
             // 
             // progb
             // 

@@ -9,8 +9,13 @@ namespace Giwer.workflowBuilder.Operations
 {
     public class SobelFilter : SingleBandOperation
     {
-        public SobelFilter(GeoImageData image, int band)
-            : base(image, band)
+        public SobelFilter(GeoImageData image, int band, List<string> par)
+            : base(image, band, par)
+        {
+        }
+
+        public SobelFilter(byte[] inputBand, GeoImageData image, List<string> par)
+            : base(inputBand, image, par)
         {
         }
 

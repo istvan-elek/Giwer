@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Dron image catalog")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ELTE IK")]
-[assembly: AssemblyProduct("catalog")]
-[assembly: AssemblyCopyright("Copyright © István Elek,  2020")]
+[assembly: AssemblyProduct("Giwer Catalog")]
+[assembly: AssemblyCopyright("Copyright © Elek István, Cserép Máté, ELTE IK 2020-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1")]
-[assembly: AssemblyFileVersion("1.0.1")]
+[assembly: AssemblyVersion("1.0.2")]
+[assembly: AssemblyFileVersion("1.0.2")]

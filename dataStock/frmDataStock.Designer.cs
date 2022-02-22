@@ -1118,6 +1118,7 @@
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(6, 29);
+            this.toolStripSeparator11.Visible = false;
             // 
             // tsPbar
             // 
@@ -1632,6 +1633,7 @@
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 39);
+            this.toolStripSeparator9.Visible = false;
             // 
             // bttnBandAligner
             // 
@@ -1643,6 +1645,7 @@
             this.bttnBandAligner.Name = "bttnBandAligner";
             this.bttnBandAligner.Size = new System.Drawing.Size(36, 36);
             this.bttnBandAligner.Text = "Align multiple bands";
+            this.bttnBandAligner.Visible = false;
             this.bttnBandAligner.Click += new System.EventHandler(this.bttnBandAligner_Click);
             // 
             // cmnDisplay

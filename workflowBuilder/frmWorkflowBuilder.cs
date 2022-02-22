@@ -30,7 +30,7 @@ namespace Giwer.workflowBuilder
         }
 
          private void FillAvailableMethods()
-        { 
+         { 
             lstAvailableOperations.Items.Clear();
             var operations = Assembly
                 .GetAssembly(typeof(SingleBandOperation))
@@ -42,19 +42,16 @@ namespace Giwer.workflowBuilder
             {
                 lstAvailableOperations.Items.Add(new WorkflowItem(opType));
             }
-        }
 
+            operations = Assembly
+                .GetAssembly(typeof(MultiBandOperation))
+                .GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(MultiBandOperation)))
+                .OrderBy(t => t.Name);
 
-        private void frmProjectBuilder_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (this.WindowState != FormWindowState.Minimized)
+            foreach (Type opType in operations)
             {
-                workflowBuilder.Properties.Settings.Default["StartLocation"] = this.Location;
-                workflowBuilder.Properties.Settings.Default["FormSize"] = this.Size;
-                workflowBuilder.Properties.Settings.Default["WindowState"] = this.WindowState;
-                workflowBuilder.Properties.Settings.Default.Save();
-                conf.config["WorkflowFolder"] = WorkflowFolder;
-                conf.saveConfig();
+                lstAvailableOperations.Items.Add(new WorkflowItem(opType));
             }
         }
 
@@ -83,13 +80,12 @@ namespace Giwer.workflowBuilder
             if (lstAvailableOperations.SelectedItem.ToString()[0] == '=') return;
 
             WorkflowItem wItem = (WorkflowItem)lstAvailableOperations.SelectedItem;
-           
             lstSelectedOperations.Items.Add(new WorkflowItem(wItem.Operation));
-            currentWorkflow.Methods.Add(lstSelectedOperations.Items[lstSelectedOperations.Items.Count-1].ToString());
-            //List<string> lstnewpar = new List<string>();
-            //currentWorkflow.Pars.Add(lstnewpar);
-            //currentWorkflow.Pars.Add(new List<string>() { "" }); //{ wItem.Parameters.Values.ToString() });
-            //currentWorkflow.Pars.Add(wItem.Parameters)
+            currentWorkflow.Methods.Add(wItem.ToString());
+            List<string> parlist = new List<string>();
+            int  lsCount =int.Parse(wItem.ToString().Split(' ')[1].Trim('(').Trim(')')); 
+            if (lsCount==0) currentWorkflow.Pars.Add(new List<string>() { "" });
+            for (int i=0; i < lsCount; i++) currentWorkflow.Pars.Add(new List<string>() {"" });
         }
 
         private void lstSelectedOperations_SelectedIndexChanged(object sender, EventArgs e)
@@ -107,22 +103,30 @@ namespace Giwer.workflowBuilder
                 pLabel.Location = new Point(10, 10 + index * 25);
                 pLabel.AutoSize = true;
                 TextBox pTbx = new TextBox();
-                pTbx.Text = param.Value;
-                if (currentWorkflow.Pars.Count != 0) //pTbx.Text = lstSelectedOperations.SelectedItem.ToString();
-                {
-                    for (int i = 0; i < wItem.Parameters.Count; i++)
-                    {
-                        pTbx.Text = currentWorkflow.Pars[lstSelectedOperations.SelectedIndex][0]; // nemcsak az első kellhet!!
-                    }                   
-                }
+                pTbx.Text = currentWorkflow.Pars[lstSelectedOperations.SelectedIndex][0].ToString();
+
                 pTbx.TextChanged += ParameterChanged;
                 pTbx.Tag = param.Key;
+                pTbx.KeyDown += AcceptParam;
+                pTbx.Tag = lstSelectedOperations.SelectedIndex;
                 pTbx.Location = new Point(pLabel.Location.X + pLabel.Width, pLabel.Location.Y);
                 pTbx.Width = 30;
 
-                pnlParams.Controls.Add(pLabel);
-                pnlParams.Controls.Add(pTbx);
+                if (pnlParams.Controls.Count == 0)
+                {
+                    pnlParams.Controls.Add(pLabel);
+                    pnlParams.Controls.Add(pTbx);
+                }
                 ++index;
+            }
+        }
+
+        private void AcceptParam(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                TextBox tSender = (TextBox)sender;
+                currentWorkflow.Pars[int.Parse(tSender.Tag.ToString())][0] = tSender.Text;
             }
         }
 
@@ -131,13 +135,18 @@ namespace Giwer.workflowBuilder
             TextBox tSender = (TextBox) sender;
             WorkflowItem wItem = (WorkflowItem)lstSelectedOperations.SelectedItem;
             wItem.Parameters[tSender.Tag.ToString()] = tSender.Text;
+            
         }
 
         private void btnRemoveOperation_Click(object sender, EventArgs e)
         {
             if (lstSelectedOperations.SelectedItem != null)
             {
-                lstSelectedOperations.Items.RemoveAt(lstSelectedOperations.SelectedIndex);
+                string removedItem = lstSelectedOperations.SelectedItem.ToString();
+                int removedIndex = lstSelectedOperations.SelectedIndex;
+                lstSelectedOperations.Items.RemoveAt(removedIndex);
+                currentWorkflow.Methods.Remove(removedItem);
+                currentWorkflow.Pars.RemoveAt(removedIndex); //(new List<string>() { removedItem });
                 if (lstSelectedOperations.Items.Count == 0)
                 {
                     lstSelectedOperations.Enabled = false;
@@ -157,7 +166,12 @@ namespace Giwer.workflowBuilder
 
             int oldIndex = lstSelectedOperations.SelectedIndex;
             var moveItem = lstSelectedOperations.SelectedItem;
-            lstSelectedOperations.Items.RemoveAt(lstSelectedOperations.SelectedIndex);
+            var movePar = currentWorkflow.Pars[oldIndex];
+            lstSelectedOperations.Items.RemoveAt(oldIndex);
+            currentWorkflow.Methods.RemoveAt(oldIndex);
+            currentWorkflow.Pars.RemoveAt(oldIndex);
+            currentWorkflow.Methods.Insert(oldIndex - 1, moveItem.ToString());
+            currentWorkflow.Pars.Insert(oldIndex - 1, movePar);
             lstSelectedOperations.Items.Insert(oldIndex - 1, moveItem);
             lstSelectedOperations.SelectedIndex = oldIndex - 1;
         }
@@ -172,6 +186,11 @@ namespace Giwer.workflowBuilder
 
             int oldIndex = lstSelectedOperations.SelectedIndex;
             var moveItem = lstSelectedOperations.SelectedItem;
+            var movePar = currentWorkflow.Pars[oldIndex];
+            currentWorkflow.Methods.RemoveAt(oldIndex);
+            currentWorkflow.Pars.RemoveAt(oldIndex);
+            currentWorkflow.Methods.Insert(oldIndex + 1, moveItem.ToString());
+            currentWorkflow.Pars.Insert(oldIndex + 1, movePar);
             lstSelectedOperations.Items.RemoveAt(lstSelectedOperations.SelectedIndex);
             lstSelectedOperations.Items.Insert(oldIndex + 1, moveItem);
             lstSelectedOperations.SelectedIndex = oldIndex + 1;
@@ -192,35 +211,129 @@ namespace Giwer.workflowBuilder
 
         void RunWorkflow(Project proj)
         {
-            foreach(string item in proj.FileNames)
+            //Assembly assem = typeof(WorkflowBuilder).Assembly;
+            //Type tt = assem.GetType("Giwer.workflowBuilder.Operations.HighPassFilter");
+
+            //MethodInfo method = tt.GetMethod("Execute", BindingFlags.Public | BindingFlags.Instance);           
+            //method.Invoke(tt, null);
+
+            //GeoImageData imgData=new GeoImageData();
+            //int band = 0;
+            //SingleBandOperation op = (SingleBandOperation)Activator.CreateInstance(tt, new object[] { imgData, band });
+            //// propertyket beállítani
+            //op.Execute();
+
+            if (!checkParameters()) return;
+            if (MessageBox.Show("The process can take a long time (even hours)", "Long last process notice", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel) return;
+            this.Cursor = Cursors.WaitCursor;
+            progressWorkflow.Maximum = proj.FileNames.Count;
+            progressWorkflow.Value = 0;
+            progressWorkflow.Visible = true;
+
+            foreach (string fileItem in proj.FileNames)
             {
-                //itt kell alkalmazni a workflowt az adott fájlra (a fájl beolvasás: a proj fileból fognak jönni a fájlnevek)
+                progressWorkflow.PerformStep();
+                GeoImageData imgData = new GeoImageData();
+                imgData.FileName = fileItem;
+                byte[] byin = new byte[imgData.Nrows * imgData.Ncols];
+                byte[] byout = new byte[imgData.Nrows * imgData.Ncols];
+
+                for (int band=0; band < imgData.Nbands; band++)
+                {
+                int k = 0;
+                    for (int i = 0; i < currentWorkflow.Methods.Count; i++)
+                    {
+                        Assembly assem = typeof(WorkflowBuilder).Assembly;
+                        Type opt = assem.GetType("Giwer.workflowBuilder.Operations." + currentWorkflow.Methods[i].Split(' ')[0]);
+                        if (opt.BaseType.Name == "SingleBandOperation")
+                        {
+                            if (k == 0)
+                            {
+                                GeoImageTools gt = new GeoImageTools(imgData);
+                                byin = gt.getOneBandBytes(band);
+                                SingleBandOperation op = (SingleBandOperation)Activator.CreateInstance(opt, new object[] { imgData, band, currentWorkflow.Pars[i] });
+                                op.Execute();
+                                byin = op.Output;
+                                byout = op.Output;
+                                k = 1;
+                            }
+                            else
+                            {
+                                SingleBandOperation op = (SingleBandOperation)Activator.CreateInstance(opt, new object[] { byin, imgData, currentWorkflow.Pars[i] });
+                                op.Execute();
+                                byin = op.Output;
+                                byout = op.Output;
+                            }
+
+                        }
+                        if (opt.BaseType.Name == "MultiBandOperation")
+                        {
+
+                        }
+
+                    }
+                    if (chkSave.Checked)
+                    {
+                        SaveResult(imgData, byout, band);
+                    }
+                }
             }
+            this.Cursor = Cursors.Default;
+            progressWorkflow.Visible = false;
+            MessageBox.Show("Save process has completed", "Save completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        void SaveResult(GeoImageData gimda, byte[] byout, int iband)
+        {
+            GeoImageTools gt = new GeoImageTools(gimda);
+            string dirname= Path.GetDirectoryName(gimda.FileName);
+            string fname = Path.GetFileNameWithoutExtension(gimda.FileName);
+            string extension = Path.GetExtension(gimda.FileName);
+            string fileName = dirname + "\\" + fname + tbResultAppendix.Text + extension;
+            if (iband==0) gt.saveHeader2Giwer(fileName);
+            gt.saveGivenBand2GiwerFormat(dirname + "\\" + fname + tbResultAppendix.Text, byout, iband, "");
+            //gt.saveOneBandResultAsGiwerFormat(fileName, byout, "");
         }
 
         private void bttnSave_Click(object sender, EventArgs e) // a save as és a lista bővítése még nem működik
         {
+            if (!checkParameters()) return;
             Workflow wkf = currentWorkflow;
-
-            currentWorkflow.initWorkflow();
-            currentWorkflow.Description = tbDescription.Text;
-            for (int i = 0; i < lstSelectedOperations.Items.Count; i++)
-            {
-                WorkflowItem wi = (WorkflowItem)lstSelectedOperations.Items[i];
-                currentWorkflow.Methods.Add(wi.ToString());
-                List<string> lsPars = new List<string>();
-                for (int j = 0; j < wi.Parameters.Count; j++)
-                {
-                    string val = wi.Parameters.ElementAt(j).Value;
-                    lsPars.Add(val);
-                }
-                currentWorkflow.Pars.Add(lsPars);
-            }
+            wkf.Description = tbDescription.Text;
+            //for (int i = 0; i < lstSelectedOperations.Items.Count; i++)
+            //{
+            //    WorkflowItem wi = (WorkflowItem)lstSelectedOperations.Items[i];
+            //    //wkf.Methods.Add(wi.ToString());
+            //    List<string> lsPars = new List<string>();
+                
+            //    for (int j = 0; j < wi.Parameters.Count; j++)
+            //    {
+            //        string val = wi.Parameters.ElementAt(j).Value;
+            //        lsPars.Add(val);
+            //    }
+            //    wkf.Pars.Add(lsPars);
+            //}
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "Workflow files(*.wkf)|*.wkf";
             sf.FileName = tbxName.Text.Trim();
-            if (sf.ShowDialog() == DialogResult.OK) wkf.saveWorkflowFile(sf.FileName);
+            if (sf.ShowDialog() == DialogResult.OK) currentWorkflow.saveWorkflowFile(sf.FileName);
             bttnRun.Enabled = true;
+        }
+
+        Boolean checkParameters()
+        {
+            Boolean res = true;
+            for (int i=0; i <currentWorkflow.Methods.Count; i++)
+            {
+                int numOfPars = int.Parse( currentWorkflow.Methods[i].Split(' ')[1].Trim('(').Trim(')'));
+                if (numOfPars != 0 && currentWorkflow.Pars[i][0] == "")
+                //if (currentWorkflow.Pars[i].Count!=numOfPars || currentWorkflow.Pars[i][0]=="0")
+                {
+                    MessageBox.Show("Missing parameters of '" + currentWorkflow.Methods[i] + "'","Missing parameters", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    res = false;
+                }
+            }
+            return res;
         }
 
         private void loadWorkflowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -247,9 +360,10 @@ namespace Giwer.workflowBuilder
                 {
                     foreach (Type opType in operations)
                     {
-                        if (wkf.Methods[j].ToLower().Contains(opType.Name.ToLower()))
+                        if (wkf.Methods[j].Contains(opType.Name))
                         {
-                            lstSelectedOperations.Items.Add(new WorkflowItem(opType));
+                            WorkflowItem op = new WorkflowItem(opType);
+                            lstSelectedOperations.Items.Add(op);
                             break;
                         }
                     }

@@ -45,13 +45,17 @@
             this.tbxName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.grpBoxOperations = new System.Windows.Forms.GroupBox();
+            this.progressWorkflow = new System.Windows.Forms.ProgressBar();
+            this.tbResultAppendix = new System.Windows.Forms.TextBox();
+            this.chkSave = new System.Windows.Forms.CheckBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.bttnMinus = new System.Windows.Forms.ToolStripButton();
             this.bttnUp = new System.Windows.Forms.ToolStripButton();
             this.bttnDown = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.bttnRun = new System.Windows.Forms.ToolStripButton();
             this.bttnSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.bttnRun = new System.Windows.Forms.ToolStripButton();
             this.btnAddOperation = new System.Windows.Forms.Button();
             this.grpBoxParams = new System.Windows.Forms.GroupBox();
             this.pnlParams = new System.Windows.Forms.Panel();
@@ -142,7 +146,7 @@
             this.lstSelectedOperations.Location = new System.Drawing.Point(289, 17);
             this.lstSelectedOperations.Margin = new System.Windows.Forms.Padding(2);
             this.lstSelectedOperations.Name = "lstSelectedOperations";
-            this.lstSelectedOperations.Size = new System.Drawing.Size(247, 316);
+            this.lstSelectedOperations.Size = new System.Drawing.Size(247, 160);
             this.lstSelectedOperations.TabIndex = 5;
             this.lstSelectedOperations.SelectedIndexChanged += new System.EventHandler(this.lstSelectedOperations_SelectedIndexChanged);
             // 
@@ -156,7 +160,7 @@
             this.lstAvailableOperations.Location = new System.Drawing.Point(4, 17);
             this.lstAvailableOperations.Margin = new System.Windows.Forms.Padding(2);
             this.lstAvailableOperations.Name = "lstAvailableOperations";
-            this.lstAvailableOperations.Size = new System.Drawing.Size(239, 316);
+            this.lstAvailableOperations.Size = new System.Drawing.Size(239, 160);
             this.lstAvailableOperations.TabIndex = 6;
             this.lstAvailableOperations.DoubleClick += new System.EventHandler(this.btnAddOperation_Click);
             // 
@@ -178,6 +182,8 @@
             // 
             // tbDescription
             // 
+            this.tbDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDescription.Location = new System.Drawing.Point(301, 8);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
@@ -217,6 +223,9 @@
             // grpBoxOperations
             // 
             this.grpBoxOperations.BackColor = System.Drawing.SystemColors.Control;
+            this.grpBoxOperations.Controls.Add(this.progressWorkflow);
+            this.grpBoxOperations.Controls.Add(this.tbResultAppendix);
+            this.grpBoxOperations.Controls.Add(this.chkSave);
             this.grpBoxOperations.Controls.Add(this.toolStrip1);
             this.grpBoxOperations.Controls.Add(this.btnAddOperation);
             this.grpBoxOperations.Controls.Add(this.lstSelectedOperations);
@@ -226,10 +235,45 @@
             this.grpBoxOperations.Margin = new System.Windows.Forms.Padding(2);
             this.grpBoxOperations.Name = "grpBoxOperations";
             this.grpBoxOperations.Padding = new System.Windows.Forms.Padding(2);
-            this.grpBoxOperations.Size = new System.Drawing.Size(574, 359);
+            this.grpBoxOperations.Size = new System.Drawing.Size(574, 214);
             this.grpBoxOperations.TabIndex = 8;
             this.grpBoxOperations.TabStop = false;
             this.grpBoxOperations.Text = "Operations";
+            // 
+            // progressWorkflow
+            // 
+            this.progressWorkflow.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressWorkflow.Location = new System.Drawing.Point(12, 190);
+            this.progressWorkflow.Name = "progressWorkflow";
+            this.progressWorkflow.Size = new System.Drawing.Size(144, 14);
+            this.progressWorkflow.Step = 1;
+            this.progressWorkflow.TabIndex = 15;
+            this.progressWorkflow.Visible = false;
+            // 
+            // tbResultAppendix
+            // 
+            this.tbResultAppendix.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbResultAppendix.Location = new System.Drawing.Point(481, 187);
+            this.tbResultAppendix.Name = "tbResultAppendix";
+            this.tbResultAppendix.Size = new System.Drawing.Size(88, 20);
+            this.tbResultAppendix.TabIndex = 14;
+            this.tbResultAppendix.Text = "_res";
+            // 
+            // chkSave
+            // 
+            this.chkSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSave.AutoSize = true;
+            this.chkSave.Checked = true;
+            this.chkSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSave.Location = new System.Drawing.Point(207, 189);
+            this.chkSave.Name = "chkSave";
+            this.chkSave.Size = new System.Drawing.Size(277, 17);
+            this.chkSave.TabIndex = 10;
+            this.chkSave.Text = "Save final result in file name + the following appendix:";
+            this.chkSave.UseVisualStyleBackColor = true;
             // 
             // toolStrip1
             // 
@@ -240,11 +284,12 @@
             this.bttnUp,
             this.bttnDown,
             this.toolStripSeparator2,
-            this.bttnRun,
-            this.bttnSave});
+            this.bttnSave,
+            this.toolStripSeparator3,
+            this.bttnRun});
             this.toolStrip1.Location = new System.Drawing.Point(548, 15);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(24, 342);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 197);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -283,17 +328,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(21, 6);
             // 
-            // bttnRun
-            // 
-            this.bttnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bttnRun.Enabled = false;
-            this.bttnRun.Image = ((System.Drawing.Image)(resources.GetObject("bttnRun.Image")));
-            this.bttnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bttnRun.Name = "bttnRun";
-            this.bttnRun.Size = new System.Drawing.Size(21, 20);
-            this.bttnRun.Text = "Run workflow";
-            this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
-            // 
             // bttnSave
             // 
             this.bttnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -304,6 +338,22 @@
             this.bttnSave.Size = new System.Drawing.Size(21, 20);
             this.bttnSave.Text = "Save workflow";
             this.bttnSave.Click += new System.EventHandler(this.bttnSave_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(21, 6);
+            // 
+            // bttnRun
+            // 
+            this.bttnRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bttnRun.Enabled = false;
+            this.bttnRun.Image = ((System.Drawing.Image)(resources.GetObject("bttnRun.Image")));
+            this.bttnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bttnRun.Name = "bttnRun";
+            this.bttnRun.Size = new System.Drawing.Size(21, 20);
+            this.bttnRun.Text = "Run workflow";
+            this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
             // 
             // btnAddOperation
             // 
@@ -320,7 +370,7 @@
             // 
             this.grpBoxParams.Controls.Add(this.pnlParams);
             this.grpBoxParams.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpBoxParams.Location = new System.Drawing.Point(0, 441);
+            this.grpBoxParams.Location = new System.Drawing.Point(0, 296);
             this.grpBoxParams.Margin = new System.Windows.Forms.Padding(2);
             this.grpBoxParams.Name = "grpBoxParams";
             this.grpBoxParams.Padding = new System.Windows.Forms.Padding(2);
@@ -343,13 +393,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 572);
+            this.ClientSize = new System.Drawing.Size(574, 427);
             this.Controls.Add(this.grpBoxOperations);
             this.Controls.Add(this.grpBoxParams);
             this.Controls.Add(this.grpBoxMetadata);
             this.Controls.Add(this.mainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenu;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 452);
             this.Name = "WorkflowBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -396,6 +448,10 @@
         private System.Windows.Forms.ToolStripButton bttnSave;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.TextBox tbResultAppendix;
+        private System.Windows.Forms.CheckBox chkSave;
+        private System.Windows.Forms.ProgressBar progressWorkflow;
     }
 }
 

@@ -9,11 +9,12 @@ using Giwer.dataStock.Clustering.View;
 
 namespace Giwer.dataStock
 {
-    // The frmDataStock creates the GUI and handles the events
+    // The frmDataStock creates the GUI and handles events
 
     public partial class frmDataStock : Form
     {
         #region global variables
+        CrossPlot cp;
         GeoImageData GeoImage;
         GeoImageTools GTools;
         byte[] currentBand;
@@ -97,8 +98,21 @@ namespace Giwer.dataStock
             setControls(GeoImageData.fTypes.UNKOWN, false);
             loadAvailableColorPalettes();
             tsButtonLut.Enabled = true;
-            multibandProcessesToolStripMenuItem.Enabled = true; ///*******************************
+            //multibandProcessesToolStripMenuItem.Enabled = true; ///*******************************
         }
+
+        private void reloadConfigDataToolStripMenuItem_Click(object sender, EventArgs e) // reload config data
+        {
+            frmConfig conf = new frmConfig();
+            JpgDataFolder = conf.config["JpgDataFolder"];
+            TifDataFolder = conf.config["TifDataFolder"];
+            BilDataFolder = conf.config["BilDataFolder"];
+            GiwerDataFolder = conf.config["GiwerDataFolder"];
+            D3DataFolder = conf.config["3DDataFolder"];
+            ProjectFolder = conf.config["ProjectFolder"];
+            WorkflowFolder = conf.config["WorkflowFolder"];
+        }
+
         #endregion
 
         #region color_palette_and_lookup_table
@@ -593,6 +607,22 @@ namespace Giwer.dataStock
                 }
             }
         }
+
+        void settbDronEXIF(GeoImageData.fTypes ftp) // parses a geoimage file exif data from tif and jpg files
+        {
+            if (GeoImage.FileType == GeoImageData.fTypes.TIF || GeoImage.FileType == GeoImageData.fTypes.JPG)
+            {
+                string[] exif = GeoImage.getExifData(GeoImage.FileName);
+                printExif(exif);
+            }
+            //if (GeoImage.FileType == GeoImageData.fTypes.GWH || GeoImage.FileType == GeoImageData.fTypes.BIL || GeoImage.FileType == GeoImageData.fTypes.UNKOWN) { tbEXIF.Text = ""; }
+        }
+
+        void settbEXIF(GeoImageData.fTypes ftp)
+        {
+            if (GeoImage.FileType == GeoImageData.fTypes.TIF || GeoImage.FileType == GeoImageData.fTypes.JPG) { string[] exif = GeoImage.getExifData(GeoImage.FileName); printExif(exif); }
+            if (GeoImage.FileType == GeoImageData.fTypes.GWH || GeoImage.FileType == GeoImageData.fTypes.BIL || GeoImage.FileType == GeoImageData.fTypes.UNKOWN) { tbEXIF.Text = ""; }
+        }
         #endregion
 
         #region histogram
@@ -700,22 +730,22 @@ namespace Giwer.dataStock
 
         private void crossPlotToolStripMenuItem_Click(object sender, EventArgs e) // activates the cross-plot drawing form
         {
-            CrossPlot cp = new CrossPlot(GeoImage);
-            cp.ShowDialog();
-            if (cp.DialogResult == DialogResult.OK)
-            {
+            cp = new CrossPlot(GeoImage);
+            cp.Apply2Image += cpProcessHandler;
+            cp.Show();         
+        }
+
+        void cpProcessHandler()
+        {
                 if (cp.chkDisplayInNewWindow.Checked)
                 {
                     GeoImageTools gt = new GeoImageTools();
-                    gt.displayBandOnNewForm(0, GeoImage, cp.band1, colorpal);
+                    gt.displayBandOnNewForm(GeoImage, cp.bandResult, colorpal);
                 }
                 else
                 {
-                    undoBand = currentBand;
-                    currentBand = cp.band1;
-                    imw.DrawImage(GeoImage, currentBand, colorpal);
+                    imw.DrawImage(GeoImage, cp.bandResult, colorpal);
                 }
-            }
         }
 
         private void pCAToolStripMenuItem_Click(object sender, EventArgs e)  // activates PCA 
@@ -1772,37 +1802,7 @@ namespace Giwer.dataStock
 
 
 
-        void settbDronEXIF(GeoImageData.fTypes ftp) // parses a geoimage file exif data from tif and jpg files
-        {
-            if (GeoImage.FileType == GeoImageData.fTypes.TIF || GeoImage.FileType == GeoImageData.fTypes.JPG)
-            {
-                string[] exif = GeoImage.getExifData(GeoImage.FileName);
-                printExif(exif);
-            }
-            //if (GeoImage.FileType == GeoImageData.fTypes.GWH || GeoImage.FileType == GeoImageData.fTypes.BIL || GeoImage.FileType == GeoImageData.fTypes.UNKOWN) { tbEXIF.Text = ""; }
-        }
-
-        void settbEXIF(GeoImageData.fTypes ftp)
-        {
-            if (GeoImage.FileType == GeoImageData.fTypes.TIF || GeoImage.FileType == GeoImageData.fTypes.JPG) { string[] exif = GeoImage.getExifData(GeoImage.FileName); printExif(exif); }
-            if (GeoImage.FileType == GeoImageData.fTypes.GWH || GeoImage.FileType == GeoImageData.fTypes.BIL || GeoImage.FileType == GeoImageData.fTypes.UNKOWN) { tbEXIF.Text = ""; }
-        }
-
-
-        private void reloadConfigDataToolStripMenuItem_Click(object sender, EventArgs e) // reload config data
-        {
-            frmConfig conf = new frmConfig();
-            JpgDataFolder = conf.config["JpgDataFolder"];
-            TifDataFolder = conf.config["TifDataFolder"];
-            BilDataFolder = conf.config["BilDataFolder"];
-            GiwerDataFolder = conf.config["GiwerDataFolder"];
-            D3DataFolder = conf.config["3DDataFolder"];
-            ProjectFolder = conf.config["ProjectFolder"];
-            WorkflowFolder = conf.config["WorkflowFolder"];
-        }
-
-
-        void upSampling(string fileName) // ez a thermal sávot fogja átmintavételezni a többi kép méretére
+        void upSampling(string fileName) // ez a micasense thermal sávját fogja átmintavételezni (sűríteni) a többi kép méretére
         {
 
         }

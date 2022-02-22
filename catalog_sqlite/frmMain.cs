@@ -13,6 +13,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Globalization;
 using catalog.Properties;
+using Emgu.CV.CvEnum;
 
 namespace catalog
 {

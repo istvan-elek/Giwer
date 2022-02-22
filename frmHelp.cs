@@ -15,38 +15,61 @@ namespace Giwer
         public frmHelp()
         {
             InitializeComponent();
-        }
-
-        private void bttndatastock_Click(object sender, EventArgs e)
-        {
-            frmGuide guide = new frmGuide(Application.StartupPath + @"\giwer_ug.pdf");
-            guide.Show();
+            cmbTutorLanguage.SelectedIndex = 0;
+            cmbUsersguideLanguage.SelectedIndex = 0;
         }
 
 
-        private void bttnDataStockTutor_Click(object sender, EventArgs e)
+        private void cmbUsersguideLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            frmGuide guide = new frmGuide(Application.StartupPath + @"\datastock_tutor.pdf");
-            guide.Show();
+            if (cmbUsersguideLanguage.SelectedIndex == 0)
+            {
+                bttnGiwerUG.Text = "Felhasználói leírás";
+            }
+            else
+            {
+                bttnGiwerUG.Text = "Users' guide";
+            }
         }
 
-        private void bttnCatTutor_Click(object sender, EventArgs e)
+        private void cmbTutorLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            frmGuide guide = new frmGuide(Application.StartupPath + @"\catalog_tutor.pdf");
-            guide.Show();
+            if (cmbTutorLanguage.SelectedIndex == 0)
+            {
+                bttnTutor.Text = "Gyakorlás";
+            }
+            else
+            {
+                bttnTutor.Text = "Tutorial";
+            }
         }
 
-
-        private void bttnWfTutor_Click(object sender, EventArgs e)
+        private void bttnGiwerUG_Click(object sender, EventArgs e)
         {
-            frmGuide guide = new frmGuide(Application.StartupPath + @"\workflow_tutor.pdf");
-            guide.Show();
+            if (cmbUsersguideLanguage.SelectedIndex == 0)
+            {
+                frmGuide guide = new frmGuide(Application.StartupPath + @"\giwer_ug_hu.pdf");
+                guide.Show();
+            }
+            else
+            {
+                frmGuide guide = new frmGuide(Application.StartupPath + @"\giwer_ug_eng.pdf");
+                guide.Show();
+            }
         }
 
-        private void bttnGiwerUGEng_Click(object sender, EventArgs e)
+        private void bttnTutor_Click(object sender, EventArgs e)
         {
-            frmGuide guide = new frmGuide(Application.StartupPath + @"\giwer_ug_eng.pdf");
-            guide.Show();
+            if (cmbTutorLanguage.SelectedIndex == 0)
+            {
+                frmGuide guide = new frmGuide(Application.StartupPath + @"\tutor_hu.pdf");
+                guide.Show();
+            }
+            else
+            {
+                frmGuide guide = new frmGuide(Application.StartupPath + @"\tutor_eng.pdf");
+                guide.Show();
+            }
         }
     }
 }

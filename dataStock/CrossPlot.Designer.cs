@@ -42,10 +42,10 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.grBox = new System.Windows.Forms.GroupBox();
+            this.chkDisplayInNewWindow = new System.Windows.Forms.CheckBox();
             this.bttnApply2Image = new System.Windows.Forms.Button();
             this.bttnAbove = new System.Windows.Forms.Button();
             this.bttnBelow = new System.Windows.Forms.Button();
-            this.chkDisplayInNewWindow = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ch1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.grBox.SuspendLayout();
@@ -188,6 +188,18 @@
             this.grBox.Text = "Select pixels";
             this.grBox.Visible = false;
             // 
+            // chkDisplayInNewWindow
+            // 
+            this.chkDisplayInNewWindow.AutoSize = true;
+            this.chkDisplayInNewWindow.Checked = true;
+            this.chkDisplayInNewWindow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDisplayInNewWindow.Location = new System.Drawing.Point(8, 140);
+            this.chkDisplayInNewWindow.Name = "chkDisplayInNewWindow";
+            this.chkDisplayInNewWindow.Size = new System.Drawing.Size(96, 17);
+            this.chkDisplayInNewWindow.TabIndex = 16;
+            this.chkDisplayInNewWindow.Text = "in new window";
+            this.chkDisplayInNewWindow.UseVisualStyleBackColor = true;
+            // 
             // bttnApply2Image
             // 
             this.bttnApply2Image.Location = new System.Drawing.Point(6, 89);
@@ -217,17 +229,6 @@
             this.bttnBelow.Text = "Below line";
             this.bttnBelow.UseVisualStyleBackColor = true;
             this.bttnBelow.Click += new System.EventHandler(this.bttnBelow_Click);
-            // 
-            // chkDisplayInNewWindow
-            // 
-            this.chkDisplayInNewWindow.AutoSize = true;
-            this.chkDisplayInNewWindow.Location = new System.Drawing.Point(8, 140);
-            this.chkDisplayInNewWindow.Name = "chkDisplayInNewWindow";
-            this.chkDisplayInNewWindow.Size = new System.Drawing.Size(96, 17);
-            this.chkDisplayInNewWindow.TabIndex = 16;
-            this.chkDisplayInNewWindow.Text = "in new window";
-            this.chkDisplayInNewWindow.UseVisualStyleBackColor = true;
-
             // 
             // CrossPlot
             // 

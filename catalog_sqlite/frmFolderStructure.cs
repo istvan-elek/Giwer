@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using catalog;
+using Emgu.Util;
 
 namespace catalog
 {
@@ -244,6 +244,23 @@ namespace catalog
             string tex = lblDestination.Text.Split('>')[1].Trim() ;
         }
 
-
+        private void bttnBandAligner_Click(object sender, EventArgs e)
+        {
+            string outPath;
+            OpenFileDialog of = new OpenFileDialog();
+            of.Multiselect = true;
+            of.Filter = "Tif files|*.tif";
+            if (of.ShowDialog()==DialogResult.OK)
+            {
+                outPath = Path.GetDirectoryName(of.FileNames[0]) + @"\aligned_images";
+                //if (!File.Exists(outPath)) File.Create(outPath);
+                Directory.CreateDirectory(outPath);
+                this.Cursor = Cursors.WaitCursor;
+                MicaSense.Align(of.FileNames, outPath, 0);
+                this.Cursor = Cursors.Default;
+                MessageBox.Show("Aligner has been completed");
+            }
+            
+        }
     }
 }
