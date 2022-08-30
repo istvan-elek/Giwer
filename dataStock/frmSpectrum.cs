@@ -8,24 +8,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.IO;
+using System.Data.SQLite;
 
 namespace Giwer.dataStock
 {
     public partial class frmSpectrum : Form
     {
-        //GeoImageData gida;
+        //DataTable spectrum2Save;
         string[] waves;
         Point[] specPoints;
         int lastSelectedSpecIndex=0;
         Color valueColor = Color.DeepSkyBlue;
+        frmConfig conf = new frmConfig();
+        string SpectrumBankPath;
+        string SpectrumBankName;
+        SQLiteConnectionStringBuilder cnsb = new SQLiteConnectionStringBuilder();
+
         public frmSpectrum()
         {
             InitializeComponent();
-            chart1.Legends.Clear();
         }
 
+        DataTable loadTableData(string cmdSql)
+        {
+            DataTable dt = new DataTable();
+            using (SQLiteConnection cnn = new SQLiteConnection(cnsb.ConnectionString))
+            {
+                try
+                {
+                    cnn.Open();
+                    using (SQLiteCommand cmd = new SQLiteCommand(cmdSql, cnn))
+                    {
+                        SQLiteDataReader dr = cmd.ExecuteReader();
+                        dt.Load(dr);
+                    }
+                    return dt;
+                }
+                catch (SQLiteException e)
+                {
+                    //throw;
+                    MessageBox.Show("Error in SQL command:" + e.Message, "Sql error !", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+            }
+        }
 
+        #region chart functions
         public void displaySpectrum(Point[] pnt, string[] wave)
         {
             waves = wave;
@@ -60,6 +88,10 @@ namespace Giwer.dataStock
             chart1.Series[0].Color = valueColor;
             this.dgv1.DefaultCellStyle.Font = new Font("Tahoma", 8);
             bttnSaveSpectrum.Visible = true;
+            label1.Visible = true;
+            cmbBankName.Visible = true;
+            label2.Visible = true;
+            tbCathegoryName.Visible = true;
         }
 
         private void chart1_MouseMove(object sender, MouseEventArgs e)
@@ -92,26 +124,18 @@ namespace Giwer.dataStock
             }
         }
 
-        void showSpectrumAsTable()
+        private void chart1_MouseUp(object sender, MouseEventArgs e)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Band");
-            dt.Columns.Add("Wavelength");
-            dt.Columns.Add("Value");
-            for (int i=0; i< chart1.Series[0].Points.Count;i++)
-            {
-                if (waves !=null) dt.Rows.Add(chart1.Series[0].Points[i].XValue, waves[i], chart1.Series[0].Points[i].YValues[0]);
-                else dt.Rows.Add(chart1.Series[0].Points[i].XValue, null, chart1.Series[0].Points[i].YValues[0]);
-            }
-            dgv1.DataSource = dt;
+            //HitTestResult hit = chart1.HitTest(e.X, e.Y);
         }
 
+        #endregion
         public void showSpectrumAsTable(Point[] pnt, string[] waves)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("Band");
-            dt.Columns.Add("Wavelength");
-            dt.Columns.Add("Value");
+            dt.Columns.Add("band");
+            dt.Columns.Add("wavelength");
+            dt.Columns.Add("intensity");
             for (int i = 0; i < pnt.Length; i++)
             {
                 if (waves != null) dt.Rows.Add(pnt[i].X, waves[i], pnt[i].Y);
@@ -125,14 +149,14 @@ namespace Giwer.dataStock
             dgv1.DataSource = null;
             chart1.Series[0].Points.Clear();
             bttnSaveSpectrum.Visible = false;
+            label1.Visible = false;
+            label2.Visible = false;
+            cmbBankName.Visible = false;
+            tbCathegoryName.Visible = false;
         }
 
-        private void chart1_MouseUp(object sender, MouseEventArgs e)
-        {
-            //HitTestResult hit = chart1.HitTest(e.X, e.Y);
 
 
-        }
         void highlightValue(int index)
         {
             chart1.Series[0].Points[lastSelectedSpecIndex].Color = valueColor;
@@ -152,46 +176,59 @@ namespace Giwer.dataStock
 
         private void bttnSaveSpectrum_Click(object sender, EventArgs e)
         {
-            frmSpectrumBank specBank = new frmSpectrumBank();
-            specBank.Show();
-            //SaveFileDialog sf = new SaveFileDialog();
-            //sf.Filter = "Spectrum bank files (*.spb)| *.spb";
-            //if (sf.ShowDialog()==DialogResult.OK)
-            //{
-            //    saveCurrentSpectrum(sf.FileName);
-            //}
+            if (cmbBankName.SelectedItem == null) { MessageBox.Show("Missing bank name, select one."); return; }
+            if (tbCathegoryName.Text == "") { MessageBox.Show("Missing 'cathegory', which is mandatory"); return; }
+            insertNewSpectrum();
+
         }
 
-        void saveCurrentSpectrum(string filename)
+        private void cmbBankName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (FileStream fs = new FileStream(filename,FileMode.OpenOrCreate,FileAccess.Write))
+            SpectrumBankName = cmbBankName.SelectedItem.ToString();
+        }
+
+        void insertNewSpectrum()
+        {
+            using (SQLiteConnection cnn = new SQLiteConnection(cnsb.ConnectionString))
             {
-                using (StreamWriter sw= new StreamWriter(fs))
+                cnn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand())
                 {
-                    DataTable dtGridSource = (DataTable)dgv1.DataSource;
-                    StringBuilder line = new StringBuilder();
-                    line.Append(dgv1.Columns[0].Name + "; ");
-                    line.Append(dgv1.Columns[1].Name + "; ");
-                    line.Append(dgv1.Columns[2].Name);
-                    sw.WriteLine(line);
-                    foreach (DataRow row in dtGridSource.Rows)
+                    cmd.Connection = cnn;
+                    foreach(DataGridViewRow row in dgv1.Rows)
                     {
-                        line.Clear();
-                        object[] arr = row.ItemArray;
-                        for (int i = 0; i < arr.Length; i++)
-                        {
-                            line.Append(Convert.ToString(arr[i]));
-                            if (i< arr.Length-1 )line.Append(";");
-                        }
-                        sw.WriteLine(line);
+                        cmd.CommandText = "INSERT INTO spectrums " + "(bankname,name,band,wavelength,intensity) VALUES('" + SpectrumBankName + "','" + tbCathegoryName.Text + "',"+ row.Cells["band"].Value + ",'" + row.Cells["wavelength"].Value + "'," + row.Cells["intensity"].Value + ")";
+                        cmd.ExecuteNonQuery();
                     }
+                    MessageBox.Show("Spectrum has been saved");
                 }
             }
         }
 
-        private void frmSpectrum_FormClosed(object sender, FormClosedEventArgs e)
+        private void frmSpectrum_Load(object sender, EventArgs e)
         {
+            chart1.Legends.Clear();
+            this.Text = "Spectrum in the selected point";
+            SpectrumBankPath = conf.config["SpectrumBankPath"];
+            if (System.IO.File.Exists(SpectrumBankPath))
+            {
+                tslblSpectrumBankName.Text = SpectrumBankPath;
+                cnsb.DataSource = SpectrumBankPath;
+                cnsb.Version = 3;
+                DataTable dt = loadTableData("select bankname from banks");
+                if (dt == null) return;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    cmbBankName.Items.Add(dr[0]);
+                }
+            }
+            else { SpectrumBankPath = ""; }
+        }
 
+        private void frmSpectrum_Activated(object sender, EventArgs e)
+        {
+            SpectrumBankPath = conf.config["SpectrumBankPath"];
+            tslblSpectrumBankName.Text = SpectrumBankPath;
         }
     }
 }

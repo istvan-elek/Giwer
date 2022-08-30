@@ -29,6 +29,7 @@ namespace Giwer.dataStock
         string D3DataFolder = "";
         string ProjectFolder = "";
         string WorkflowFolder = "";
+        string SpectrumBankPath = "";
         Project project = new Project();
         Int32[] colorpal=new int[256];
         ImageWindow imw = new ImageWindow();
@@ -73,13 +74,12 @@ namespace Giwer.dataStock
                     D3DataFolder = conf.config["3DDataFolder"];
                     ProjectFolder = conf.config["ProjectFolder"];
                     WorkflowFolder = conf.config["WorkflowFolder"];
+                    SpectrumBankPath = conf.config["SpectrumBankPath"];
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("Config file may contain improper data, or it is damaged. " + e.Message + ". Try to recover the 'config.cfg' file", "Improper data",MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //frmConfig cnffile = new frmConfig();
                     conf.config.Clear();
-                    //conf.readConfig(Application.StartupPath + @"\config_default.cfg");
                     JpgDataFolder = "";
                     TifDataFolder = "";
                     BilDataFolder = "";
@@ -87,6 +87,7 @@ namespace Giwer.dataStock
                     D3DataFolder = "";
                     ProjectFolder = "";
                     WorkflowFolder = "";
+                    SpectrumBankPath = "";
                 }
 
                 this.splitContainer1.Panel2.Controls.Add(imw);
@@ -103,6 +104,20 @@ namespace Giwer.dataStock
 
         private void reloadConfigDataToolStripMenuItem_Click(object sender, EventArgs e) // reload config data
         {
+            reloadConfigFile();
+            //frmConfig conf = new frmConfig();
+            //JpgDataFolder = conf.config["JpgDataFolder"];
+            //TifDataFolder = conf.config["TifDataFolder"];
+            //BilDataFolder = conf.config["BilDataFolder"];
+            //GiwerDataFolder = conf.config["GiwerDataFolder"];
+            //D3DataFolder = conf.config["3DDataFolder"];
+            //ProjectFolder = conf.config["ProjectFolder"];
+            //WorkflowFolder = conf.config["WorkflowFolder"];
+            //SpectrumBankFolder = conf.config["SpectrumBankFolder"];
+        }
+
+        void reloadConfigFile()
+        {
             frmConfig conf = new frmConfig();
             JpgDataFolder = conf.config["JpgDataFolder"];
             TifDataFolder = conf.config["TifDataFolder"];
@@ -111,6 +126,7 @@ namespace Giwer.dataStock
             D3DataFolder = conf.config["3DDataFolder"];
             ProjectFolder = conf.config["ProjectFolder"];
             WorkflowFolder = conf.config["WorkflowFolder"];
+            SpectrumBankPath = conf.config["SpectrumBankPath"];
         }
 
         #endregion
@@ -713,12 +729,14 @@ namespace Giwer.dataStock
 
         private void aRVIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmNDVI showARVI = new frmNDVI(GeoImage, GiwerDataFolder);
+            showARVI.Show();
         }
 
         private void sAVIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmNDVI showSAVI = new frmNDVI(GeoImage, GiwerDataFolder);
+            showSAVI.Show();
         }
 
         private void tsUndo_Click(object sender, EventArgs e) // recoveres data to the original state
@@ -812,8 +830,10 @@ namespace Giwer.dataStock
 
         private void spectrumAnalysisToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmSpectrumBank spBank = new frmSpectrumBank();
-            spBank.ShowDialog();
+            //frmSpectrumBank spBank = new frmSpectrumBank(SpectrumBankFolder);
+            //spBank.ShowDialog();
+            //SpectrumBankFolder = spBank.SpectrumBankFolder;
+            //reloadConfigFile();
         }
 
         private void segmentationToolStripMenuItem_Click(object sender, EventArgs e)  // activates segmentation based on histogram
@@ -1395,6 +1415,7 @@ namespace Giwer.dataStock
             OpenFileDialog of = new OpenFileDialog();
             of.Multiselect = true;
             of.Filter = "Giwer files|*.gwh";
+            of.Title = "Delete selected files";
             if (of.ShowDialog() == DialogResult.OK)
             {
                 foreach(string item in of.FileNames)
@@ -1572,6 +1593,17 @@ namespace Giwer.dataStock
             undoBand = currentBand;
             Filter prewitt = new Filter();
             currentBand = prewitt.Prewitt(currentBand, GeoImage.Ncols, GeoImage.Nrows);
+            imw.Show();
+            imw.Clear(GeoImage);
+            imw.DrawImage(GeoImage, currentBand, colorpal);
+            imw.Enabled = true;
+        }
+
+        private void izotropicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            undoBand = currentBand;
+            Filter prewitt = new Filter();
+            currentBand = prewitt.Isotropic(currentBand, GeoImage.Ncols, GeoImage.Nrows);
             imw.Show();
             imw.Clear(GeoImage);
             imw.DrawImage(GeoImage, currentBand, colorpal);
@@ -1756,6 +1788,7 @@ namespace Giwer.dataStock
             conf.config["3DDataFolder"] = D3DataFolder;
             conf.config["ProjectFolder"] = ProjectFolder;
             conf.config["WorkflowFolder"] = WorkflowFolder;
+            conf.config["SpectrumBankPath"] = SpectrumBankPath;
             conf.saveConfig();
         }
 
@@ -1806,6 +1839,22 @@ namespace Giwer.dataStock
         {
 
         }
+
+        private void openSpektrumBankToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSpectrumBank spBank = new frmSpectrumBank(SpectrumBankPath);
+            spBank.ShowDialog();
+            SpectrumBankPath = spBank.SpectrumBankPath;
+            reloadConfigFile();
+        }
+
+        private void classificationBySpectrumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmClassifyBySpectrum frmClassBySpec = new frmClassifyBySpectrum(SpectrumBankPath, colorpal);
+            frmClassBySpec.Show();
+        }
+
+
 
 
 

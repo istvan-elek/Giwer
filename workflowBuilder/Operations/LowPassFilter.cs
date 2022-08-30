@@ -26,8 +26,7 @@ namespace Giwer.workflowBuilder.Operations
         public override void Execute()
         {
             Filter filt = new Filter();
-            double[,] kernel = filt.highPassKernel(KernelLength);
-
+            double[,] kernel = filt.lowPassKernelGauss(KernelLength);
             byte[] byteOrig = inputBand;
             byte[] byteSmoothed = filt.ConvolSingleBand(kernel, inputBand, imageData.Ncols, imageData.Nrows);
             outputBand = byteSmoothed;

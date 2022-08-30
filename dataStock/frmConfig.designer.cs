@@ -48,7 +48,7 @@
             this.dgvConfig.Name = "dgvConfig";
             this.dgvConfig.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvConfig.RowTemplate.Height = 24;
-            this.dgvConfig.Size = new System.Drawing.Size(383, 216);
+            this.dgvConfig.Size = new System.Drawing.Size(398, 237);
             this.dgvConfig.TabIndex = 2;
             this.dgvConfig.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             this.dgvConfig.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellValueChanged);
@@ -71,7 +71,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(383, 216);
+            this.ClientSize = new System.Drawing.Size(398, 237);
             this.Controls.Add(this.dgvConfig);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);

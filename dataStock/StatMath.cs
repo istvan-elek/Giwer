@@ -26,6 +26,8 @@ namespace Giwer.dataStock
             gida = gid;
         }
 
+        public StatMath() { }
+
         //compute derivatives of an image: f'(x,y) = {[f(x+Dx,y+Dy)-f(x+Dx,y-Dy)]-[f(x-Dx,y+Dy)-f(x-Dx,y-Dy)]}/(4*Dx*Dy)
        public byte[] derivatives(byte[] byIn)
         {
@@ -140,6 +142,23 @@ namespace Giwer.dataStock
             for (Int32 i = 0; i < leng; i++)
             {
                 ro += (A[i] * B[i]);
+            }
+            return ro / leng;
+        }
+
+        public double computeCorrelation(byte[] a, byte[] b)
+        {
+            double averA = imageAverage(a);
+            double averB = imageAverage(b);
+            double scatA = imageScatter(a, averA);
+            double scatB = imageScatter(b, averB);
+            double[] standA = imageStandardization(a, averA, scatA);
+            double[] standB = imageStandardization(b, averB, scatB);
+            double ro = 0;
+            Int32 leng = a.Length;
+            for (Int32 i = 0; i < leng; i++)
+            {
+                ro += (standA[i] * standB[i]);
             }
             return ro / leng;
         }

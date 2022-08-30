@@ -9,7 +9,8 @@ namespace Giwer.workflowBuilder.Operations
 {
     public class NDVI : MultiBandOperation
     {
-
+        public int nirBand { get; set; }
+        public int redBand { get; set; }
         public NDVI(GeoImageData image, int[] bands)
             : base(image, bands)
         {

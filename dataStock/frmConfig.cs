@@ -29,8 +29,6 @@ namespace Giwer.dataStock
                         config.Add(key, val);
                         dgvConfig.Rows.Add(key, val);
                     }
-                    //config.Add(key, val);
-                    //dgvConfig.Rows.Add(key, val);
                 }
                 dgvConfig.Columns[0].ReadOnly = true;
             }
@@ -116,7 +114,7 @@ namespace Giwer.dataStock
         {
             if (e.ColumnIndex > 0)
             {
-                if (e.RowIndex < 7)
+                if (e.RowIndex < 8)
                 {
                     FolderBrowserDialog fb = new FolderBrowserDialog();
                     fb.ShowNewFolderButton = true;

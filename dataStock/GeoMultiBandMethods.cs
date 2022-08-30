@@ -33,6 +33,40 @@ namespace Giwer.dataStock
             return ndvi;
         }
 
+        public byte[] SAVI(byte[] bNIR, byte[] bIR)
+        {
+            byte[] ndvi = new byte[bNIR.Length];
+            for (Int32 i = 0; i < bNIR.Length; i++)
+            {
+                int d = bNIR[i] + bIR[i];
+                if (d > 0)
+                {
+                    int nd = (255 * (bNIR[i] -
+                        bIR[i])) / d;
+                    if (nd < 0) { nd = 0; }
+                    ndvi[i] = (byte)nd;
+                }
+            }
+            return ndvi;
+        }
+
+        public byte[] ARVI(byte[] bNIR, byte[] bIR)
+        {
+            byte[] ndvi = new byte[bNIR.Length];
+            for (Int32 i = 0; i < bNIR.Length; i++)
+            {
+                int d = bNIR[i] + bIR[i];
+                if (d > 0)
+                {
+                    int nd = (255 * (bNIR[i] -
+                        bIR[i])) / d;
+                    if (nd < 0) { nd = 0; }
+                    ndvi[i] = (byte)nd;
+                }
+            }
+            return ndvi;
+        }
+
         [UserAttr("u")]
         public Bitmap createRGB_gwr(GeoImageData imgDat, byte[] red, byte[] green, byte[] blue)
         {

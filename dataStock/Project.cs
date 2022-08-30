@@ -105,6 +105,13 @@ namespace Giwer.dataStock
             }
         }
 
+        public string readAlltoString(string fname)
+        {
+            string s = "";
+            s = File.ReadAllText(fname);
+            return s;
+        }
+
 
         public void initProject()
         {

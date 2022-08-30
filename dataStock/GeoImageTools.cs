@@ -102,10 +102,10 @@ namespace Giwer.dataStock
                     }
                 }                
             }
-            if (!File.Exists(destFname))
-            {
+            //if (!File.Exists(destFname))
+            //{
                 File.WriteAllLines(destFname, hdr);
-            }
+            //}
         }
 
         [UserAttr("u")]

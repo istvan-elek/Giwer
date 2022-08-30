@@ -37,6 +37,7 @@ namespace Giwer.dataStock
             // 
             // bttnCancel
             // 
+            this.bttnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bttnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bttnCancel.Location = new System.Drawing.Point(12, 63);
             this.bttnCancel.Name = "bttnCancel";
@@ -48,7 +49,8 @@ namespace Giwer.dataStock
             // 
             // bttnOk
             // 
-            this.bttnOk.Location = new System.Drawing.Point(144, 63);
+            this.bttnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bttnOk.Location = new System.Drawing.Point(165, 63);
             this.bttnOk.Name = "bttnOk";
             this.bttnOk.Size = new System.Drawing.Size(75, 23);
             this.bttnOk.TabIndex = 1;
@@ -67,9 +69,11 @@ namespace Giwer.dataStock
             // 
             // tbNewBankName
             // 
+            this.tbNewBankName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbNewBankName.Location = new System.Drawing.Point(12, 25);
             this.tbNewBankName.Name = "tbNewBankName";
-            this.tbNewBankName.Size = new System.Drawing.Size(207, 20);
+            this.tbNewBankName.Size = new System.Drawing.Size(228, 20);
             this.tbNewBankName.TabIndex = 3;
             // 
             // frmInputText

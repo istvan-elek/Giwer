@@ -120,10 +120,32 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="mergeMultipleImageToGwrFormatToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAATBJREFUWEfFk+EVgjAQgzuIP52CgTpPp2EBxmAGZ6hNHwfXNlREOPPepzTCJRRx
+        r8fzr1DTEmpaQk1LqNljmqbYg13Tg5qaOuCT6vPZTA01gQz4VZ+KUPOK4Fp7JRrjjnARK1Es7gwX1SVM
+        w0W6hHm4SEpsBeYQBzfEMC9nxDmGQa+v0Bi98+lTFVjvPhdw0Xn8nI2LCyA8zV8KQMguCwwhBi+h5wq4
+        FNIKsxC87QBEC8z4zrtwfgd4CehIgXQ45l3gBTD8KK0OFsjHPj0Oix0o3gIpkDR63MVV/wHRVgCZ7Wuo
+        CuT1iQJ97RRYSxhJwosCViV0OCgKgDtL1OGgWAh3lGDhoDEEXCD8IpnBMgA1a74po88FbJ6Gmj3qgBp2
+        TQ9qWkJNS6hpCTUtoaYdT/cGz6U17lqoY6UAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="convertEachMultipleImageToGwrFormatToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAASdJREFUWEfFlNGNhDAMRFPIfW4VFEQ9qYYGKIMaroZcHK2RsScJ7GWdkUabWGbm
+        LR+E35/XVMOhp+HQ03DoaThsed/31DN6rmY41JbhdyT3UZ40HLKflNbUA4HDEcVaNZDLhTy6WEtDuJaz
+        JIR7OYshppSTLMAR0xKWFI/3RjpSXOT9QzVyqVcBhBTWzSz+S43cAlDKyzwvLjHFlUufA4RcZNTJNQAH
+        /Rbaz96AgejkWoB83AqtBaDwuz7VyYUA5bzm1zbyDfBZ5WKArG2lf/IMwJSTOrlVgHJ/CADVyKXuaR8i
+        0lQA6jy/hDMgDIAnBJcbAPK3IWQ5+VLOpqXRIJypuy4X7REgtWI2HGpzyF0YuY/ypOGwZRleM3quZjj0
+        NBx6Gg79/Ap/WKffyR/pDMUAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="toolStripLayer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>760, 19</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tsbttnClearLayerList.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

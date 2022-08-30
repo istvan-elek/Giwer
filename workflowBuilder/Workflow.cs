@@ -86,7 +86,7 @@ namespace Giwer.workflowBuilder
                         {
                             if (_pars[i].Count > 0)
                             {
-                                if (lsitem != "-")
+                                if (lsitem != "")
                                 {
                                     string s = lsitem.ToString();
                                     sw.WriteLine(s);

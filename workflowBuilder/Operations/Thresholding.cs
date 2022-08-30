@@ -14,11 +14,13 @@ namespace Giwer.workflowBuilder.Operations
         public Thresholding(GeoImageData image, int band, List<string> par) 
             : base(image, band, par)
         {
+            Threshold = int.Parse(par[0]);
         }
 
         public Thresholding(byte[] inputBand, GeoImageData image, List<string> par)
             : base(inputBand, image, par)
         {
+            Threshold = int.Parse(par[0]);
         }
 
         public override void Execute()

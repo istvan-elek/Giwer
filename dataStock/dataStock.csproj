@@ -252,11 +252,29 @@
     <Compile Include="EditGiwerHeader.Designer.cs">
       <DependentUpon>EditGiwerHeader.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmARVI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmARVI.Designer.cs">
+      <DependentUpon>frmARVI.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBandAlign.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmBandAlign.designer.cs">
       <DependentUpon>frmBandAlign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChart.Designer.cs">
+      <DependentUpon>frmChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClassifyBySpectrum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClassifyBySpectrum.Designer.cs">
+      <DependentUpon>frmClassifyBySpectrum.cs</DependentUpon>
     </Compile>
     <Compile Include="frmCombineImages.cs">
       <SubType>Form</SubType>
@@ -299,6 +317,12 @@
     </Compile>
     <Compile Include="frmRasterCalculator.Designer.cs">
       <DependentUpon>frmRasterCalculator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSAVI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSAVI.Designer.cs">
+      <DependentUpon>frmSAVI.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSegmenting.cs">
       <SubType>Form</SubType>
@@ -438,6 +462,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBandAlign.resx">
       <DependentUpon>frmBandAlign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmChart.resx">
+      <DependentUpon>frmChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClassifyBySpectrum.resx">
+      <DependentUpon>frmClassifyBySpectrum.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCombineImages.resx">
       <DependentUpon>frmCombineImages.cs</DependentUpon>

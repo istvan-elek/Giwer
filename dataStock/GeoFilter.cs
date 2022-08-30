@@ -492,9 +492,10 @@ namespace Giwer.dataStock
         [UserAttr("u")]
         public byte[] Sobel(byte[] byIn, Int32 imWidth, Int32 imHeight)
         {
-            // Sobel filter's kernel G_x = {1,0,-1,  2,0,-2,  1,0,-1}    G_y = {1,2,1,  0,0,0,  -1,-2,-1},    G = SQRT (G_x ^2 + G_y ^2)
-            int[,] g_x = new int[,] { { 1, 0, -1 }, { 2, 0, -2 }, { 1, 0, -1 } };
-            int[,] g_y = new int[,] { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } };
+            // Sobel filter's kernel:  G_x = {-1,0,1,  2-p,0,p-2,  -1,0,1}    G_y = {-1,2-p,-1,  0,0,0,  1,p-2,1},    G = SQRT (G_x ^2 + G_y ^2) where p=2
+            int p = 3;
+            int[,] g_x = new int[,] { { -1, 0, 1 }, { 2 - p, 0, p - 2 }, { -1, 0, 1 } };
+            int[,] g_y = new int[,] { { -1, 2 - p, -1 }, { 0, 0, 0 }, { 1, p - 2, 1 } };
             byte[] byOut = new byte[byIn.Length];
 
             for (Int32 row = 1; row < imHeight - 1; row++)
@@ -524,9 +525,10 @@ namespace Giwer.dataStock
         [UserAttr("u")]
         public byte[] Prewitt(byte[] byIn, Int32 imWidth, Int32 imHeight)
         {
-            // Prewitt filter's kernel:  G_x = {1,0,-1,  1,0,-1,  1,0,-1}    G_y = {1,1,1,  0,0,0,  -1,-1,-1},    G = SQRT (G_x ^2 + G_y ^2)
-            int[,] g_x = new int[,] { { 1, 0, -1 }, { 1, 0, -1 }, { 1, 0, -1 } };
-            int[,] g_y = new int[,] { { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 } };
+            // Prewitt filter's kernel:  G_x = {-1,0,1,  2-p,0,p-2,  -1,0,1}    G_y = {-1,2-p,-1,  0,0,0,  1,p-2,1},    G = SQRT (G_x ^2 + G_y ^2) where p=2
+            int p = 2;
+            int[,] g_x = new int[,] { { -1, 0, 1 }, { 2 - p, 0, p - 2 }, { -1, 0, 1 } };
+            int[,] g_y = new int[,] { { -1, 2 - p, -1 }, { 0, 0, 0 }, { 1, p - 2, 1 } };
             byte[] byOut = new byte[byIn.Length];
 
             for (Int32 row = 1; row < imHeight - 1; row++)
@@ -547,6 +549,39 @@ namespace Giwer.dataStock
                     }
                     int Gx = sumx;
                     int Gy = sumy;
+                    byOut[ind] = (byte)Math.Sqrt(Gx * Gx + Gy * Gy);
+                }
+            }
+            return byOut;
+        }
+
+        public byte[] Isotropic(byte[] byIn, Int32 imWidth, Int32 imHeight)
+        {
+            // Isotropic filter's kernel:  G_x = {-1,0,1,  2-p,0,p-2,  -1,0,1}    G_y = {-1,2-p,-1,  0,0,0,  1,p-2,1},    G = SQRT (G_x ^2 + G_y ^2)   where p=2-SQRT(2)
+            double psqrt2 = 2 + Math.Sqrt(2);
+            double p = 2-psqrt2;
+            double[,] g_x = new double[,] { { -1, 0, 1 }, { 2-p,0, p-2 }, { -1, 0, 1 } };
+            double[,] g_y = new double[,] { { -1, 2-p, -1 }, { 0, 0, 0 }, { 1, p-2, 1 } };
+            byte[] byOut = new byte[byIn.Length];
+
+            for (Int32 row = 1; row < imHeight - 1; row++)
+            {
+                for (Int32 col = 1; col < imWidth - 1; col++)
+                {
+                    double sumx = 0;
+                    double sumy = 0;
+                    Int32 ind = row * imWidth + col;
+                    for (int irow = 0; irow < 3; irow++)
+                    {
+                        for (int icol = 0; icol < 3; icol++)
+                        {
+                            Int32 curindex = (row + irow - 1) * imWidth + (col + icol - 1);
+                            sumx = sumx + byIn[curindex] * g_x[irow, icol];
+                            sumy = sumy + byIn[curindex] * g_y[irow, icol];
+                        }
+                    }
+                    double Gx = sumx;
+                    double Gy = sumy;
                     byOut[ind] = (byte)Math.Sqrt(Gx * Gx + Gy * Gy);
                 }
             }

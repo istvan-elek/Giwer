@@ -100,11 +100,12 @@
       <DependentUpon>frmWorkflowBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="MultiBandOperation.cs" />
+    <Compile Include="Operations\Histogram.cs" />
+    <Compile Include="Operations\Isotropic.cs" />
     <Compile Include="Operations\LowPassFilter.cs" />
     <Compile Include="Operations\MedianFilter.cs" />
     <Compile Include="Operations\NDVI.cs" />
     <Compile Include="Operations\PrewittFilter.cs" />
-    <Compile Include="Operations\SaveResult.cs" />
     <Compile Include="Operations\SobelFilter.cs" />
     <Compile Include="Operations\Thresholding.cs" />
     <Compile Include="WorkflowItem.cs" />

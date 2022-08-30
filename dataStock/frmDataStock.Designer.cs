@@ -42,6 +42,8 @@
             this.openJPG24DppOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDTMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openVideoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSpektrumBankToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.classifyBySpectrumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveProjectFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveProjectAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +72,7 @@
             this.prewittToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.derivateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.robertsCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.izotropicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.laplacefilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.medianFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,6 +97,7 @@
             this.combineCurrentImageWithToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.combineCurrentBandWithAnOtherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSpectrumBank = new System.Windows.Forms.ToolStripMenuItem();
+            this.classificationBySpectrumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPreparationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToGiwerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertSelectedFilesToGiwerFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -245,6 +249,8 @@
             this.openJPG24DppOnlyToolStripMenuItem,
             this.openDTMToolStripMenuItem,
             this.openVideoToolStripMenuItem,
+            this.openSpektrumBankToolStripMenuItem,
+            this.classifyBySpectrumToolStripMenuItem,
             this.toolStripMenuItem1,
             this.saveProjectFileToolStripMenuItem,
             this.saveProjectAsToolStripMenuItem,
@@ -325,6 +331,20 @@
             this.openVideoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.openVideoToolStripMenuItem.Text = "Open video";
             this.openVideoToolStripMenuItem.Click += new System.EventHandler(this.bttnMoviePlayer_Click);
+            // 
+            // openSpektrumBankToolStripMenuItem
+            // 
+            this.openSpektrumBankToolStripMenuItem.Name = "openSpektrumBankToolStripMenuItem";
+            this.openSpektrumBankToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.openSpektrumBankToolStripMenuItem.Text = "Open spektrum bank";
+            this.openSpektrumBankToolStripMenuItem.Click += new System.EventHandler(this.openSpektrumBankToolStripMenuItem_Click);
+            // 
+            // classifyBySpectrumToolStripMenuItem
+            // 
+            this.classifyBySpectrumToolStripMenuItem.Name = "classifyBySpectrumToolStripMenuItem";
+            this.classifyBySpectrumToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.classifyBySpectrumToolStripMenuItem.Text = "Classify by spectrum";
+            this.classifyBySpectrumToolStripMenuItem.Click += new System.EventHandler(this.classificationBySpectrumToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -508,7 +528,8 @@
             this.sobelToolStripMenuItem,
             this.prewittToolStripMenuItem,
             this.derivateToolStripMenuItem,
-            this.robertsCrossToolStripMenuItem});
+            this.robertsCrossToolStripMenuItem,
+            this.izotropicToolStripMenuItem});
             this.gradientFiltersToolStripMenuItem.Name = "gradientFiltersToolStripMenuItem";
             this.gradientFiltersToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.gradientFiltersToolStripMenuItem.Text = "Gradient filters";
@@ -532,6 +553,7 @@
             this.derivateToolStripMenuItem.Name = "derivateToolStripMenuItem";
             this.derivateToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.derivateToolStripMenuItem.Text = "Derivate";
+            this.derivateToolStripMenuItem.Visible = false;
             this.derivateToolStripMenuItem.Click += new System.EventHandler(this.derivateToolStripMenuItem_Click);
             // 
             // robertsCrossToolStripMenuItem
@@ -539,6 +561,14 @@
             this.robertsCrossToolStripMenuItem.Name = "robertsCrossToolStripMenuItem";
             this.robertsCrossToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.robertsCrossToolStripMenuItem.Text = "Roberts cross";
+            this.robertsCrossToolStripMenuItem.Visible = false;
+            // 
+            // izotropicToolStripMenuItem
+            // 
+            this.izotropicToolStripMenuItem.Name = "izotropicToolStripMenuItem";
+            this.izotropicToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.izotropicToolStripMenuItem.Text = "Izotropic";
+            this.izotropicToolStripMenuItem.Click += new System.EventHandler(this.izotropicToolStripMenuItem_Click);
             // 
             // laplacefilterToolStripMenuItem
             // 
@@ -593,7 +623,8 @@
             this.colorSeparationToolStripMenuItem,
             this.combineCurrentImageWithToolStripMenuItem,
             this.combineCurrentBandWithAnOtherToolStripMenuItem,
-            this.mnuSpectrumBank});
+            this.mnuSpectrumBank,
+            this.classificationBySpectrumToolStripMenuItem});
             this.multibandProcessesToolStripMenuItem.Name = "multibandProcessesToolStripMenuItem";
             this.multibandProcessesToolStripMenuItem.ShowShortcutKeys = false;
             this.multibandProcessesToolStripMenuItem.Size = new System.Drawing.Size(128, 23);
@@ -668,6 +699,7 @@
             this.waterStressIndexToolStripMenuItem.Name = "waterStressIndexToolStripMenuItem";
             this.waterStressIndexToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.waterStressIndexToolStripMenuItem.Text = "Water stress index";
+            this.waterStressIndexToolStripMenuItem.Visible = false;
             // 
             // crossPlotToolStripMenuItem
             // 
@@ -729,6 +761,13 @@
             this.mnuSpectrumBank.Text = "Spectrum bank";
             this.mnuSpectrumBank.Click += new System.EventHandler(this.spectrumAnalysisToolStripMenuItem_Click);
             // 
+            // classificationBySpectrumToolStripMenuItem
+            // 
+            this.classificationBySpectrumToolStripMenuItem.Name = "classificationBySpectrumToolStripMenuItem";
+            this.classificationBySpectrumToolStripMenuItem.Size = new System.Drawing.Size(309, 22);
+            this.classificationBySpectrumToolStripMenuItem.Text = "Classification by spectrum";
+            this.classificationBySpectrumToolStripMenuItem.Click += new System.EventHandler(this.classificationBySpectrumToolStripMenuItem_Click);
+            // 
             // dataPreparationToolStripMenuItem
             // 
             this.dataPreparationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -782,6 +821,7 @@
             // 
             // mergeMultipleImageToGwrFormatToolStripMenuItem
             // 
+            this.mergeMultipleImageToGwrFormatToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("mergeMultipleImageToGwrFormatToolStripMenuItem.Image")));
             this.mergeMultipleImageToGwrFormatToolStripMenuItem.Name = "mergeMultipleImageToGwrFormatToolStripMenuItem";
             this.mergeMultipleImageToGwrFormatToolStripMenuItem.Size = new System.Drawing.Size(330, 22);
             this.mergeMultipleImageToGwrFormatToolStripMenuItem.Text = "Merge multiple images to giwer format";
@@ -789,6 +829,7 @@
             // 
             // convertEachMultipleImageToGwrFormatToolStripMenuItem
             // 
+            this.convertEachMultipleImageToGwrFormatToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("convertEachMultipleImageToGwrFormatToolStripMenuItem.Image")));
             this.convertEachMultipleImageToGwrFormatToolStripMenuItem.Name = "convertEachMultipleImageToGwrFormatToolStripMenuItem";
             this.convertEachMultipleImageToGwrFormatToolStripMenuItem.Size = new System.Drawing.Size(330, 22);
             this.convertEachMultipleImageToGwrFormatToolStripMenuItem.Text = "Convert each multiple image to giwer format";
@@ -1592,6 +1633,7 @@
             this.bttnDronTools.Name = "bttnDronTools";
             this.bttnDronTools.Size = new System.Drawing.Size(32, 32);
             this.bttnDronTools.Text = "Show/hide dron tools";
+            this.bttnDronTools.Visible = false;
             this.bttnDronTools.Click += new System.EventHandler(this.bttnDronTools_Click);
             // 
             // toolStripDron
@@ -1884,6 +1926,10 @@
         private System.Windows.Forms.ToolStripMenuItem exportToBSQToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuSpectrumBank;
         private System.Windows.Forms.ToolStripButton bttnSpectrum;
+        private System.Windows.Forms.ToolStripMenuItem izotropicToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openSpektrumBankToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem classificationBySpectrumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem classifyBySpectrumToolStripMenuItem;
     }
 }
 

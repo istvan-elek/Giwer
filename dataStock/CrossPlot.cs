@@ -64,7 +64,6 @@ namespace Giwer.dataStock
             }
         }
 
-
         private void cmbXaxis_SelectedIndexChanged(object sender, EventArgs e)
         {
             GeoImageTools gimt = new GeoImageTools(gida);
@@ -210,8 +209,6 @@ namespace Giwer.dataStock
             ch1.Series[1].Points.AddXY(s2.X, s2.Y);
         }
 
-
-
         private void bttnAbove_Click(object sender, EventArgs e)
         {
             flUpper = true;
@@ -221,7 +218,5 @@ namespace Giwer.dataStock
         {
             flUpper = false;
         }
-
-
     }
 }
