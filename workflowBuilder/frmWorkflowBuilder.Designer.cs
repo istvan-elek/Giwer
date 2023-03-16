@@ -211,10 +211,10 @@
             // 
             // tbxName
             // 
-            this.tbxName.Location = new System.Drawing.Point(46, 24);
+            this.tbxName.Location = new System.Drawing.Point(87, 22);
             this.tbxName.Margin = new System.Windows.Forms.Padding(2);
             this.tbxName.Name = "tbxName";
-            this.tbxName.Size = new System.Drawing.Size(152, 20);
+            this.tbxName.Size = new System.Drawing.Size(144, 20);
             this.tbxName.TabIndex = 1;
             this.tbxName.TextChanged += new System.EventHandler(this.tbxName_TextChanged);
             // 
@@ -224,9 +224,9 @@
             this.lblName.Location = new System.Drawing.Point(4, 24);
             this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(38, 13);
+            this.lblName.Size = new System.Drawing.Size(84, 13);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Name:";
+            this.lblName.Text = "Workflow name:";
             // 
             // grpBoxOperations
             // 
@@ -330,9 +330,9 @@
             this.bttnSave,
             this.toolStripSeparator3,
             this.bttnRun});
-            this.toolStrip1.Location = new System.Drawing.Point(540, 15);
+            this.toolStrip1.Location = new System.Drawing.Point(548, 15);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(32, 235);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 235);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -342,7 +342,7 @@
             this.bttnMinus.Image = ((System.Drawing.Image)(resources.GetObject("bttnMinus.Image")));
             this.bttnMinus.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttnMinus.Name = "bttnMinus";
-            this.bttnMinus.Size = new System.Drawing.Size(29, 20);
+            this.bttnMinus.Size = new System.Drawing.Size(21, 20);
             this.bttnMinus.Text = "Remove item from list";
             this.bttnMinus.Click += new System.EventHandler(this.btnRemoveOperation_Click);
             // 
@@ -352,7 +352,7 @@
             this.bttnUp.Image = ((System.Drawing.Image)(resources.GetObject("bttnUp.Image")));
             this.bttnUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttnUp.Name = "bttnUp";
-            this.bttnUp.Size = new System.Drawing.Size(29, 20);
+            this.bttnUp.Size = new System.Drawing.Size(21, 20);
             this.bttnUp.Text = "Move up";
             this.bttnUp.Click += new System.EventHandler(this.btnUpOperation_Click);
             // 
@@ -362,14 +362,14 @@
             this.bttnDown.Image = ((System.Drawing.Image)(resources.GetObject("bttnDown.Image")));
             this.bttnDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttnDown.Name = "bttnDown";
-            this.bttnDown.Size = new System.Drawing.Size(29, 20);
+            this.bttnDown.Size = new System.Drawing.Size(21, 20);
             this.bttnDown.Text = "Move down";
             this.bttnDown.Click += new System.EventHandler(this.btnDownOperation_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(29, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(21, 6);
             // 
             // bttnSave
             // 
@@ -378,14 +378,14 @@
             this.bttnSave.Image = ((System.Drawing.Image)(resources.GetObject("bttnSave.Image")));
             this.bttnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttnSave.Name = "bttnSave";
-            this.bttnSave.Size = new System.Drawing.Size(29, 20);
+            this.bttnSave.Size = new System.Drawing.Size(21, 20);
             this.bttnSave.Text = "Save workflow";
             this.bttnSave.Click += new System.EventHandler(this.bttnSave_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(29, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(21, 6);
             // 
             // bttnRun
             // 
@@ -394,7 +394,7 @@
             this.bttnRun.Image = ((System.Drawing.Image)(resources.GetObject("bttnRun.Image")));
             this.bttnRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bttnRun.Name = "bttnRun";
-            this.bttnRun.Size = new System.Drawing.Size(29, 20);
+            this.bttnRun.Size = new System.Drawing.Size(21, 20);
             this.bttnRun.Text = "Run workflow";
             this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
             // 

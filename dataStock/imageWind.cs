@@ -156,7 +156,7 @@ namespace Giwer.dataStock
 
         public void DrawImageRGB(GeoImageData gida, byte[] red, byte[] green, byte[] blue)   // drawing the 24bits RGB byte array (red,green,blue) to the picture box (pb)
         {
-            bttnMinus.Enabled = false;
+            //bttnMinus.Enabled = false;
             Clear(gida);
             this.Enabled = true;
             flagRGB = true;
@@ -353,7 +353,10 @@ namespace Giwer.dataStock
                 {
                     lblCursorPosition.Text = "Pixel position: (" + cur.X + "," + cur.Y + ")  --  X,Y coords: (" + (gimda.Ulxmap + cur.X * gimda.Xdim).ToString() + ", " + (gimda.Ulymap - cur.Y * gimda.Ydim).ToString() + ")  --  Elevation: " + elev[cur.X, cur.Y].ToString();
                 }
-                else lblCursorPosition.Text = "Pixel position: (X:" + cur.X + " Y:" + cur.Y + "), Value: " + imageIn[width * cur.Y + cur.X].ToString();  //+ imIn2D[cur.X, cur.Y].ToString();
+                else
+                {
+                    if (imageIn !=null) lblCursorPosition.Text = "Pixel position: (X:" + cur.X + " Y:" + cur.Y + "), Value: " + imageIn[width * cur.Y + cur.X].ToString();  //+ imIn2D[cur.X, cur.Y].ToString();
+                }
             }
             if (bttnPlus.Checked)
             {
@@ -406,7 +409,7 @@ namespace Giwer.dataStock
                 float clipedImageAspect = (int)((float)(startPosImage.X - endPosImage.X) / (float)(startPosImage.Y - endPosImage.Y));
                 if (clipedImageAspect >= controlAspect) sizeClipedImage = new Size((int)(float)((endPosImage.Y - startPosImage.Y) * controlAspect), endPosImage.Y - startPosImage.Y);
                 else sizeClipedImage = new Size((int)(endPosImage.X - startPosImage.X), (int)(float)((endPosImage.X - startPosImage.X) / controlAspect + 0.5F));
-                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width+10) / 20);
+                //sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20);
                 if (startPosImage.X + sizeClipedImage.Width > width) startPosImage.X = width - sizeClipedImage.Width;
                 if (startPosImage.Y + sizeClipedImage.Height > height) startPosImage.Y = height - sizeClipedImage.Height;
                 if (!flagRGB)  // if we are drawing a single band image
@@ -419,11 +422,12 @@ namespace Giwer.dataStock
                 }
                 else
                 {
-                    //actualiminRed = ClipImage(actualiminRed, startPosImage, sizeClipedImage, width, height);
-                    //actualiminGreen = ClipImage(actualiminGreen, startPosImage, sizeClipedImage, width, height);
-                    //actualiminBlue = ClipImage(actualiminBlue, startPosImage, sizeClipedImage, width, height);
-                    //GeoMultiBandMethods gmb = new GeoMultiBandMethods();
-                    //pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);
+                    sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20);
+                    actualiminRed = ClipImage(actualiminRed, startPosImage, sizeClipedImage, width, height);
+                    actualiminGreen = ClipImage(actualiminGreen, startPosImage, sizeClipedImage, width, height);
+                    actualiminBlue = ClipImage(actualiminBlue, startPosImage, sizeClipedImage, width, height);
+                    GeoMultiBandMethods gmb = new GeoMultiBandMethods();
+                    pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);
                 }
                 width = sizeClipedImage.Width;
                 height = sizeClipedImage.Height;
@@ -509,9 +513,9 @@ namespace Giwer.dataStock
             {
                 for (Int32 j = imStart.X; j < endx; j++)
                 {
-                    ar[k] = iminBlue[j + i * IWidth];
+                    ab[k] = iminBlue[j + i * IWidth];
                     ag[k] = iminGreen[j + i * IWidth];
-                    ab[k] = iminRed[j + i * IWidth];
+                    ar[k] = iminRed[j + i * IWidth];
                     k++;
                 }
             }
@@ -526,7 +530,7 @@ namespace Giwer.dataStock
             imageStartIndex.X -= sizeClipedImage.Width / 4;
             imageStartIndex.Y -= sizeClipedImage.Height / 4;
             Int32 newwid = (int)(sizeClipedImage.Width * 1.2F);
-            Int32 newhgt = (Int32)(sizeClipedImage.Height * 1.2F);
+            Int32 newhgt = (int)(sizeClipedImage.Height * 1.2F);
             if (newwid > gimda.Ncols) newwid = gimda.Ncols;
             if (newhgt > gimda.Nrows) newhgt = gimda.Nrows;
             sizeClipedImage = new Size((int)(newwid), (int)(newhgt));
@@ -534,6 +538,7 @@ namespace Giwer.dataStock
             if (imageStartIndex.Y < 0) imageStartIndex.Y = 0;
             if (imageStartIndex.X > gimda.Ncols - sizeClipedImage.Width) imageStartIndex.X = gimda.Ncols - sizeClipedImage.Width;
             if (imageStartIndex.Y > gimda.Nrows - sizeClipedImage.Height) imageStartIndex.Y = gimda.Nrows - sizeClipedImage.Height;
+
             if (!flagRGB)
             {
                 clipedImage = ClipImage(imageIn, imageStartIndex, sizeClipedImage, gimda.Ncols, gimda.Nrows);
@@ -547,6 +552,9 @@ namespace Giwer.dataStock
 
             else
             {
+                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width /*+ 10*/) / 20);
+                startPosImage.X = (4 * startPosImage.X / 4);
+                startPosImage.Y = (4 * startPosImage.Y / 4);
                 ZoomOutImageRGB(imageStartIndex, sizeClipedImage, gimda.Ncols, gimda.Nrows);
                 GeoMultiBandMethods gmb = new GeoMultiBandMethods();
                 pb.Image = gmb.createRGB_gwr(sizeClipedImage, actualiminRed, actualiminGreen, actualiminBlue);

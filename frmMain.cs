@@ -18,12 +18,13 @@ namespace Giwer
         public static readonly string WorkflowBuilderPath = Application.StartupPath + @"\workflowBuilder.exe";
         public static readonly string DataStockPath = Application.StartupPath + @"\dataStock.exe";
         public static readonly string CatalogPath = Application.StartupPath + @"\catalog.exe";
+        public static readonly string MosaicPath = Application.StartupPath + @"\mosaic.exe";
 
         public frmMain()
         {
             InitializeComponent();
             this.Location = Properties.Settings.Default.StartLocation;
-            bttnGiwerPlant.Enabled = File.Exists(WorkflowBuilderPath);
+            bttnWfBuilder.Enabled = File.Exists(WorkflowBuilderPath);
             bttnDataStock.Enabled = File.Exists(DataStockPath);
             bttnCatalog.Enabled = File.Exists(CatalogPath);
         }
@@ -50,6 +51,14 @@ namespace Giwer
                 Process.Start(CatalogPath);
             else
                 MessageBox.Show("Catalog executable not found.", "Giwer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void bttnMosaic_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(MosaicPath))
+                Process.Start(MosaicPath);
+            else
+                MessageBox.Show("Mosaic executable not found.", "Giwer", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void bttnHelp_Click(object sender, EventArgs e)
@@ -85,6 +94,13 @@ namespace Giwer
                 item.CloseMainWindow();
                 item.Kill();
             }
+
+            Process[] procsMosaic = Process.GetProcessesByName("mosaic");
+            foreach (Process item in procsMosaic)
+            {
+                item.CloseMainWindow();
+                item.Kill();
+            }
         }
 
 
@@ -100,7 +116,6 @@ namespace Giwer
             frmConfig ConfigDisplay = new frmConfig();
             ConfigDisplay.ShowDialog();
         }
-
 
     }
 }

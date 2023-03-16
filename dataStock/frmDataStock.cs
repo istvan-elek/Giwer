@@ -449,6 +449,7 @@ namespace Giwer.dataStock
                 if (Path.GetExtension(of.FileName).ToLower() == ".ddm")
                 {
                     setControls(GeoImageData.fTypes.UNKOWN, false);
+                    //convertToGiwerFormatToolStripMenuItem.Enabled = true;
                     GeoImage = new GeoImageData();
                     GeoImage.FileName = of.FileName;
                     TreeNode actualTreenode = new TreeNode();
@@ -865,6 +866,7 @@ namespace Giwer.dataStock
                 foreach (string fil in of.FileNames)
                 {
                     tsPbar.PerformStep();
+                    Application.DoEvents();
                     GeoImageData geoimda = new GeoImageData();
                     geoimda.FileName = fil;
                     convertImage2gwr(geoimda);
@@ -919,13 +921,23 @@ namespace Giwer.dataStock
 
         private void convertToGiwerFormatToolStripMenuItem_Click(object sender, EventArgs e)  // calls the convert function, which converts the current image to giwer format
         {
-            this.Cursor = Cursors.WaitCursor;
-            convertImage2gwr(GeoImage);
-            this.Cursor = Cursors.Default;
-            //tsPbar.Visible = false;
-            //tsPbar.Minimum = 0;
-            //tsPbar.Value = 0;
-            MessageBox.Show("'" + Path.GetFileName(GeoImage.FileName) + "' conversion succeeded into " + GiwerDataFolder);
+            if (GiwerDataFolder != "")
+            {
+                this.Cursor = Cursors.WaitCursor;
+                convertImage2gwr(GeoImage);
+                this.Cursor = Cursors.Default;
+                //tsPbar.Visible = false;
+                //tsPbar.Minimum = 0;
+                //tsPbar.Value = 0;
+                MessageBox.Show("'" + Path.GetFileName(GeoImage.FileName) + "' conversion succeeded into " + GiwerDataFolder);
+            }
+            else
+            {
+                FolderBrowserDialog fb = new FolderBrowserDialog();
+                fb.ShowNewFolderButton = true;
+                fb.ShowDialog();
+                GiwerDataFolder = fb.SelectedPath;
+            }
         }
 
         private void mergeMultipleImageToGwrFormatToolStripMenuItem_Click(object sender, EventArgs e)  // converts and merges individual tif or jpeg files containing only one band per file into one multiband gwr file 
@@ -1661,12 +1673,17 @@ namespace Giwer.dataStock
                 saveProjectFile(sfproj.FileName);
                 project.ProjectFileName = sfproj.FileName;
                 this.Text = "Data stock --> " + Path.GetFileName(sfproj.FileName);
+                ProjectFolder = Path.GetDirectoryName(sfproj.FileName);
             }
         }
 
 
         private void saveProjectFileToolStripMenuItem_Click(object sender, EventArgs e) // saves a project file
         {
+            if (ProjectFolder == "")
+            {
+                saveProjectAsToolStripMenuItem.PerformClick();
+            }
             project.ProjectDescription = tbProjDesc.Text;
             saveProjectFile(project.ProjectFileName);
         }

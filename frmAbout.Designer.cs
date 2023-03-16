@@ -40,6 +40,7 @@
             this.lblVersionDataStock = new System.Windows.Forms.Label();
             this.lblVersionCatalog = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblMosaicVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,9 +105,9 @@
             this.lblDesc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDesc.Location = new System.Drawing.Point(15, 201);
+            this.lblDesc.Location = new System.Drawing.Point(12, 205);
             this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(333, 56);
+            this.lblDesc.Size = new System.Drawing.Size(380, 63);
             this.lblDesc.TabIndex = 7;
             this.lblDesc.Text = "lblDesc";
             // 
@@ -143,18 +144,28 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 261);
+            this.label2.Location = new System.Drawing.Point(12, 268);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 13);
             this.label2.TabIndex = 11;
             this.label2.Text = "Licence: GNU3";
+            // 
+            // lblMosaicVersion
+            // 
+            this.lblMosaicVersion.AutoSize = true;
+            this.lblMosaicVersion.Location = new System.Drawing.Point(12, 185);
+            this.lblMosaicVersion.Name = "lblMosaicVersion";
+            this.lblMosaicVersion.Size = new System.Drawing.Size(78, 13);
+            this.lblMosaicVersion.TabIndex = 12;
+            this.lblMosaicVersion.Text = "Mosaic version";
             // 
             // frmAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(360, 283);
+            this.ClientSize = new System.Drawing.Size(407, 290);
+            this.Controls.Add(this.lblMosaicVersion);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblVersionCatalog);
             this.Controls.Add(this.lblVersionDataStock);
@@ -192,5 +203,6 @@
         private System.Windows.Forms.Label lblVersionDataStock;
         private System.Windows.Forms.Label lblVersionCatalog;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblMosaicVersion;
     }
 }

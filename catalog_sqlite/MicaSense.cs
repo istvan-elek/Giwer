@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -27,12 +28,14 @@ namespace catalog
         /// <param name="warpMode">Motion model.</param>
         /// <param name="numberOfIterations">Stopping criteria for the algorithm.</param>
         /// <param name="terminationEps">Stopping criteria for the algorithm.</param>
+        /// <param name="mergedFileName">Filename of the combined output of all channels. (Leave empty to skip creation.)</param>
         /// <exception cref="ArgumentOutOfRangeException">nameof(refIndex), Reference channel index too large or negative.</exception>
         public static void Align(string[] imagePaths, string outputFolder,
             int refIndex = 0,
             MotionType warpMode = MotionType.Affine,
             int numberOfIterations = 1000 /*2500*/,
-            double terminationEps = 1e-6/*1e-9*/)
+            double terminationEps = 1e-6 /*1e-9*/,
+            string mergedFileName = null)
         {
             if (refIndex >= imagePaths.Length || refIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(refIndex),
@@ -51,59 +54,88 @@ namespace catalog
             Mat imageColor = new Mat();
             CvInvoke.Merge(channels, imageColor);
 
-            // Set space for aligned image.
-            VectorOfMat alignedChannels = new VectorOfMat();
-            for (int i = 0; i < channels.Size; i++)
-            {
-                // All channels will be aligned to the reference channel
-                if (i != refIndex)
-                    alignedChannels.Push(new Mat(channels[refIndex].Size, DepthType.Cv8U, 1));
-                else
-                    alignedChannels.Push(channels[refIndex].Clone());
-            }
-
-            // Set space for warp matrix.
-            Mat warpMatrix;
+            // Set space for warp matrices.
+            VectorOfMat warpMatrices = new VectorOfMat();
 
             // Set the warp matrix to identity.
-            if (warpMode == MotionType.Homography)
-                warpMatrix = Mat.Eye(3, 3, DepthType.Cv32F, 1);
-            else
-                warpMatrix = Mat.Eye(2, 3, DepthType.Cv32F, 1);
+            for (int i = 0; i < imagePaths.Length; ++i)
+            {
+                if (warpMode == MotionType.Homography)
+                    warpMatrices.Push(Mat.Eye(3, 3, DepthType.Cv32F, 1));
+                else
+                    warpMatrices.Push(Mat.Eye(2, 3, DepthType.Cv32F, 1));
+            }
 
             // Set the stopping criteria for the algorithm.
             MCvTermCriteria criteria = new MCvTermCriteria(numberOfIterations, terminationEps);
 
-            // Warp all channels to the reference channel
+            // Initializing cropping boundaries
+            int cropStartX = 0;
+            int cropStartY = 0;
+            int cropEndX = channels[refIndex].Width;
+            int cropEndY = channels[refIndex].Height;
+
+            // Calculate aligned dimensions for all channels
             for (int i = 0; i < channels.Size; i++)
             {
-                Debug.WriteLine($"Wrapping band {i + 1}");
-
-                if (i == refIndex)
-                    continue;
+                Debug.WriteLine($"Calculating aligned dimensions for band {i + 1}");
 
                 double cc = CvInvoke.FindTransformECC(
                     GetGradient(channels[refIndex]),
                     GetGradient(channels[i]),
-                    warpMatrix,
+                    warpMatrices[i],
                     warpMode,
                     criteria
                 );
 
-                if (warpMode == MotionType.Homography)
-                    // Use Perspective warp when the transformation is a Homography
-                    CvInvoke.WarpPerspective(channels[i], alignedChannels[i], warpMatrix, alignedChannels[refIndex].Size,
-                        Inter.Linear, Warp.InverseMap);
-                else
-                    // Use Affine warp when the transformation is not a Homography
-                    CvInvoke.WarpAffine(channels[i], alignedChannels[i], warpMatrix, alignedChannels[refIndex].Size,
-                        Inter.Linear, Warp.InverseMap);
+                if (i == refIndex)
+                    continue;
+
+                // Update cropping boundaries
+                PointF p1 = TransformPoint(new PointF(0, 0), warpMatrices[i], warpMode);
+                PointF p2 = TransformPoint(new PointF(0, channels[i].Height), warpMatrices[i], warpMode);
+                PointF p3 = TransformPoint(new PointF(channels[i].Width, 0), warpMatrices[i], warpMode);
+                PointF p4 = TransformPoint(new PointF(channels[i].Width, channels[i].Height), warpMatrices[i], warpMode);
+
+                cropStartX = (int)Math.Ceiling(Math.Max(cropStartX, p1.X));
+                cropStartX = (int)Math.Ceiling(Math.Max(cropStartX, p2.X));
+                cropStartY = (int)Math.Ceiling(Math.Max(cropStartY, p1.Y));
+                cropStartY = (int)Math.Ceiling(Math.Max(cropStartY, p3.Y));
+                cropEndX = (int)Math.Floor(Math.Min(cropEndX, p3.X));
+                cropEndX = (int)Math.Floor(Math.Min(cropEndX, p4.X));
+                cropEndY = (int)Math.Floor(Math.Min(cropEndY, p2.Y));
+                cropEndY = (int)Math.Floor(Math.Min(cropEndY, p4.Y));
+            }
+            Debug.WriteLine($"Aligned dimensions: ({cropStartX};{cropStartY}) - ({cropEndX};{cropEndY})");
+
+            // Set aligned size for channels.
+            Size alignedSize = new Size(cropEndX - cropStartX - 1, cropEndY - cropStartY - 1);
+
+            // Set space for aligned image.
+            VectorOfMat alignedChannels = new VectorOfMat();
+            for (int i = 0; i < channels.Size; i++)
+            {
+                alignedChannels.Push(new Mat(alignedSize, DepthType.Cv8U, 1));
             }
 
-            // Merge the aligned channels
-            //Mat imageAligned = new Mat();
-            //CvInvoke.Merge(alignedChannels, imageAligned);
-            //CvInvoke.Imwrite(outputPath, imageAligned);
+            // Warp all channels to the reference channel
+            for (int i = 0; i < channels.Size; i++)
+            {
+                Debug.WriteLine($"Warpping band {i + 1}");
+
+                if (warpMode == MotionType.Homography)
+                {
+                    // Use Perspective warp when the transformation is a Homography
+                    CvInvoke.WarpPerspective(channels[i], alignedChannels[i], warpMatrices[i], alignedSize,
+                        Inter.Linear, Warp.InverseMap);
+                }
+                else
+                {
+                    // Use Affine warp when the transformation is not a Homography
+                    CvInvoke.WarpAffine(channels[i], alignedChannels[i], warpMatrices[i], alignedSize,
+                        Inter.Linear, Warp.InverseMap);
+                }
+            }
 
             // Save the output
             for (int i = 0; i < imagePaths.Length; ++i)
@@ -112,6 +144,37 @@ namespace catalog
                 string outputPath = Path.Combine(outputFolder, fileName);
                 CvInvoke.Imwrite(outputPath, alignedChannels[i]);
             }
+
+            // Merge the aligned channels
+            if (!String.IsNullOrEmpty(mergedFileName))
+            {
+                string outputPath = Path.Combine(outputFolder, mergedFileName);
+                Mat imageAligned = new Mat();
+                CvInvoke.Merge(alignedChannels, imageAligned);
+                CvInvoke.Imwrite(outputPath, imageAligned);
+            }
+        }
+
+        /// <summary>
+        /// Applies the given transformation to a coordinate.
+        /// </summary>
+        /// <param name="point">Coordinate to be transformed.</param>
+        /// <param name="warpMat">Transformation matrix.</param>
+        /// <param name="warpMode">Motion model.</param>
+        /// <returns>Transformed coordinate.</returns>
+        private static PointF TransformPoint(PointF point, Mat warpMat, MotionType warpMode)
+        {
+            Matrix<float> warpMatrix;
+            if (warpMode == MotionType.Homography)
+                warpMatrix = new Matrix<float>(3, 3);
+            else
+                warpMatrix = new Matrix<float>(2, 3);
+
+            warpMat.ConvertTo(warpMatrix, DepthType.Cv32F);
+
+            Matrix<float> pointMatrix = new Matrix<float>(new float[] { point.X, point.Y, 1 });
+            Matrix<float> transformedMatrix = warpMatrix * pointMatrix;
+            return new PointF(transformedMatrix[0, 0], transformedMatrix[1, 0]);
         }
 
         /// <summary>

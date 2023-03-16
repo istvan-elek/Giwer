@@ -595,7 +595,6 @@ namespace Giwer.dataStock
                         {
 
                         }
-
                     }
                 }
                 if (l.Contains("yaw")) { _camera_yaw = Convert.ToSingle(l.Split(';')[1], CultureInfo.InvariantCulture); }

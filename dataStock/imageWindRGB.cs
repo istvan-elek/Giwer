@@ -244,7 +244,9 @@ namespace Giwer.dataStock
             {
                 drawRectangleBool = false;
                 startPosImage = TranslateZoomMousePosition(new Point(startx, starty), pb.Image); // compute start position in the image
+                //startPosImage = new Point((Int32)((startPosImage.X / 3) * 3), (Int32)((startPosImage.Y / 3) * 3));
                 endPosImage = TranslateZoomMousePosition(e.Location, pb.Image);  // compute end position in the image
+                //endPosImage = new Point((Int32)((endPosImage.X / 3) * 3), (Int32)((endPosImage.Y / 3) * 3));
                 if (startPosImage.X == endPosImage.X || startPosImage.Y == endPosImage.Y) return;
                 Int32 tmp = 0; ;
                 if (startPosImage.X > endPosImage.X)
@@ -264,9 +266,12 @@ namespace Giwer.dataStock
                 //new Size(360, 311);
                 if (clipedImageAspect >= controlAspect) sizeClipedImage = new Size((int)(float)((endPosImage.Y - startPosImage.Y) * controlAspect), endPosImage.Y - startPosImage.Y);
                 else sizeClipedImage = new Size((int)(endPosImage.X - startPosImage.X), (int)(float)((endPosImage.X - startPosImage.X) / controlAspect + 0.5F));
+                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20); // hússzal oszthatónak kell lennie !!??
+                //sizeClipedImage.Width = 3 * (sizeClipedImage.Width / 3);
                 if (startPosImage.X + sizeClipedImage.Width > width) startPosImage.X = width - sizeClipedImage.Width;
                 if (startPosImage.Y + sizeClipedImage.Height > height) startPosImage.Y = height - sizeClipedImage.Height;
-                sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20); // hússzal oszthatónak kell lennie !!??
+                //sizeClipedImage.Width = 20 * ((sizeClipedImage.Width + 10) / 20); // hússzal oszthatónak kell lennie !!??
+
                 actualiminRed = ClipImage(iminRed, startPosImage, sizeClipedImage, width, height);
                 actualiminGreen = ClipImage(iminGreen, startPosImage, sizeClipedImage, width, height);
                 actualiminBlue = ClipImage(iminBlue, startPosImage, sizeClipedImage, width, height);

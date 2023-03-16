@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("catalog")]
-[assembly: AssemblyDescription("Dron image catalog")]
+[assembly: AssemblyTitle("Mosaic")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ELTE IK")]
-[assembly: AssemblyProduct("Giwer Catalog")]
-[assembly: AssemblyCopyright("Copyright © Elek István, Cserép Máté, ELTE IK 2020-2022")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Mosaic")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("12229b8a-a214-4eff-81ce-dfa603992943")]
+[assembly: Guid("807b8e05-0a15-4c91-a48d-ac393ffea81a")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.2")]
-[assembly: AssemblyFileVersion("1.3.2")]
+[assembly: AssemblyVersion("0.3.0")]
+[assembly: AssemblyFileVersion("0.3.0")]

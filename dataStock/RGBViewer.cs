@@ -10,7 +10,8 @@ namespace Giwer.dataStock
     {
         GeoImageData imgDat;
         GeoImageTools imgTools;
-        ImageWindRGB imw;
+        //ImageWindRGB imv;
+        ImageWindow imw;
         byte[] red;
         byte[] green;
         byte[] blue;
@@ -31,7 +32,8 @@ namespace Giwer.dataStock
             frmConfig conf = new frmConfig();
             //DisplayCursorPosition = conf.config["DisplayCursorPosition"];
             //DisplayImageSize = conf.config["DisplayImageSize"];
-            imw = new ImageWindRGB();
+            //imw = new ImageWindRGB();
+            imw = new ImageWindow();
             this.WindowState = Properties.Settings.Default.RGBWindowState;
             this.Location = Properties.Settings.Default.RGBWindowStartLocation;
             this.Size = Properties.Settings.Default.RGBWindowSize;
