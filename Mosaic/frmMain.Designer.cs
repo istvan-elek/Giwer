@@ -37,10 +37,13 @@ namespace Giwer.Mosaic
             this.tsbtnMakeGauss = new System.Windows.Forms.ToolStripButton();
             this.lstProj = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pbCompas = new System.Windows.Forms.PictureBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCompas)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -114,9 +117,22 @@ namespace Giwer.Mosaic
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.lstProj);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.pbCompas);
             this.splitContainer1.Size = new System.Drawing.Size(753, 427);
             this.splitContainer1.SplitterDistance = 170;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // pbCompas
+            // 
+            this.pbCompas.Location = new System.Drawing.Point(0, 0);
+            this.pbCompas.Name = "pbCompas";
+            this.pbCompas.Size = new System.Drawing.Size(80, 80);
+            this.pbCompas.TabIndex = 0;
+            this.pbCompas.TabStop = false;
+
             // 
             // frmMain
             // 
@@ -132,8 +148,10 @@ namespace Giwer.Mosaic
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbCompas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,6 +166,7 @@ namespace Giwer.Mosaic
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsbtnMakeMosaic;
         private System.Windows.Forms.ToolStripButton tsbtnMakeGauss;
+        private System.Windows.Forms.PictureBox pbCompas;
     }
 }
 

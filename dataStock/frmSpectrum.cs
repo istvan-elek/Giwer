@@ -222,7 +222,24 @@ namespace Giwer.dataStock
                     cmbBankName.Items.Add(dr[0]);
                 }
             }
-            else { SpectrumBankPath = ""; }
+            else 
+            {
+                OpenFileDialog of = new OpenFileDialog();
+                of.Filter = "Spectrumbank files|*.s3db";
+                if (of.ShowDialog()==DialogResult.OK)
+                {
+                    SpectrumBankPath = System.IO.Path.GetDirectoryName(SpectrumBankPath);
+                    tslblSpectrumBankName.Text = SpectrumBankPath;
+                    cnsb.DataSource = SpectrumBankPath;
+                    cnsb.Version = 3;
+                    DataTable dt = loadTableData("select bankname from banks");
+                    if (dt == null) return;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        cmbBankName.Items.Add(dr[0]);
+                    }
+                }
+            }
         }
 
         private void frmSpectrum_Activated(object sender, EventArgs e)

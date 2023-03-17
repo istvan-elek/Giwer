@@ -431,6 +431,7 @@ namespace Giwer.dataStock
                 GTools = new GeoImageTools(GeoImage);
                 printPars("bil");
                 BilDataFolder = Path.GetDirectoryName(of.FileName);
+                if (BilDataFolder != conf.config["BilDataFolder"]) { conf.config["BilDataFolder"] = BilDataFolder; ; conf.saveConfig(); }
                 setControls(GeoImage.FileType, true);
                 if (project.ProjectFileName !="") saveProjectAsToolStripMenuItem.Enabled = true;
             }
@@ -465,6 +466,7 @@ namespace Giwer.dataStock
                     GTools = new GeoImageTools(GeoImage);
                     printPars("3d");
                     D3DataFolder = Path.GetDirectoryName(of.FileName);
+                    if (D3DataFolder != conf.config["3DDataFolder"]) { conf.config["3DDataFolder"] = D3DataFolder; ; conf.saveConfig(); }
                     setControls(GeoImageData.fTypes.DDM,false);
                     if (project.ProjectFileName != "") saveProjectAsToolStripMenuItem.Enabled = true;
                     dtm ddm = new dtm();
@@ -501,6 +503,7 @@ namespace Giwer.dataStock
                 //actualTreenode.Tag = of.FileName;
                 //fillBands(actualTreenode);
                 GiwerDataFolder = Path.GetDirectoryName(of.FileName);
+                if (GiwerDataFolder != conf.config["GiwerDataFolder"]) { conf.config["GiwerDataFolder"] = GiwerDataFolder; conf.saveConfig(); }
                 printPars("gwr");
                 setControls(GeoImage.FileType, false);
                 if (project.ProjectFileName == "")
@@ -547,6 +550,7 @@ namespace Giwer.dataStock
                 setControls(GeoImage.FileType, false);
                 if (project.ProjectFileName != "") saveProjectAsToolStripMenuItem.Enabled = true;
                 JpgDataFolder = Path.GetDirectoryName(of.FileName);
+                if (JpgDataFolder != conf.config["JpgDataFolder"]) { conf.config["JpgDataFolder"] = JpgDataFolder; conf.saveConfig(); }
                 //string[] exif = GeoImage.getExifData(of.FileName);
                 //printExif(exif);
                 toolStripLayer.Enabled = true;
@@ -582,6 +586,7 @@ namespace Giwer.dataStock
                 setControls(GeoImage.FileType, true);
                 if (project.ProjectFileName != "") saveProjectAsToolStripMenuItem.Enabled = true;
                 TifDataFolder = Path.GetDirectoryName(GeoImage.FileName);
+                if (TifDataFolder != conf.config["TifDataFolder"]) { conf.config["TifDataFolder"] = TifDataFolder; conf.saveConfig(); }
                 if (GeoImage.Nbands > 3)
                 {
                     MessageBox.Show("This image has more than 3 bands. It cannot be displayed as an RGB image." + "Convert it to gwr format to go.", "Too many bands for display", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1638,6 +1643,11 @@ namespace Giwer.dataStock
                 saveProjectAsToolStripMenuItem.Enabled = true;
                 this.Text = "Data stock --> " + Path.GetFileName(project.ProjectFileName);
                 ProjectFolder = Path.GetDirectoryName(of.FileName);
+                if (ProjectFolder != conf.config["ProjectFolder"]) 
+                { 
+                    conf.config["ProjectFolder"] = ProjectFolder; 
+                    conf.saveConfig(); 
+                }
             }
         }
 
@@ -1674,6 +1684,7 @@ namespace Giwer.dataStock
                 project.ProjectFileName = sfproj.FileName;
                 this.Text = "Data stock --> " + Path.GetFileName(sfproj.FileName);
                 ProjectFolder = Path.GetDirectoryName(sfproj.FileName);
+                if (ProjectFolder != conf.config["ProjectFolder"]) { conf.config["ProjectFolder"] = ProjectFolder; conf.saveConfig(); }
             }
         }
 
@@ -1737,6 +1748,7 @@ namespace Giwer.dataStock
                 frmSimpleWorkflow wf = new frmSimpleWorkflow(of.FileName);
                 wf.Show();
                 WorkflowFolder = Path.GetDirectoryName(of.FileName);
+                if (WorkflowFolder != conf.config["WorkflowFolder"]) { conf.config["WorkflowFolder"] = WorkflowFolder; conf.saveConfig(); }
             }
         }
 
@@ -1861,8 +1873,12 @@ namespace Giwer.dataStock
         {
             frmSpectrumBank spBank = new frmSpectrumBank(SpectrumBankPath);
             spBank.ShowDialog();
-            SpectrumBankPath = spBank.SpectrumBankPath;
-            reloadConfigFile();
+            if (spBank.ShowDialog() == DialogResult.OK)
+            {
+                SpectrumBankPath = spBank.SpectrumBankPath;
+                if (SpectrumBankPath != conf.config["SpectrumBankPath"]) { conf.config["SpectrumBankPath"] = SpectrumBankPath; conf.saveConfig(); }
+            }
+            //reloadConfigFile();
         }
 
         private void classificationBySpectrumToolStripMenuItem_Click(object sender, EventArgs e)

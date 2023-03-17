@@ -100,6 +100,7 @@ namespace Giwer.dataStock
                             sw.WriteLine(item.Key);
                             sw.WriteLine(item.Value);
                         }
+                        sw.Flush();
                     }
                 }
                 catch (Exception e)

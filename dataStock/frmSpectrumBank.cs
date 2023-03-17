@@ -188,7 +188,7 @@ namespace Giwer.dataStock
         private void tsbttnOpenSpectrumBank_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
-            of.InitialDirectory = System.IO.Path.GetDirectoryName( SpectrumBankPath);
+            if (SpectrumBankPath !="") of.InitialDirectory = System.IO.Path.GetDirectoryName( SpectrumBankPath);
             of.Filter = "Spectrum bank files (*.s3db)|*.s3db";
             if (of.ShowDialog()==DialogResult.OK)
             {

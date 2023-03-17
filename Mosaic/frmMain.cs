@@ -16,6 +16,7 @@ namespace Giwer.Mosaic
     {
         Project proj = new Project();
         Int32[] colp = new int[256];
+        //GeoImageData gimda;
         public frmMain()
         {
             InitializeComponent();
@@ -60,6 +61,8 @@ namespace Giwer.Mosaic
             {
                 Giwer.dataStock.GeoImageData GeoImage = new GeoImageData();
                 GeoImage.FileName = fnames[i];
+                GeoImageData gimda = GeoImage;
+                pbCompas_Paint(gimda);
                 GeoImageTools gt = new GeoImageTools(GeoImage);
                 byte[] imRed = gt.getOneBandBytes(2);
                 byte[] imGreen = gt.getOneBandBytes(1);
@@ -68,9 +71,9 @@ namespace Giwer.Mosaic
                 Bitmap bmp = gmb.createRGB_gwr(GeoImage, imRed, imGreen, imBlue); //for 24 bits image only
                 int wid = bmp.Width / 10;
                 int hei = bmp.Height / 10;
-                Rectangle srcRect = new Rectangle(x - i * 50, y - i * 50, wid, hei);
+                Rectangle srcRect = new Rectangle(x - i * 50, y /*- i * 50*/, wid, hei);
                 GraphicsUnit units = GraphicsUnit.Pixel;
-                Rectangle nextRect = new Rectangle(x - i * 50, y - i * 50, wid, hei);
+                //Rectangle nextRect = new Rectangle(x - i * 50, y - i * 50, wid, hei);
                 g.DrawImage(bmp, srcRect);
                 //g.DrawRectangle(Pens.Black, srcRect);
             }
@@ -89,6 +92,32 @@ namespace Giwer.Mosaic
         void loadAvailableColorPalettes() // loads available color palettes
         {
             string[] fileEntries = Directory.GetFiles(Application.StartupPath, "*.cp");
+        }
+
+        private void pbCompas_Paint(GeoImageData gimda)
+        {
+            Pen pen = new Pen(Color.FromArgb(255, 0, 0), 8);
+            pen.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            pen.EndCap = System.Drawing.Drawing2D.LineCap.NoAnchor;
+            Graphics g = pbCompas.CreateGraphics();
+            g.Clear(Color.White);
+            if (gimda != null)
+            {
+                double alfa = -Math.PI * gimda.Camera_yaw / 180;
+                int centerX = 30;
+                int centerY = 30;
+                int eps = 10;
+                int radius = 25;
+                int x2 = Convert.ToInt16(centerX - (centerX - eps) * Math.Sin(alfa));
+                int y2 = Convert.ToInt16(centerY + (centerY - eps) * Math.Cos(alfa));
+                int x1 = Convert.ToInt16(centerX + (centerX - eps) * Math.Sin(alfa));
+                int y1 = Convert.ToInt16(centerY - (centerY - eps) * Math.Cos(alfa));
+                SolidBrush rBrush = new SolidBrush(Color.FromArgb(100, 255, 255, 255));
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.FillEllipse(rBrush, centerX - radius, centerY - radius, radius + radius, radius + radius);
+                g.DrawLine(pen, x1, y1, x2, y2);
+                g.Dispose();
+            }
         }
 
 

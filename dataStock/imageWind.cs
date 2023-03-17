@@ -527,10 +527,13 @@ namespace Giwer.dataStock
         private void BttnMinus_Click(object sender, EventArgs e)
         {
             byte[] clipedImage;
-            imageStartIndex.X -= sizeClipedImage.Width / 4;
-            imageStartIndex.Y -= sizeClipedImage.Height / 4;
+
             Int32 newwid = (int)(sizeClipedImage.Width * 1.2F);
             Int32 newhgt = (int)(sizeClipedImage.Height * 1.2F);
+            imageStartIndex.X -=  newwid/4 - sizeClipedImage.Width / 4;
+            imageStartIndex.Y -= newhgt/4 - sizeClipedImage.Height / 4 ;
+            //imageStartIndex.X -= newwid / 4;
+            //imageStartIndex.Y -= newhgt / 4;
             if (newwid > gimda.Ncols) newwid = gimda.Ncols;
             if (newhgt > gimda.Nrows) newhgt = gimda.Nrows;
             sizeClipedImage = new Size((int)(newwid), (int)(newhgt));
