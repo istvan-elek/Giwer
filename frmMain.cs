@@ -27,6 +27,7 @@ namespace Giwer
             bttnWfBuilder.Enabled = File.Exists(WorkflowBuilderPath);
             bttnDataStock.Enabled = File.Exists(DataStockPath);
             bttnCatalog.Enabled = File.Exists(CatalogPath);
+            bttnMosaic.Enabled = File.Exists(MosaicPath);
         }
 
         private void ProjectBuilder_Click(object sender, EventArgs e)
