@@ -16,7 +16,8 @@ namespace Giwer
         {
             InitializeComponent();
             var uri = new Uri(fname); 
-            this.webBrowser1.Navigate(uri);            
+            webView21.Source = uri;
+            //this.webBrowser1.Navigate(uri);            
         }
 
     }
